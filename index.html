@@ -193,123 +193,186 @@
     </div>
 
     <!-- UPLOAD MODAL (ADMIN) -->
+    <!-- UPLOAD MODAL (Updated for File Upload) -->
     <div id="upload-modal" class="modal">
-        <div class="bg-[#111] max-w-xl w-full p-10">
-            <h2 class="text-2xl font-serif italic mb-8">Add Premium Asset</h2>
+        <div class="bg-[#111] max-w-xl w-full p-10 rounded-sm">
+            <h2 class="text-2xl font-serif italic mb-8 gold-text">Add Premium Asset</h2>
             <form id="upload-form" class="space-y-4">
-                <input type="text" id="car-name" placeholder="Vehicle Name" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none" required>
-                <input type="text" id="car-price" placeholder="List Price (₦)" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none" required>
-                <textarea id="car-desc" placeholder="Specifications & Features" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none h-40" required></textarea>
-                <input type="text" id="car-images" placeholder="Image URLs (Comma separated - max 5)" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none">
-                <button type="submit" class="w-full bg-gold text-black py-5 font-bold uppercase text-[10px] tracking-widest">Publish Inventory</button>
+                <input type="text" id="car-name" placeholder="Vehicle Name" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white" required>
+                <input type="text" id="car-price" placeholder="List Price (₦)" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white" required>
+                <textarea id="car-desc" placeholder="Specifications & Features" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none h-32 text-white" required></textarea>
+                
+                <div class="border-2 border-dashed border-gray-800 p-6 text-center hover:border-gold transition cursor-pointer relative">
+                    <input type="file" id="car-files" accept="image/*" multiple class="absolute inset-0 opacity-0 cursor-pointer" onchange="updateFileCount()">
+                    <i data-lucide="upload-cloud" class="mx-auto mb-2 text-gray-500"></i>
+                    <p id="file-label" class="text-[10px] text-gray-500 uppercase tracking-widest">Click to upload images (Max 5)</p>
+                </div>
+
+                <button type="submit" id="submit-btn" class="w-full bg-gold text-black py-5 font-bold uppercase text-[10px] tracking-widest disabled:opacity-50">
+                    Publish to Inventory
+                </button>
             </form>
+            <button onclick="toggleUploadModal()" class="w-full mt-4 text-gray-600 text-[10px] uppercase">Cancel</button>
         </div>
     </div>
-
     <script>
-        const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co";
-        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
-        const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+    const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co";
+    const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
+    const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
-        // Mobile Menu
-        const menuBtn = document.getElementById('menu-btn');
-        const closeBtn = document.getElementById('close-menu');
-        const mobileNav = document.getElementById('mobile-nav');
-        menuBtn.onclick = () => mobileNav.classList.add('active');
-        closeBtn.onclick = () => mobileNav.classList.remove('active');
-        function closeMobileMenu() { mobileNav.classList.remove('active'); }
+    // Mobile Menu
+    const menuBtn = document.getElementById('menu-btn');
+    const closeBtn = document.getElementById('close-menu');
+    const mobileNav = document.getElementById('mobile-nav');
+    menuBtn.onclick = () => mobileNav.classList.add('active');
+    closeBtn.onclick = () => mobileNav.classList.remove('active');
+    function closeMobileMenu() { mobileNav.classList.remove('active'); }
 
-        // Fetch Cars
-        async function fetchCars() {
-            const { data, error } = await supabaseClient.from('cars').select('*').order('created_at', { ascending: false });
-            if (!error) renderCars(data);
+    // Fetch Cars from Database
+    async function fetchCars() {
+        const { data, error } = await supabaseClient.from('cars').select('*').order('created_at', { ascending: false });
+        if (!error) renderCars(data);
+    }
+
+    function renderCars(cars) {
+        const list = document.getElementById('car-list');
+        if (cars.length === 0) {
+            list.innerHTML = '<p class="text-gray-500 italic text-center col-span-full">No cars in the showroom yet.</p>';
+            return;
         }
-
-        function renderCars(cars) {
-            const list = document.getElementById('car-list');
-            list.innerHTML = cars.map(car => `
-                <div class="group cursor-pointer border border-gray-900 p-4 hover:border-gold transition duration-500" onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})">
-                    <div class="h-64 overflow-hidden mb-8"><img src="${car.images[0]}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700"></div>
-                    <div class="flex justify-between items-center px-2"><h3 class="font-bold uppercase tracking-[0.2em] text-xs">${car.name}</h3><p class="gold-text font-bold text-sm">${car.price}</p></div>
-                    <button class="w-full mt-10 py-4 border border-gray-800 text-[10px] font-bold uppercase tracking-widest group-hover:bg-white group-hover:text-black transition">Full Specifications</button>
+        list.innerHTML = cars.map(car => `
+            <div class="group cursor-pointer border border-gray-900 p-4 hover:border-gold transition duration-500" onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})">
+                <div class="h-64 overflow-hidden mb-8">
+                    <img src="${car.images && car.images[0] ? car.images[0] : 'https://via.placeholder.com/600x400?text=No+Image'}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                 </div>
-            `).join('');
-        }
-
-        function showDetails(car) {
-            const content = document.getElementById('modal-content');
-            content.innerHTML = `
-                <div class="space-y-4">
-                    <img src="${car.images[0]}" class="w-full rounded-sm shadow-2xl">
-                    <div class="grid grid-cols-4 gap-3">${car.images.slice(1).map(img => `<img src="${img}" class="h-20 w-full object-cover rounded-sm border border-gray-800">`).join('')}</div>
+                <div class="flex justify-between items-center px-2">
+                    <h3 class="font-bold uppercase tracking-[0.2em] text-xs">${car.name}</h3>
+                    <p class="gold-text font-bold text-sm">${car.price}</p>
                 </div>
-                <div class="flex flex-col justify-center">
-                    <h2 class="text-4xl font-serif italic mb-4 leading-tight">${car.name}</h2>
-                    <p class="gold-text text-3xl font-bold mb-8">${car.price}</p>
-                    <div class="h-px bg-gray-800 mb-8 w-1/4"></div>
-                    <p class="text-gray-400 text-sm leading-loose mb-10 text-justify">${car.description}</p>
-                    <a href="https://wa.me/2348024417215?text=Hello, I am interested in the ${car.name} priced at ${car.price}" target="_blank" class="block text-center bg-green-600 text-white py-5 font-bold uppercase text-[10px] tracking-widest hover:bg-green-500 transition shadow-lg">Check Availability (WhatsApp)</a>
-                </div>
-            `;
-            document.getElementById('car-modal').classList.add('active');
-        }
+                <button class="w-full mt-10 py-4 border border-gray-800 text-[10px] font-bold uppercase tracking-widest group-hover:bg-white group-hover:text-black transition">Full Specifications</button>
+            </div>
+        `).join('');
+    }
 
-        // Detailed Policies
-        const policies = {
-            privacy: { 
-                title: "Privacy Policy", 
-                body: "At Cars Village Global, we prioritize your security. We collect your data solely for account management and transaction verification. We never share your personal information with third parties without your explicit consent. All payment data is encrypted via industry-standard protocols and stored in secure cloud environments. By using our services, you agree to our transparent data handling methods designed to protect the elite automotive community." 
-            },
-            shipping: { 
-                title: "Global Shipping Policy", 
-                body: "We offer worldwide shipping to major international ports. For global orders, shipping quotes are calculated based on the destination port, vehicle weight, and insurance requirements. Please note that all customers are responsible for local import duties, customs fees, and taxes in their respective countries. We provide full tracking documentation and professional logistical support from the moment of dispatch in Lagos until the vessel arrives at your designated port." 
-            },
-            delivery: { 
-                title: "Nationwide Delivery Policy", 
-                body: "Within Nigeria, we provide high-security doorstep delivery via our specialized car haulers and flatbeds. Delivery within Lagos is typically completed within 24-48 hours. For nationwide delivery to other states, the timeline is 3-7 business days depending on road security and distance. Every vehicle is fully insured during transit, and our drivers are vetted professionals trained in luxury asset handling." 
-            },
-            pickup: { 
-                title: "Physical Pick-up Policy", 
-                body: "Customers are welcome to physically inspect and pick up their vehicles at our flagship showroom: 76, Iju Ishaga Road, Ajilete Bus Stop Ifako Ijaiye, Lagos. Please bring a valid government-issued ID (NIN, Driver's License, or International Passport) and your confirmed transaction receipt. Pick-up appointments must be scheduled at least 24 hours in advance to ensure the vehicle is detailed and ready for your arrival." 
+    function showDetails(car) {
+        const content = document.getElementById('modal-content');
+        const mainImg = car.images && car.images[0] ? car.images[0] : 'https://via.placeholder.com/600x400';
+        
+        content.innerHTML = `
+            <div class="space-y-4">
+                <img src="${mainImg}" class="w-full rounded-sm shadow-2xl">
+                <div class="grid grid-cols-4 gap-3">
+                    ${car.images ? car.images.slice(1).map(img => `<img src="${img}" class="h-20 w-full object-cover rounded-sm border border-gray-800">`).join('') : ''}
+                </div>
+            </div>
+            <div class="flex flex-col justify-center">
+                <h2 class="text-4xl font-serif italic mb-4 leading-tight">${car.name}</h2>
+                <p class="gold-text text-3xl font-bold mb-8">${car.price}</p>
+                <div class="h-px bg-gray-800 mb-8 w-1/4"></div>
+                <p class="text-gray-400 text-sm leading-loose mb-10 text-justify">${car.description}</p>
+                <a href="https://wa.me/2348024417215?text=Hello, I am interested in the ${car.name} priced at ${car.price}" target="_blank" class="block text-center bg-green-600 text-white py-5 font-bold uppercase text-[10px] tracking-widest hover:bg-green-500 transition shadow-lg">Check Availability (WhatsApp)</a>
+            </div>
+        `;
+        document.getElementById('car-modal').classList.add('active');
+    }
+
+    // Policies
+    const policies = {
+        privacy: { title: "Privacy Policy", body: "At Cars Village Global, we prioritize your security. We collect your data solely for account management and transaction verification. We never share your personal information with third parties without your explicit consent." },
+        shipping: { title: "Global Shipping Policy", body: "We offer worldwide shipping to major international ports. For global orders, shipping quotes are calculated based on destination, weight, and insurance requirements." },
+        delivery: { title: "Nationwide Delivery Policy", body: "Within Nigeria, we provide high-security doorstep delivery via specialized car haulers. Delivery within Lagos typically takes 24-48 hours." },
+        pickup: { title: "Physical Pick-up Policy", body: "Customers are welcome to pick up their vehicles at 76, Iju Ishaga Road, Agege, Lagos. Please bring a valid ID and your confirmed receipt. Appointments required 24h in advance." }
+    };
+
+    function openPolicy(type) {
+        document.getElementById('policy-title').innerText = policies[type].title;
+        document.getElementById('policy-body').innerText = policies[type].body;
+        document.getElementById('policy-modal').classList.add('active');
+    }
+
+    // Admin Access Logic
+    const ADMIN_EMAIL = "dben61168@gmail.com";
+    async function handleLogin() {
+        const email = document.getElementById('login-email').value;
+        const pass = document.getElementById('login-pass').value;
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
+        if (!error && data.user.email === ADMIN_EMAIL) {
+            document.getElementById('admin-panel-btn').classList.remove('hidden');
+            document.getElementById('login-modal').classList.remove('active');
+            alert("Admin Access Granted");
+        } else { alert("Unauthorized or Login Failed"); }
+    }
+
+    // FILE UPLOAD & SHOWROOM PUBLISH LOGIC
+    function updateFileCount() {
+        const files = document.getElementById('car-files').files;
+        const label = document.getElementById('file-label');
+        if (label) label.innerText = files.length > 0 ? `${files.length} images selected` : "Click to upload images (Max 5)";
+    }
+
+    document.getElementById('upload-form').onsubmit = async (e) => {
+        e.preventDefault();
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        const fileInput = document.getElementById('car-files');
+        const files = fileInput.files;
+
+        if (files.length === 0) return alert("Please select at least one image.");
+        if (files.length > 5) return alert("Maximum 5 images allowed.");
+
+        submitBtn.innerText = "Uploading Assets...";
+        submitBtn.disabled = true;
+
+        const uploadedUrls = [];
+
+        try {
+            // 1. Upload each file to Storage
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+                
+                const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                    .from('car-images')
+                    .upload(fileName, file);
+
+                if (uploadError) throw uploadError;
+
+                // 2. Get the public URL for the uploaded file
+                const { data: urlData } = supabaseClient.storage
+                    .from('car-images')
+                    .getPublicUrl(fileName);
+                
+                uploadedUrls.push(urlData.publicUrl);
             }
-        };
 
-        function openPolicy(type) {
-            document.getElementById('policy-title').innerText = policies[type].title;
-            document.getElementById('policy-body').innerText = policies[type].body;
-            document.getElementById('policy-modal').classList.add('active');
-        }
-
-        const ADMIN_EMAIL = "dben61168@gmail.com";
-        async function handleLogin() {
-            const email = document.getElementById('login-email').value;
-            const pass = document.getElementById('login-pass').value;
-            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
-            if (!error && data.user.email === ADMIN_EMAIL) {
-                document.getElementById('admin-panel-btn').classList.remove('hidden');
-                document.getElementById('login-modal').classList.remove('active');
-            } else { alert("Unauthorized Access"); }
-        }
-
-        document.getElementById('upload-form').onsubmit = async (e) => {
-            e.preventDefault();
-            const images = document.getElementById('car-images').value.split(',').map(s => s.trim());
-            const { error } = await supabaseClient.from('cars').insert([{ 
+            // 3. Insert record into database with image URL array
+            const { error: dbError } = await supabaseClient.from('cars').insert([{ 
                 name: document.getElementById('car-name').value, 
                 price: document.getElementById('car-price').value, 
                 description: document.getElementById('car-desc').value, 
-                images 
+                images: uploadedUrls 
             }]);
-            if (!error) location.reload(); else alert("System Error");
-        };
 
-        function closeModal() { document.getElementById('car-modal').classList.remove('active'); }
-        function closePolicy() { document.getElementById('policy-modal').classList.remove('active'); }
-        function toggleLoginModal() { document.getElementById('login-modal').classList.toggle('active'); }
-        function toggleUploadModal() { document.getElementById('upload-modal').classList.toggle('active'); }
-        
-        lucide.createIcons();
-        fetchCars();
-    </script>
+            if (dbError) throw dbError;
+
+            alert("Showroom Updated Successfully!");
+            location.reload();
+
+        } catch (err) {
+            console.error(err);
+            alert("System Error: " + err.message);
+            submitBtn.innerText = "Publish Inventory";
+            submitBtn.disabled = false;
+        }
+    };
+
+    function closeModal() { document.getElementById('car-modal').classList.remove('active'); }
+    function closePolicy() { document.getElementById('policy-modal').classList.remove('active'); }
+    function toggleLoginModal() { document.getElementById('login-modal').classList.toggle('active'); }
+    function toggleUploadModal() { document.getElementById('upload-modal').classList.toggle('active'); }
+    
+    lucide.createIcons();
+    fetchCars();
+                                  </script>
 </body>
 </html>
