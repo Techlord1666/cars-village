@@ -7,76 +7,118 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Playfair+Display:italic,wght@700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Supabase Library -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; overflow: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; min-height: 100vh; display: flex; flex-direction: column; }
         .font-serif { font-family: 'Playfair Display', serif; }
         .gold-text { color: #d4af37; }
         .bg-gold { background-color: #d4af37; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .input-style { background: rgba(0,0,0,0.5); border: 1px solid #222; padding: 12px; width: 100%; font-size: 14px; outline: none; transition: 0.3s; }
+        .input-style { background: rgba(0,0,0,0.5); border: 1px solid #222; padding: 12px; width: 100%; font-size: 14px; outline: none; transition: 0.3s; color: white; }
         .input-style:focus { border-color: #d4af37; }
+        
+        /* Modal Animation */
+        #policy-modal { display: none; opacity: 0; transition: opacity 0.3s ease; }
+        #policy-modal.active { display: flex; opacity: 1; }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen relative">
+<body class="relative">
 
     <!-- Background Image -->
-    <div class="absolute inset-0 z-0">
+    <div class="fixed inset-0 z-0">
         <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover opacity-40">
-        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black"></div>
     </div>
 
-    <!-- Sign Up Card -->
-    <div class="relative z-10 w-full max-w-md px-6">
-        <div class="glass p-10 rounded-sm shadow-2xl">
-            <div class="text-center mb-10">
-                <h1 class="text-xs uppercase tracking-[0.5em] text-gray-500 mb-2">Cars Village Global</h1>
-                <h2 class="text-4xl font-serif italic">Create Account</h2>
-                <p class="text-gray-400 text-xs mt-4">Join our exclusive community of luxury enthusiasts.</p>
+    <!-- Main Content Wrapper -->
+    <main class="relative z-10 flex-grow flex items-center justify-center px-4 py-20">
+        <!-- Sign Up Card -->
+        <div class="w-full max-w-md">
+            <div class="glass p-8 md:p-10 rounded-sm shadow-2xl">
+                <div class="text-center mb-8">
+                    <h1 class="text-[10px] uppercase tracking-[0.5em] text-gray-500 mb-2">Cars Village Global</h1>
+                    <h2 class="text-3xl md:text-4xl font-serif italic">Create Account</h2>
+                    <p class="text-gray-400 text-xs mt-4 leading-relaxed">Join our exclusive community of luxury enthusiasts and browse our premium inventory.</p>
+                </div>
+
+                <form id="signup-form" class="space-y-5">
+                    <div>
+                        <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Full Name</label>
+                        <input type="text" id="full-name" class="input-style" placeholder="John Doe" required>
+                    </div>
+                    <div>
+                        <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Email Address</label>
+                        <input type="email" id="email" class="input-style" placeholder="email@example.com" required>
+                    </div>
+                    <div>
+                        <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Password</label>
+                        <input type="password" id="password" class="input-style" placeholder="••••••••" required>
+                    </div>
+                    
+                    <div id="error-msg" class="text-red-500 text-[10px] uppercase hidden text-center"></div>
+
+                    <button type="submit" id="signup-btn" class="w-full bg-gold text-black py-4 font-bold uppercase text-[10px] tracking-widest hover:bg-[#f2d472] transition duration-300 flex justify-center items-center gap-2">
+                        Register Now
+                    </button>
+                </form>
+
+                <div class="mt-8 text-center">
+                    <p class="text-gray-500 text-xs">Already have an account? <a href="index.html" class="gold-text border-b border-[#d4af37]">Log In</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-10 bg-black/80 backdrop-blur-md border-t border-gray-900 px-6 py-10">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <!-- Address Section -->
+            <div class="text-center md:text-left">
+                <p class="text-[10px] uppercase tracking-[0.3em] text-gray-500 mb-2">Headquarters</p>
+                <p class="text-xs text-gray-300 leading-loose">
+                    76, Iju Ishaga Road, Ajilete Bus Stop<br>
+                    Ifako Ijaiye, Agege, Lagos, Nigeria
+                </p>
             </div>
 
-            <form id="signup-form" class="space-y-5">
-                <div>
-                    <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Full Name</label>
-                    <input type="text" id="full-name" class="input-style" placeholder="John Doe" required>
-                </div>
-                <div>
-                    <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Email Address</label>
-                    <input type="email" id="email" class="input-style" placeholder="email@example.com" required>
-                </div>
-                <div>
-                    <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Password</label>
-                    <input type="password" id="password" class="input-style" placeholder="••••••••" required>
-                </div>
-                
-                <div id="error-msg" class="text-red-500 text-[10px] uppercase hidden"></div>
-
-                <button type="submit" id="signup-btn" class="w-full bg-gold text-black py-4 font-bold uppercase text-[10px] tracking-widest hover:bg-[#f2d472] transition duration-300 flex justify-center items-center gap-2">
-                    Register Now
-                </button>
-            </form>
-
-            <div class="mt-8 text-center">
-                <p class="text-gray-500 text-xs">Already have an account? <a href="index.html" class="gold-text border-b border-[#d4af37]">Log In</a></p>
+            <!-- Policy Links -->
+            <div class="flex flex-wrap justify-center md:justify-end gap-6 text-[10px] uppercase tracking-widest font-bold text-gray-400">
+                <button onclick="openPolicy('privacy')" class="hover:text-gold transition">Privacy Policy</button>
+                <button onclick="openPolicy('shipping')" class="hover:text-gold transition">Shipping</button>
+                <button onclick="openPolicy('delivery')" class="hover:text-gold transition">Delivery</button>
+                <button onclick="openPolicy('pickup')" class="hover:text-gold transition">Pick-up</button>
             </div>
+        </div>
+        <p class="text-center text-[10px] text-gray-700 mt-10 uppercase tracking-widest">&copy; 2024 Cars Village Global</p>
+    </footer>
+
+    <!-- POLICY MODAL -->
+    <div id="policy-modal" class="fixed inset-0 z-[100] glass flex items-center justify-center p-6">
+        <div class="bg-[#0a0a0a] border border-gray-800 w-full max-w-2xl p-8 md:p-12 relative max-h-[80vh] overflow-y-auto">
+            <button onclick="closePolicy()" class="absolute top-6 right-6 text-gray-500 hover:text-white">
+                <i data-lucide="x"></i>
+            </button>
+            <h2 id="policy-title" class="text-3xl font-serif italic mb-6 gold-text"></h2>
+            <div id="policy-body" class="text-gray-400 text-sm leading-relaxed space-y-4">
+                <!-- Content injected by JS -->
+            </div>
+            <button onclick="closePolicy()" class="mt-8 w-full py-4 border border-gray-800 text-[10px] uppercase tracking-widest font-bold hover:bg-white hover:text-black transition">Close Information</button>
         </div>
     </div>
 
     <script>
-        // 1. SUPABASE CONFIGURATION (Same keys as index.html)
+        // 1. SUPABASE CONFIGURATION
         const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co"; 
-        const SB_KEY = ""eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
+        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
         const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
+        // 2. SIGNUP LOGIC
         const signupForm = document.getElementById('signup-form');
         const errorMsg = document.getElementById('error-msg');
         const signupBtn = document.getElementById('signup-btn');
 
         signupForm.onsubmit = async (e) => {
             e.preventDefault();
-            
-            // UI Feedback
             signupBtn.innerHTML = "Processing...";
             signupBtn.disabled = true;
             errorMsg.classList.add('hidden');
@@ -85,15 +127,10 @@
             const password = document.getElementById('password').value;
             const fullName = document.getElementById('full-name').value;
 
-            // 2. SUPABASE SIGNUP CALL
             const { data, error } = await supabaseClient.auth.signUp({
                 email: email,
                 password: password,
-                options: {
-                    data: {
-                        full_name: fullName, // This saves the name to the user profile
-                    }
-                }
+                options: { data: { full_name: fullName } }
             });
 
             if (error) {
@@ -102,10 +139,45 @@
                 signupBtn.innerHTML = "Register Now";
                 signupBtn.disabled = false;
             } else {
-                alert("Success! Check your email for the confirmation link.");
-                window.location.href = "index.html"; // Redirect back home
+                alert("Account created successfully!");
+                window.location.href = "index.html";
             }
         };
+
+        // 3. POLICY MODAL LOGIC
+        const policies = {
+            privacy: {
+                title: "Privacy Policy",
+                body: "At Cars Village Global, we prioritize your security. We collect your data solely for account management and transaction verification. We never share your personal information with third parties without your explicit consent. All payment data is encrypted via industry-standard protocols."
+            },
+            shipping: {
+                title: "Global Shipping Policy",
+                body: "We offer worldwide shipping to major ports. For international orders, shipping quotes are calculated based on destination and vehicle weight. Please note that customers are responsible for local import duties and taxes in their respective countries."
+            },
+            delivery: {
+                title: "Delivery Policy",
+                body: "Within Nigeria, we offer doorstep delivery via our specialized car haulers. Delivery within Lagos takes 24-48 hours. Outside Lagos, delivery typically takes 3-7 business days depending on the state and security clearance."
+            },
+            pickup: {
+                title: "Vehicle Pick-up Policy",
+                body: "Customers can physically inspect and pick up their vehicles at our showroom: 76, Iju Ishaga Road, Ajilete Bus Stop Ifako Ijaiye, Lagos. Please bring a valid government-issued ID and your transaction receipt. Appointments must be scheduled 24 hours in advance."
+            }
+        };
+
+        function openPolicy(type) {
+            const modal = document.getElementById('policy-modal');
+            document.getElementById('policy-title').innerText = policies[type].title;
+            document.getElementById('policy-body').innerText = policies[type].body;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePolicy() {
+            document.getElementById('policy-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        lucide.createIcons();
     </script>
 </body>
 </html>
