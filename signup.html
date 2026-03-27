@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join the Elite | Cars Village Global</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Playfair+Display:italic,wght@700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Supabase Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; overflow: hidden; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .gold-text { color: #d4af37; }
+        .bg-gold { background-color: #d4af37; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .input-style { background: rgba(0,0,0,0.5); border: 1px solid #222; padding: 12px; width: 100%; font-size: 14px; outline: none; transition: 0.3s; }
+        .input-style:focus { border-color: #d4af37; }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen relative">
+
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover opacity-40">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black"></div>
+    </div>
+
+    <!-- Sign Up Card -->
+    <div class="relative z-10 w-full max-w-md px-6">
+        <div class="glass p-10 rounded-sm shadow-2xl">
+            <div class="text-center mb-10">
+                <h1 class="text-xs uppercase tracking-[0.5em] text-gray-500 mb-2">Cars Village Global</h1>
+                <h2 class="text-4xl font-serif italic">Create Account</h2>
+                <p class="text-gray-400 text-xs mt-4">Join our exclusive community of luxury enthusiasts.</p>
+            </div>
+
+            <form id="signup-form" class="space-y-5">
+                <div>
+                    <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Full Name</label>
+                    <input type="text" id="full-name" class="input-style" placeholder="John Doe" required>
+                </div>
+                <div>
+                    <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Email Address</label>
+                    <input type="email" id="email" class="input-style" placeholder="email@example.com" required>
+                </div>
+                <div>
+                    <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Password</label>
+                    <input type="password" id="password" class="input-style" placeholder="••••••••" required>
+                </div>
+                
+                <div id="error-msg" class="text-red-500 text-[10px] uppercase hidden"></div>
+
+                <button type="submit" id="signup-btn" class="w-full bg-gold text-black py-4 font-bold uppercase text-[10px] tracking-widest hover:bg-[#f2d472] transition duration-300 flex justify-center items-center gap-2">
+                    Register Now
+                </button>
+            </form>
+
+            <div class="mt-8 text-center">
+                <p class="text-gray-500 text-xs">Already have an account? <a href="index.html" class="gold-text border-b border-[#d4af37]">Log In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. SUPABASE CONFIGURATION (Same keys as index.html)
+        const SB_URL = "YOUR_SUPABASE_URL_HERE"; 
+        const SB_KEY = "YOUR_SUPABASE_ANON_KEY_HERE";
+        const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+
+        const signupForm = document.getElementById('signup-form');
+        const errorMsg = document.getElementById('error-msg');
+        const signupBtn = document.getElementById('signup-btn');
+
+        signupForm.onsubmit = async (e) => {
+            e.preventDefault();
+            
+            // UI Feedback
+            signupBtn.innerHTML = "Processing...";
+            signupBtn.disabled = true;
+            errorMsg.classList.add('hidden');
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const fullName = document.getElementById('full-name').value;
+
+            // 2. SUPABASE SIGNUP CALL
+            const { data, error } = await supabaseClient.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        full_name: fullName, // This saves the name to the user profile
+                    }
+                }
+            });
+
+            if (error) {
+                errorMsg.innerText = error.message;
+                errorMsg.classList.remove('hidden');
+                signupBtn.innerHTML = "Register Now";
+                signupBtn.disabled = false;
+            } else {
+                alert("Success! Check your email for the confirmation link.");
+                window.location.href = "index.html"; // Redirect back home
+            }
+        };
+    </script>
+</body>
+</html>
