@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cars Village Global | Luxury Car Dealership</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Playfair+Display:italic,wght@700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; overflow-x: hidden; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .gold-text { color: #d4af37; }
+        .bg-gold { background-color: #d4af37; }
+        
+        /* Smooth Mobile Menu Animation */
+        #mobile-menu {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+        }
+        #mobile-menu.active {
+            transform: translateX(0%);
+        }
+    </style>
+</head>
+<body class="text-white">
+
+    <!-- NAVIGATION -->
+    <nav class="flex items-center justify-between px-6 md:px-12 py-6 absolute w-full z-50">
+        <div class="text-xl md:text-2xl font-bold tracking-tighter">
+            CAR VILLAGE <span class="gold-text font-light italic uppercase">Global</span>
+        </div>
+
+        <!-- Desktop Links (Hidden on Mobile) -->
+        <div class="hidden md:flex gap-10 text-xs uppercase tracking-[0.2em] text-gray-300">
+            <a href="#" class="gold-text border-b border-[#d4af37] pb-1">Home</a>
+            <a href="#" class="hover:text-white transition">Store</a>
+            <a href="#" class="hover:text-white transition">About</a>
+        </div>
+
+        <!-- Desktop Auth (Hidden on Mobile) -->
+        <div class="hidden md:flex gap-6 items-center">
+            <a href="#" class="text-xs uppercase tracking-widest hover:gold-text">Login</a>
+            <a href="#" class="bg-gold text-black px-6 py-2 text-xs font-bold uppercase rounded-sm hover:bg-[#f2d472] transition">Sign Up</a>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="menu-open" class="md:hidden text-white">
+            <i data-lucide="menu"></i>
+        </button>
+    </nav>
+
+    <!-- MOBILE MENU OVERLAY (Animated) -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black z-[100] flex flex-col p-10 md:hidden">
+        <div class="flex justify-end">
+            <button id="menu-close" class="text-white">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+        </div>
+        <div class="flex flex-col gap-8 mt-10 text-2xl font-serif italic">
+            <a href="#" class="gold-text">Home</a>
+            <a href="#" class="hover:gold-text transition">Store</a>
+            <a href="#" class="hover:gold-text transition">About</a>
+            <hr class="border-gray-800">
+            <a href="#" class="text-lg uppercase tracking-widest">Login</a>
+            <button class="bg-gold text-black py-4 text-sm font-bold uppercase">Sign Up</button>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-screen flex items-center px-6 md:px-12 pt-20">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80&w=2000" 
+                 class="w-full h-full object-cover opacity-60 md:opacity-100" alt="Luxury Car">
+            <div class="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-3xl">
+            <h1 class="text-5xl md:text-8xl font-serif italic leading-tight mb-6">
+                Buy, Sell & <span class="gold-text">Swap</span> Cars with Ease
+            </h1>
+            <p class="text-gray-400 text-base md:text-lg mb-10 max-w-xl leading-relaxed">
+                Experience the pinnacle of automotive luxury in Lagos. Your trusted marketplace for high-performance vehicles.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <button class="bg-gold text-black px-10 py-4 font-bold uppercase text-xs tracking-widest w-full sm:w-auto">Browse Cars</button>
+                <button class="border border-gray-600 px-10 py-4 font-bold uppercase text-xs tracking-widest w-full sm:w-auto hover:bg-white hover:text-black transition">Sell Your Car</button>
+            </div>
+        </div>
+
+        <!-- Performance Specs (Hidden on small mobile) -->
+        <div class="absolute bottom-10 right-6 md:right-12 hidden sm:flex gap-8 md:gap-16 border-t border-gray-800 pt-6 bg-black/40 backdrop-blur-md p-4">
+            <div class="text-center">
+                <p class="text-gray-500 text-[10px] tracking-widest uppercase">0-100 km/h</p>
+                <p class="text-xl md:text-3xl font-bold">3.2s</p>
+            </div>
+            <div class="text-center">
+                <p class="text-gray-500 text-[10px] tracking-widest uppercase">Top Speed</p>
+                <p class="text-xl md:text-3xl font-bold">325 km/h</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEARCH FILTER BAR (Stack on Mobile) -->
+    <section class="px-6 md:px-12 -mt-10 md:-mt-16 relative z-20">
+        <div class="bg-[#141414] p-6 md:p-8 grid grid-cols-1 md:grid-cols-4 gap-6 items-end border border-gray-800 shadow-2xl">
+            <div>
+                <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Brand</label>
+                <select class="w-full bg-black border border-gray-800 p-3 text-sm focus:border-[#d4af37] outline-none">
+                    <option>Select Brand</option>
+                </select>
+            </div>
+            <div class="hidden md:block">
+                <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Price Range</label>
+                <select class="w-full bg-black border border-gray-800 p-3 text-sm focus:border-[#d4af37] outline-none">
+                    <option>Any Price</option>
+                </select>
+            </div>
+            <div>
+                <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Vehicle Type</label>
+                <select class="w-full bg-black border border-gray-800 p-3 text-sm focus:border-[#d4af37] outline-none">
+                    <option>All Types</option>
+                </select>
+            </div>
+            <button class="bg-gold text-black h-[50px] font-bold uppercase text-xs tracking-widest">
+                Search Inventory
+            </button>
+        </div>
+    </section>
+
+    <!-- FEATURED COLLECTION -->
+    <section class="px-6 md:px-12 py-20">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-serif italic">Featured Collection</h2>
+                <p class="text-gray-500 mt-2">Hand-picked luxury selections.</p>
+            </div>
+            <a href="#" class="gold-text text-xs uppercase tracking-widest font-bold border-b border-[#d4af37]">View Catalog →</a>
+        </div>
+
+        <!-- Grid: 1 column on mobile, 3 on desktop -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <!-- CAR 1 -->
+            <div class="group">
+                <div class="relative overflow-hidden h-64 mb-6">
+                    <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=800" class="w-full h-full object-cover" alt="Mercedes">
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold">Mercedes S-580</h3>
+                    <p class="gold-text font-bold text-sm">₦145M</p>
+                </div>
+                <button class="w-full py-4 border border-gray-800 text-[10px] uppercase tracking-widest font-bold">View Details</button>
+            </div>
+
+            <!-- CAR 2 -->
+            <div class="group">
+                <div class="relative overflow-hidden h-64 mb-6">
+                    <img src="https://images.unsplash.com/photo-1606148585254-3b499b3521ca?q=80&w=800" class="w-full h-full object-cover" alt="Range Rover">
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold">Range Rover SV</h3>
+                    <p class="gold-text font-bold text-sm">₦210M</p>
+                </div>
+                <button class="w-full py-4 border border-gray-800 text-[10px] uppercase tracking-widest font-bold">View Details</button>
+            </div>
+
+            <!-- CAR 3 -->
+            <div class="group">
+                <div class="relative overflow-hidden h-64 mb-6">
+                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=800" class="w-full h-full object-cover" alt="Porsche">
+                </div>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold">Porsche 911 GT3</h3>
+                    <p class="gold-text font-bold text-sm">₦185M</p>
+                </div>
+                <button class="w-full py-4 border border-gray-800 text-[10px] uppercase tracking-widest font-bold">View Details</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER / CONTACT -->
+    <footer class="bg-[#050505] px-6 md:px-12 py-10 border-t border-gray-900 text-center md:text-left">
+        <p class="text-gray-600 text-[10px] uppercase tracking-[0.3em]">&copy; 2024 CAR VILLAGE GLOBAL</p>
+    </footer>
+
+    <!-- Scripts for Icons and Menu -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Mobile Menu Logic
+        const menuOpen = document.getElementById('menu-open');
+        const menuClose = document.getElementById('menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuOpen.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Stop scrolling when menu is open
+        });
+
+        menuClose.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Resume scrolling
+        });
+    </script>
+</body>
+</html>
