@@ -42,17 +42,17 @@
         </div>
     </nav>
 
-    <!-- MOBILE MENU OVERLAY -->
+    <!-- MOBILE MENU OVERLAY (REDUCED SIZE) -->
     <div id="mobile-nav" class="fixed inset-0 bg-black z-[100] flex flex-col p-10 md:hidden">
         <div class="flex justify-end">
             <button id="close-menu" class="text-white p-2"><i data-lucide="x" class="w-8 h-8"></i></button>
         </div>
-        <div class="flex flex-col gap-6 mt-10 text-2xl font-serif italic text-center">
+        <div class="flex flex-col gap-5 mt-10 text-2xl font-serif italic text-center">
             <a href="index.html" class="gold-text" onclick="closeMobileMenu()">Home</a>
             <a href="#inventory" onclick="closeMobileMenu()">Inventory</a>
             <a href="#about" onclick="closeMobileMenu()">About Us</a>
-            <a href="signup.html" class="text-lg uppercase tracking-widest bg-gold text-black py-4 mt-4">Sign Up</a>
-            <button onclick="toggleLoginModal(); closeMobileMenu();" class="text-lg uppercase tracking-widest border border-gray-800 py-4">Staff Login</button>
+            <a href="signup.html" class="text-sm uppercase tracking-widest bg-gold text-black py-4 mt-4">Sign Up</a>
+            <button onclick="toggleLoginModal(); closeMobileMenu();" class="text-sm uppercase tracking-widest border border-gray-800 py-4">Staff Login</button>
         </div>
     </div>
 
@@ -71,19 +71,26 @@
         </div>
     </section>
 
-    <!-- ABOUT SECTION -->
+    <!-- WELCOME / ABOUT SECTION (RESTORED) -->
     <section id="about" class="px-6 md:px-12 py-32 bg-[#080808] grid md:grid-cols-2 gap-20 items-center">
         <div>
-            <h2 class="text-4xl md:text-6xl font-serif italic mb-8 uppercase tracking-tighter">The <span class="gold-text">Village</span> Legacy</h2>
-            <p class="text-gray-400 leading-loose mb-8 text-lg">76, Iju Ishaga Road, Ajilete Bus Stop, Ifako Ijaiye, Agege, Lagos, Nigeria.</p>
+            <h2 class="text-4xl md:text-6xl font-serif italic mb-8 uppercase tracking-tighter">Welcome to <br><span class="gold-text">The Village</span></h2>
+            <p class="text-gray-400 leading-loose mb-8 text-lg">
+                Located at <strong>76, Iju Ishaga Road, Ajilete Bus Stop, Ifako Ijaiye, Agege, Lagos, Nigeria</strong>, Cars Village Global is more than a dealership. We are a community built for the discerning driver. We specialize in global procurement, high-end sales, and seamless swaps.
+            </p>
+            <div class="border-l-4 border-gold pl-8 py-4 bg-white/5">
+                <p class="text-md italic text-gray-200 uppercase tracking-widest">"Experience craftsmanship and service beyond compare in the heart of Lagos."</p>
+            </div>
         </div>
-        <div class="relative"><img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1000" class="rounded-sm shadow-2xl grayscale hover:grayscale-0 transition duration-700"></div>
+        <div class="relative">
+            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1000" class="rounded-sm shadow-2xl filter grayscale hover:grayscale-0 transition duration-700">
+        </div>
     </section>
 
-    <!-- INVENTORY SECTION (Updated Grid) -->
+    <!-- INVENTORY SECTION (2 ROWS MOBILE / 5 ROWS LAPTOP) -->
     <section id="inventory" class="px-6 md:px-12 py-24 bg-black border-t border-gray-900">
-        <div class="flex justify-between items-end mb-20">
-            <h2 class="text-4xl md:text-5xl font-serif italic uppercase">Featured Collection</h2>
+        <div class="flex justify-between items-end mb-20 border-b border-gray-800 pb-10">
+            <h2 class="text-3xl md:text-5xl font-serif italic uppercase">Featured Collection</h2>
             <p class="gold-text text-sm uppercase tracking-widest hidden md:block">Luxury Showroom</p>
         </div>
         <div id="car-list" class="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-8">
@@ -91,7 +98,7 @@
         </div>
     </section>
 
-    <!-- WHY CHOOSE US (Why We Lead) -->
+    <!-- WHY CHOOSE US (WHY WE LEAD) -->
     <section class="px-6 md:px-12 py-24 bg-[#0d0d0d] border-y border-gray-900">
         <h2 class="text-center text-3xl md:text-5xl font-serif italic mb-20 uppercase tracking-tighter">Why Village Global <span class="gold-text">Leads</span></h2>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-16 text-center">
@@ -113,54 +120,61 @@
         </div>
     </section>
 
-    <!-- CLIENT RATINGS & COMMENTS -->
+    <!-- CLIENT RATINGS -->
     <section class="px-6 md:px-12 py-24 bg-black">
         <h2 class="text-center text-3xl md:text-5xl font-serif italic mb-20 uppercase">Client <span class="gold-text">Testimonials</span></h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
             <div class="glass p-8 border border-gray-800">
                 <div class="flex gap-1 mb-4 text-gold"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-                <p class="text-sm italic text-gray-400 mb-6">"Got my G-Wagon swap done within 24 hours. The transparency is unmatched in Lagos."</p>
-                <p class="text-xs font-bold uppercase gold-text">— Chief Adekunle</p>
+                <p class="text-sm italic text-gray-400 mb-6">"Transparency is unmatched. My trade-in was handled perfectly."</p>
+                <p class="text-[10px] font-bold uppercase gold-text">— Chief Adekunle</p>
             </div>
             <div class="glass p-8 border border-gray-800">
                 <div class="flex gap-1 mb-4 text-gold"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-                <p class="text-sm italic text-gray-400 mb-6">"International shipping from Canada was handled professionally. Car arrived in perfect condition."</p>
-                <p class="text-xs font-bold uppercase gold-text">— Dr. Sarah O.</p>
+                <p class="text-sm italic text-gray-400 mb-6">"International shipping from Canada arrived in record time."</p>
+                <p class="text-[10px] font-bold uppercase gold-text">— Dr. Sarah O.</p>
             </div>
             <div class="glass p-8 border border-gray-800">
                 <div class="flex gap-1 mb-4 text-gold"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-                <p class="text-sm italic text-gray-400 mb-6">"The best place for verified luxury cars in Agege. Trusted and reliable."</p>
-                <p class="text-xs font-bold uppercase gold-text">— Mr. Emeka</p>
+                <p class="text-sm italic text-gray-400 mb-6">"Best place for verified luxury cars in Nigeria."</p>
+                <p class="text-[10px] font-bold uppercase gold-text">— Mr. Emeka</p>
             </div>
         </div>
     </section>
 
-    <!-- CONTACT FORM (WhatsApp Connected) -->
+    <!-- CONTACT FORM -->
     <section class="px-6 md:px-12 py-24 bg-[#0d0d0d] border-t border-gray-900">
         <div class="max-w-xl mx-auto text-center">
             <h2 class="text-4xl font-serif italic mb-4 uppercase">Reach the <span class="gold-text">Concierge</span></h2>
-            <p class="text-gray-500 text-xs uppercase tracking-widest mb-12">Submit and chat on WhatsApp</p>
             <form id="contact-form" class="space-y-4">
-                <input type="text" id="contact-name" placeholder="YOUR FULL NAME" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none focus:border-gold uppercase tracking-widest" required>
-                <textarea id="contact-msg" placeholder="YOUR MESSAGE / INQUIRY" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none focus:border-gold h-32 uppercase tracking-widest" required></textarea>
-                <button type="submit" class="w-full bg-gold text-black py-4 font-bold uppercase text-xs tracking-widest hover:scale-105 transition">Send Message</button>
+                <input type="text" id="contact-name" placeholder="YOUR FULL NAME" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none focus:border-gold uppercase" required>
+                <textarea id="contact-msg" placeholder="YOUR MESSAGE" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none focus:border-gold h-32 uppercase" required></textarea>
+                <button type="submit" class="w-full bg-gold text-black py-4 font-bold uppercase text-xs tracking-widest">Send WhatsApp Message</button>
             </form>
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- FOOTER WITH FIXED SOCIAL MEDIA -->
     <footer class="relative z-10 bg-black border-t border-gray-900 px-6 md:px-12 py-20">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
             <div class="text-center md:text-left">
                 <p class="font-bold text-xl mb-8 tracking-tighter uppercase italic">CAR VILLAGE <span class="gold-text">GLOBAL</span></p>
-                <p class="text-[10px] text-gray-500 leading-loose mb-8">76, Iju Ishaga Road, Ajilete Bus Stop<br>Ifako Ijaiye, Agege, Lagos, Nigeria</p>
-                <!-- CORRECTED SOCIAL MEDIA ICONS -->
+                <p class="text-[10px] text-gray-500 leading-loose mb-8">76, Iju Ishaga Road, Ajilete Bus Stop, Ifako Ijaiye, Agege, Lagos, Nigeria</p>
+                
+                <!-- SOCIAL MEDIA ICONS (EXPLICITLY STYLED) -->
                 <div class="flex justify-center md:justify-start gap-8">
-                    <a href="https://www.facebook.com/profile.php?id=61577436842297" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
-                    <a href="https://www.instagram.com/carsvillageglobal" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-gold transition"><i data-lucide="music-2" class="w-5 h-5"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61577436842297" target="_blank" class="text-gray-400 hover:text-gold transition">
+                        <i data-lucide="facebook" style="width: 24px; height: 24px;"></i>
+                    </a>
+                    <a href="https://www.instagram.com/carsvillageglobal" target="_blank" class="text-gray-400 hover:text-gold transition">
+                        <i data-lucide="instagram" style="width: 24px; height: 24px;"></i>
+                    </a>
+                    <a href="#" target="_blank" class="text-gray-400 hover:text-gold transition">
+                        <i data-lucide="music-2" style="width: 24px; height: 24px;"></i>
+                    </a>
                 </div>
             </div>
+
             <div class="text-center md:text-left">
                 <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400">Navigation</p>
                 <ul class="text-[10px] space-y-6 text-gray-500 uppercase tracking-widest">
@@ -170,8 +184,9 @@
                     <li><a href="signup.html" class="hover:text-gold transition">Sign Up</a></li>
                 </ul>
             </div>
+
             <div class="text-center md:text-left">
-                <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400">Policies</p>
+                <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400">Legal</p>
                 <ul class="text-[10px] space-y-6 text-gray-500 uppercase tracking-widest font-bold">
                     <li><button onclick="openPolicy('privacy')" class="hover:text-gold">Privacy Policy</button></li>
                     <li><button onclick="openPolicy('shipping')" class="hover:text-gold">Shipping</button></li>
@@ -179,6 +194,7 @@
                     <li><button onclick="openPolicy('pickup')" class="hover:text-gold">Pick-up</button></li>
                 </ul>
             </div>
+
             <div class="text-center md:text-left">
                 <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400">Contact</p>
                 <a href="https://wa.me/2348024417215" class="gold-text text-xl font-bold block mb-4">08024417215</a>
@@ -188,17 +204,17 @@
     </footer>
 
     <!-- MODALS -->
-    <div id="policy-modal" class="modal"><div class="bg-[#0a0a0a] border border-gray-800 w-full max-w-2xl p-8 md:p-12 relative max-h-[85vh] overflow-y-auto rounded-sm"><button onclick="closePolicy()" class="absolute top-6 right-6 text-gray-500 hover:text-white"><i data-lucide="x"></i></button><h2 id="policy-title" class="text-3xl font-serif italic mb-8 gold-text uppercase tracking-tighter"></h2><div id="policy-body" class="text-gray-400 text-xs leading-relaxed space-y-6 text-justify"></div></div></div>
+    <div id="policy-modal" class="modal"><div class="bg-[#0a0a0a] border border-gray-800 w-full max-w-2xl p-8 md:p-12 relative max-h-[85vh] overflow-y-auto rounded-sm"><button onclick="closePolicy()" class="absolute top-6 right-6 text-gray-500 hover:text-white"><i data-lucide="x"></i></button><h2 id="policy-title" class="text-3xl font-serif italic mb-8 gold-text uppercase"></h2><div id="policy-body" class="text-gray-400 text-xs leading-relaxed space-y-6 text-justify"></div></div></div>
     <div id="car-modal" class="modal"><div class="bg-[#111] max-w-5xl w-full p-8 rounded-sm relative max-h-[90vh] overflow-y-auto"><button onclick="closeModal()" class="absolute top-6 right-6 text-white"><i data-lucide="x"></i></button><div id="modal-content" class="grid md:grid-cols-2 gap-12"></div></div></div>
-    <div id="login-modal" class="modal"><div class="bg-[#111] max-w-sm w-full p-10 text-center rounded-sm"><h2 class="text-2xl font-serif italic mb-8 gold-text">Staff Portal</h2><input type="email" id="login-email" placeholder="EMAIL" class="w-full bg-black border border-gray-800 p-4 text-[10px] mb-4 outline-none focus:border-gold text-white uppercase tracking-widest"><input type="password" id="login-pass" placeholder="PASSWORD" class="w-full bg-black border border-gray-800 p-4 text-[10px] mb-8 outline-none focus:border-gold text-white"><button onclick="handleLogin()" class="w-full bg-gold text-black py-4 font-bold uppercase text-[10px] tracking-widest">Sign In</button></div></div>
-    <div id="upload-modal" class="modal"><div class="bg-[#111] max-w-xl w-full p-10 rounded-sm"><h2 class="text-2xl font-serif italic mb-8 gold-text uppercase">Add Premium Asset</h2><form id="upload-form" class="space-y-4"><input type="text" id="car-name" placeholder="VEHICLE NAME" class="w-full bg-black border border-gray-800 p-4 text-[10px] outline-none text-white uppercase tracking-widest" required><input type="text" id="car-price" placeholder="LIST PRICE (₦)" class="w-full bg-black border border-gray-800 p-4 text-[10px] outline-none text-white uppercase tracking-widest" required><textarea id="car-desc" placeholder="SPECIFICATIONS & FEATURES" class="w-full bg-black border border-gray-800 p-4 text-[10px] outline-none h-32 text-white uppercase tracking-widest" required></textarea><div class="border-2 border-dashed border-gray-800 p-6 text-center relative hover:border-gold transition cursor-pointer"><input type="file" id="car-files" accept="image/*" multiple class="absolute inset-0 opacity-0 cursor-pointer" onchange="updateFileCount()"><p id="file-label" class="text-[10px] text-gray-500 uppercase tracking-widest">Select Images (Max 5)</p></div><button type="submit" id="submit-btn" class="w-full bg-gold text-black py-5 font-bold uppercase text-[10px] tracking-widest">Publish Inventory</button></form><button onclick="toggleUploadModal()" class="w-full mt-4 text-gray-600 text-[10px] uppercase">Cancel</button></div></div>
+    <div id="login-modal" class="modal"><div class="bg-[#111] max-w-sm w-full p-10 text-center rounded-sm"><h2 class="text-2xl font-serif italic mb-8 gold-text">Staff Portal</h2><input type="email" id="login-email" placeholder="EMAIL" class="w-full bg-black border border-gray-800 p-4 text-xs mb-4 outline-none focus:border-gold text-white uppercase"><input type="password" id="login-pass" placeholder="PASSWORD" class="w-full bg-black border border-gray-800 p-4 text-xs mb-8 outline-none focus:border-gold text-white"><button onclick="handleLogin()" class="w-full bg-gold text-black py-4 font-bold uppercase text-xs">Sign In</button></div></div>
+    <div id="upload-modal" class="modal"><div class="bg-[#111] max-w-xl w-full p-10 rounded-sm"><h2 class="text-2xl font-serif italic mb-8 gold-text uppercase">Add Premium Asset</h2><form id="upload-form" class="space-y-4"><input type="text" id="car-name" placeholder="VEHICLE NAME" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white uppercase" required><input type="text" id="car-price" placeholder="LIST PRICE (₦)" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white uppercase" required><textarea id="car-desc" placeholder="SPECIFICATIONS" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none h-32 text-white uppercase" required></textarea><div class="border-2 border-dashed border-gray-800 p-6 text-center relative hover:border-gold transition cursor-pointer"><input type="file" id="car-files" accept="image/*" multiple class="absolute inset-0 opacity-0 cursor-pointer" onchange="updateFileCount()"><p id="file-label" class="text-[10px] text-gray-500 uppercase tracking-widest">Select Images (Max 5)</p></div><button type="submit" id="submit-btn" class="w-full bg-gold text-black py-5 font-bold uppercase text-xs">Publish Inventory</button></form><button onclick="toggleUploadModal()" class="w-full mt-4 text-gray-600 text-[10px] uppercase">Cancel</button></div></div>
 
     <script>
     const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co";
     const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
     const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
-    // Menu logic
+    // Navigation
     const menuBtn = document.getElementById('menu-btn');
     const closeBtn = document.getElementById('close-menu');
     const mobileNav = document.getElementById('mobile-nav');
@@ -206,7 +222,7 @@
     closeBtn.onclick = () => mobileNav.classList.remove('active');
     function closeMobileMenu() { mobileNav.classList.remove('active'); }
 
-    // Fetch Cars
+    // Fetch Inventory
     async function fetchCars() {
         const { data, error } = await supabaseClient.from('cars').select('*').order('created_at', { ascending: false });
         if (!error) renderCars(data);
@@ -214,30 +230,31 @@
 
     function renderCars(cars) {
         const list = document.getElementById('car-list');
-        if (cars.length === 0) { list.innerHTML = '<p class="col-span-full text-center text-gray-600 text-xs tracking-widest uppercase">Showroom Empty</p>'; return; }
+        if (cars.length === 0) { list.innerHTML = '<p class="col-span-full text-center text-gray-600 text-xs uppercase">Showroom Empty</p>'; return; }
         list.innerHTML = cars.map(car => `
-            <div class="group cursor-pointer border border-gray-900 p-3 md:p-4 hover:border-gold transition duration-500" onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})">
-                <div class="h-40 md:h-64 overflow-hidden mb-4"><img src="${car.images[0]}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700"></div>
-                <div class="flex flex-col gap-2"><h3 class="font-bold uppercase tracking-widest text-[10px]">${car.name}</h3><p class="gold-text font-bold text-xs">${car.price}</p></div>
+            <div class="group cursor-pointer border border-gray-900 p-2 md:p-4 hover:border-gold transition" onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})">
+                <div class="h-32 md:h-64 overflow-hidden mb-4"><img src="${car.images[0]}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700"></div>
+                <div class="flex flex-col gap-1"><h3 class="font-bold uppercase tracking-widest text-[9px] md:text-[10px]">${car.name}</h3><p class="gold-text font-bold text-[10px] md:text-xs">${car.price}</p></div>
             </div>
         `).join('');
     }
 
-    // Contact Form to WhatsApp
+    // Contact Logic
     document.getElementById('contact-form').onsubmit = (e) => {
         e.preventDefault();
         const name = document.getElementById('contact-name').value;
         const msg = document.getElementById('contact-msg').value;
-        const text = encodeURIComponent(`Hello Cars Village Global,\nName: ${name}\nInquiry: ${msg}`);
+        const text = encodeURIComponent(`Hello Cars Village Global,\nName: ${name}\nMessage: ${msg}`);
         window.open(`https://wa.me/2348024417215?text=${text}`, '_blank');
     };
 
     function showDetails(car) {
         const content = document.getElementById('modal-content');
-        content.innerHTML = `<div class="space-y-4"><img src="${car.images[0]}" class="w-full rounded-sm"><div class="grid grid-cols-4 gap-2">${car.images.slice(1).map(img => `<img src="${img}" class="h-16 w-full object-cover rounded-sm border border-gray-800">`).join('')}</div></div><div class="flex flex-col justify-center"><h2 class="text-3xl font-serif italic mb-4 leading-tight uppercase">${car.name}</h2><p class="gold-text text-2xl font-bold mb-8">${car.price}</p><p class="text-gray-400 text-xs leading-loose mb-10 text-justify">${car.description}</p><a href="https://wa.me/2348024417215?text=I am interested in ${car.name}" target="_blank" class="block text-center bg-green-600 text-white py-4 font-bold uppercase text-[10px] tracking-widest">Chat on WhatsApp</a></div>`;
+        content.innerHTML = `<div class="space-y-4"><img src="${car.images[0]}" class="w-full rounded-sm"><div class="grid grid-cols-4 gap-2">${car.images.slice(1).map(img => `<img src="${img}" class="h-16 w-full object-cover border border-gray-800">`).join('')}</div></div><div class="flex flex-col justify-center"><h2 class="text-3xl font-serif italic mb-4 uppercase">${car.name}</h2><p class="gold-text text-2xl font-bold mb-8">${car.price}</p><p class="text-gray-400 text-xs leading-loose text-justify">${car.description}</p><a href="https://wa.me/2348024417215?text=I am interested in ${car.name}" target="_blank" class="block text-center bg-green-600 text-white py-4 font-bold uppercase text-[10px] mt-8">WhatsApp Inquiry</a></div>`;
         document.getElementById('car-modal').classList.add('active');
     }
 
+    // Auth
     async function handleLogin() {
         const email = document.getElementById('login-email').value;
         const pass = document.getElementById('login-pass').value;
@@ -245,13 +262,12 @@
         if (!error && data.user.email === "dben61168@gmail.com") { document.getElementById('admin-panel-btn').classList.remove('hidden'); document.getElementById('login-modal').classList.remove('active'); } else { alert("Staff Only"); }
     }
 
-    function updateFileCount() { const f = document.getElementById('car-files').files; document.getElementById('file-label').innerText = f.length + " Images Selected"; }
-
+    // Upload
+    function updateFileCount() { const f = document.getElementById('car-files').files; document.getElementById('file-label').innerText = f.length + " Images Ready"; }
     document.getElementById('upload-form').onsubmit = async (e) => {
         e.preventDefault();
-        const b = document.getElementById('submit-btn');
-        const f = document.getElementById('car-files').files;
-        b.innerText = "Processing Assets..."; b.disabled = true;
+        const b = document.getElementById('submit-btn'); const f = document.getElementById('car-files').files;
+        b.innerText = "Uploading..."; b.disabled = true;
         const urls = [];
         for (let i = 0; i < f.length; i++) {
             const name = `${Math.random()}-${Date.now()}`;
@@ -262,7 +278,7 @@
         location.reload();
     };
 
-    const policies = { privacy: { title: "Privacy", body: "We prioritize your security and data protection." }, shipping: { title: "Shipping", body: "Global shipping quotes available to all major ports." }, delivery: { title: "Delivery", body: "Lagos delivery within 48h. Nationwide available." }, pickup: { title: "Pick-up", body: "Address: 76, Iju Ishaga Road, Agege, Lagos." } };
+    const policies = { privacy: { title: "Privacy", body: "We prioritize your data security." }, shipping: { title: "Shipping", body: "Global shipping available." }, delivery: { title: "Delivery", body: "Doorstep delivery nationwide." }, pickup: { title: "Pick-up", body: "Location: 76, Iju Ishaga Road, Lagos." } };
     function openPolicy(t) { document.getElementById('policy-title').innerText = policies[t].title; document.getElementById('policy-body').innerText = policies[t].body; document.getElementById('policy-modal').classList.add('active'); }
     function closeModal() { document.getElementById('car-modal').classList.remove('active'); }
     function closePolicy() { document.getElementById('policy-modal').classList.remove('active'); }
