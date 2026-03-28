@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Login | Cars Village Global</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Playfair+Display:italic,wght@700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; min-height: 100vh; display: flex; flex-direction: column; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .gold-text { color: #d4af37; }
+        .bg-gold { background-color: #d4af37; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .input-style { background: rgba(0,0,0,0.5); border: 1px solid #222; padding: 14px; width: 100%; font-size: 14px; outline: none; transition: 0.3s; color: white; }
+        .input-style:focus { border-color: #d4af37; }
+        
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        .modal.active { display: flex; }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Background Image -->
+    <div class="fixed inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1493238507129-15510bfad137?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover opacity-30">
+        <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="relative z-10 p-8 flex justify-between items-center max-w-7xl mx-auto w-full">
+        <div class="text-xl font-bold tracking-tighter uppercase italic">CARS VILLAGE <span class="gold-text">GLOBAL</span></div>
+        <a href="index.html" class="text-[10px] uppercase tracking-widest text-gray-400 hover:text-white transition flex items-center gap-2">
+            <i data-lucide="arrow-left" class="w-3 h-3"></i> Back to Showroom
+        </a>
+    </header>
+
+    <!-- LOGIN CARD -->
+    <main class="relative z-10 flex-grow flex items-center justify-center px-6 py-12">
+        <div class="w-full max-w-md">
+            <div class="glass p-10 rounded-sm shadow-2xl border border-white/5">
+                <div class="text-center mb-10">
+                    <h1 class="text-[10px] uppercase tracking-[0.5em] text-gold-text mb-2 gold-text">Welcome Back</h1>
+                    <h2 class="text-4xl font-serif italic mb-4">Client Login</h2>
+                    <p class="text-gray-500 text-xs">Access your luxury car portfolio and saved favorites.</p>
+                </div>
+
+                <form id="login-form" class="space-y-6">
+                    <div>
+                        <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Email Address</label>
+                        <input type="email" id="email" class="input-style uppercase tracking-widest" placeholder="EMAIL@EXAMPLE.COM" required>
+                    </div>
+                    <div>
+                        <label class="text-[10px] uppercase tracking-widest text-gray-500 mb-2 block">Password</label>
+                        <input type="password" id="password" class="input-style" placeholder="••••••••" required>
+                    </div>
+                    
+                    <div id="error-msg" class="text-red-500 text-[10px] uppercase hidden text-center tracking-widest"></div>
+
+                    <button type="submit" id="login-btn" class="w-full bg-gold text-black py-4 font-bold uppercase text-[10px] tracking-widest hover:bg-[#f2d472] transition duration-300">
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="mt-10 text-center">
+                    <p class="text-gray-500 text-xs uppercase tracking-widest">New to the Village? <a href="signup.html" class="gold-text border-b border-[#d4af37] pb-1">Create Account</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODERN FOOTER -->
+    <footer class="relative z-10 bg-black/90 border-t border-gray-900 px-6 md:px-12 py-16">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
+            
+            <!-- Column 1: Address & Social -->
+            <div class="text-center md:text-left">
+                <p class="font-bold text-lg mb-6 uppercase italic tracking-tighter">CARS VILLAGE <span class="gold-text">GLOBAL</span></p>
+                <p class="text-[10px] text-gray-500 leading-loose mb-8">
+                    76, Iju Ishaga Road, Ajilete Bus Stop<br>
+                    Ifako Ijaiye, Agege, Lagos, Nigeria
+                </p>
+                <div class="flex justify-center md:justify-start gap-8">
+                    <a href="https://www.facebook.com/profile.php?id=61577436842297" target="_blank" class="text-gray-400 hover:text-gold transition">
+                        <i data-lucide="facebook" style="width: 22px; height: 22px;"></i>
+                    </a>
+                    <a href="https://www.instagram.com/carsvillageglobal" target="_blank" class="text-gray-400 hover:text-gold transition">
+                        <i data-lucide="instagram" style="width: 22px; height: 22px;"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-gold transition">
+                        <i data-lucide="music-2" style="width: 22px; height: 22px;"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Column 2: Sitemap -->
+            <div class="text-center md:text-left">
+                <p class="text-[10px] uppercase tracking-widest font-bold mb-6 text-gray-400">Navigation</p>
+                <ul class="text-[10px] space-y-4 text-gray-500 uppercase tracking-widest">
+                    <li><a href="index.html" class="hover:text-gold transition">Showroom</a></li>
+                    <li><a href="index.html#about" class="hover:text-gold transition">The Village</a></li>
+                    <li><a href="signup.html" class="hover:text-gold transition">Sign Up</a></li>
+                </ul>
+            </div>
+
+            <!-- Column 3: Policies -->
+            <div class="text-center md:text-left">
+                <p class="text-[10px] uppercase tracking-widest font-bold mb-6 text-gray-400">Legal</p>
+                <ul class="text-[10px] space-y-4 text-gray-500 uppercase tracking-widest font-bold">
+                    <li><button onclick="openPolicy('privacy')" class="hover:text-gold">Privacy Policy</button></li>
+                    <li><button onclick="openPolicy('shipping')" class="hover:text-gold">Shipping</button></li>
+                    <li><button onclick="openPolicy('delivery')" class="hover:text-gold">Delivery</button></li>
+                    <li><button onclick="openPolicy('pickup')" class="hover:text-gold">Pick-up</button></li>
+                </ul>
+            </div>
+
+            <!-- Column 4: WhatsApp -->
+            <div class="text-center md:text-left">
+                <p class="text-[10px] uppercase tracking-widest font-bold mb-6 text-gray-400">Support</p>
+                <a href="https://wa.me/2348024417215" class="gold-text text-xl font-bold block mb-2 tracking-tighter">08024417215</a>
+                <p class="text-[10px] text-gray-600 uppercase">WhatsApp Concierge</p>
+            </div>
+        </div>
+        <div class="mt-12 text-center text-[9px] text-gray-800 tracking-[0.6em] uppercase">&copy; 2024 Cars Village Global</div>
+    </footer>
+
+    <!-- POLICY MODAL -->
+    <div id="policy-modal" class="modal">
+        <div class="bg-[#0a0a0a] border border-gray-800 w-full max-w-2xl p-10 relative max-h-[80vh] overflow-y-auto rounded-sm shadow-2xl">
+            <button onclick="closePolicy()" class="absolute top-6 right-6 text-gray-600 hover:text-white transition"><i data-lucide="x"></i></button>
+            <h2 id="policy-title" class="text-3xl font-serif italic mb-8 gold-text"></h2>
+            <div id="policy-body" class="text-gray-400 text-xs leading-relaxed space-y-6 text-justify"></div>
+            <button onclick="closePolicy()" class="mt-10 w-full py-4 border border-gray-800 text-[10px] uppercase tracking-widest font-bold hover:bg-white hover:text-black transition">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // 1. SUPABASE CONFIGURATION
+        const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co"; 
+        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
+        const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+
+        // 2. LOGIN LOGIC
+        const loginForm = document.getElementById('login-form');
+        const errorMsg = document.getElementById('error-msg');
+        const loginBtn = document.getElementById('login-btn');
+
+        loginForm.onsubmit = async (e) => {
+            e.preventDefault();
+            loginBtn.innerHTML = "AUTHENTICATING...";
+            loginBtn.disabled = true;
+            errorMsg.classList.add('hidden');
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                errorMsg.innerText = error.message;
+                errorMsg.classList.remove('hidden');
+                loginBtn.innerHTML = "SIGN IN";
+                loginBtn.disabled = false;
+            } else {
+                window.location.href = "index.html"; // Redirect to home on success
+            }
+        };
+
+        // 3. POLICY MODALS
+        const policies = {
+            privacy: { title: "Privacy Policy", body: "At Cars Village Global, we prioritize your security. We collect your data solely for account management and transaction verification. We never share your personal information with third parties without your explicit consent. All payment data is encrypted via industry-standard protocols." },
+            shipping: { title: "Global Shipping Policy", body: "We offer worldwide shipping to major international ports. For global orders, shipping quotes are calculated based on destination port, vehicle weight, and insurance requirements. Please note that customers are responsible for local import duties and taxes." },
+            delivery: { title: "Delivery Policy", body: "Within Nigeria, we provide high-security doorstep delivery via specialized car haulers. Delivery within Lagos is completed within 24-48 hours. Nationwide delivery typically takes 3-7 business days." },
+            pickup: { title: "Pick-up Policy", body: "Visit our flagship showroom: 76, Iju Ishaga Road, Ajilete Bus Stop Ifako Ijaiye, Lagos. Please bring a valid government ID and confirmed receipt. Appointments required 24h in advance." }
+        };
+
+        function openPolicy(type) {
+            document.getElementById('policy-title').innerText = policies[type].title;
+            document.getElementById('policy-body').innerText = policies[type].body;
+            document.getElementById('policy-modal').classList.add('active');
+        }
+
+        function closePolicy() { document.getElementById('policy-modal').classList.remove('active'); }
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>
