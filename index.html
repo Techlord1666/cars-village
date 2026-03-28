@@ -16,8 +16,6 @@
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
         .modal.active { display: flex; }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        
-        /* Mobile Menu Animation */
         #mobile-nav { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         #mobile-nav.active { transform: translateX(0); }
     </style>
@@ -25,12 +23,10 @@
 <body class="relative">
 
     <!-- NAVIGATION -->
-    <nav class="flex items-center justify-between px-6 md:px-12 py-6 absolute w-full z-50 bg-black/40 backdrop-blur-sm">
+    <nav class="flex items-center justify-between px-6 md:px-12 py-6 absolute w-full z-50 bg-black/40 backdrop-blur-sm border-b border-white/5">
         <div class="text-xl md:text-2xl font-bold tracking-tighter">
             CAR VILLAGE <span class="gold-text font-light italic uppercase">Global</span>
         </div>
-
-        <!-- Desktop Menu -->
         <div class="hidden md:flex items-center gap-10 text-[10px] uppercase tracking-[0.2em]">
             <a href="index.html" class="gold-text">Home</a>
             <a href="#inventory" class="hover:text-gold transition">Inventory</a>
@@ -38,13 +34,9 @@
             <a href="signup.html" class="bg-gold text-black px-6 py-2 text-xs font-bold uppercase rounded-sm hover:bg-[#f2d472] transition">Sign Up</a>
             <button onclick="toggleLoginModal()" class="text-gray-300 hover:text-gold transition"><i data-lucide="user" class="w-5 h-5"></i></button>
         </div>
-
-        <!-- Mobile Menu Trigger -->
         <div class="md:hidden flex items-center gap-4">
-            <button id="menu-btn" class="text-white p-2"><i data-lucide="menu" class="w-8 h-8"></i></button>
+            <button id="menu-btn" class="text-white p-2"><i data-lucide="menu" class="w-7 h-7"></i></button>
         </div>
-
-        <!-- Admin Only Button -->
         <div id="admin-panel-btn" class="hidden ml-4">
             <button onclick="toggleUploadModal()" class="bg-red-600 text-white px-4 py-2 text-[10px] uppercase font-bold">Add Car +</button>
         </div>
@@ -53,14 +45,14 @@
     <!-- MOBILE MENU OVERLAY -->
     <div id="mobile-nav" class="fixed inset-0 bg-black z-[100] flex flex-col p-10 md:hidden">
         <div class="flex justify-end">
-            <button id="close-menu" class="text-white p-2"><i data-lucide="x" class="w-10 h-10"></i></button>
+            <button id="close-menu" class="text-white p-2"><i data-lucide="x" class="w-8 h-8"></i></button>
         </div>
-        <div class="flex flex-col gap-10 mt-16 text-4xl font-serif italic text-center">
+        <div class="flex flex-col gap-6 mt-10 text-2xl font-serif italic text-center">
             <a href="index.html" class="gold-text" onclick="closeMobileMenu()">Home</a>
             <a href="#inventory" onclick="closeMobileMenu()">Inventory</a>
             <a href="#about" onclick="closeMobileMenu()">About Us</a>
-            <a href="signup.html" class="text-xl uppercase tracking-widest bg-gold text-black py-5">Sign Up</a>
-            <button onclick="toggleLoginModal(); closeMobileMenu();" class="text-xl uppercase tracking-widest border border-gray-800 py-5">Staff Login</button>
+            <a href="signup.html" class="text-lg uppercase tracking-widest bg-gold text-black py-4 mt-4">Sign Up</a>
+            <button onclick="toggleLoginModal(); closeMobileMenu();" class="text-lg uppercase tracking-widest border border-gray-800 py-4">Staff Login</button>
         </div>
     </div>
 
@@ -71,156 +63,142 @@
             <div class="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent"></div>
         </div>
         <div class="relative z-10 max-w-4xl pt-20">
-            <h1 class="text-5xl md:text-9xl font-serif italic mb-6 leading-tight md:leading-none">Buy, Sell & <span class="gold-text underline">Swap</span></h1>
-            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed">Nigeria's premier destination for high-performance luxury vehicles. Experience the pinnacle of automotive excellence in the heart of Lagos.</p>
+            <h1 class="text-5xl md:text-9xl font-serif italic mb-6 leading-tight">Buy, Sell & <span class="gold-text underline">Swap</span></h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed">Nigeria's premier destination for high-performance luxury vehicles.</p>
             <div class="flex flex-col sm:flex-row gap-4">
                 <a href="#inventory" class="bg-gold text-black px-12 py-5 font-bold uppercase text-[10px] tracking-widest text-center">Browse Inventory</a>
-                <a href="https://wa.me/2348024417215" class="border border-white text-white px-12 py-5 font-bold uppercase text-[10px] tracking-widest text-center hover:bg-white hover:text-black transition">Contact Sales</a>
             </div>
         </div>
     </section>
 
-    <!-- WELCOME / ABOUT SECTION -->
+    <!-- ABOUT SECTION -->
     <section id="about" class="px-6 md:px-12 py-32 bg-[#080808] grid md:grid-cols-2 gap-20 items-center">
         <div>
-            <h2 class="text-4xl md:text-6xl font-serif italic mb-8">Welcome to <br><span class="gold-text">The Village</span></h2>
-            <p class="text-gray-400 leading-loose mb-8 text-lg">
-                Located at <strong>76, Iju Ishaga Road, Ajilete Bus Stop, Ifako Ijaiye, Agege, Lagos, Nigeria</strong>, Cars Village Global is more than a dealership. We are a community built for the discerning driver. We specialize in global procurement, high-end sales, and seamless swaps.
-            </p>
-            <div class="border-l-4 border-gold pl-8 py-4 bg-white/5">
-                <p class="text-md italic text-gray-200 uppercase tracking-widest">"Crafting excellence in Lagos since 2024."</p>
-            </div>
+            <h2 class="text-4xl md:text-6xl font-serif italic mb-8 uppercase tracking-tighter">The <span class="gold-text">Village</span> Legacy</h2>
+            <p class="text-gray-400 leading-loose mb-8 text-lg">76, Iju Ishaga Road, Ajilete Bus Stop, Ifako Ijaiye, Agege, Lagos, Nigeria.</p>
         </div>
-        <div class="relative">
-            <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1000" class="rounded-sm shadow-2xl filter grayscale hover:grayscale-0 transition duration-700">
+        <div class="relative"><img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1000" class="rounded-sm shadow-2xl grayscale hover:grayscale-0 transition duration-700"></div>
+    </section>
+
+    <!-- INVENTORY SECTION (Updated Grid) -->
+    <section id="inventory" class="px-6 md:px-12 py-24 bg-black border-t border-gray-900">
+        <div class="flex justify-between items-end mb-20">
+            <h2 class="text-4xl md:text-5xl font-serif italic uppercase">Featured Collection</h2>
+            <p class="gold-text text-sm uppercase tracking-widest hidden md:block">Luxury Showroom</p>
+        </div>
+        <div id="car-list" class="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-8">
+            <p class="text-gray-500 italic text-center col-span-full uppercase tracking-widest animate-pulse">Entering Showroom Vault...</p>
         </div>
     </section>
 
-    <!-- INVENTORY SECTION -->
-    <section id="inventory" class="px-6 md:px-12 py-24 bg-black">
-        <div class="flex justify-between items-end mb-20 border-b border-gray-900 pb-10">
-            <h2 class="text-4xl md:text-5xl font-serif italic">Featured Collection</h2>
-            <p class="gold-text text-sm uppercase tracking-widest hidden md:block">New Arrivals Added Daily</p>
+    <!-- WHY CHOOSE US (Why We Lead) -->
+    <section class="px-6 md:px-12 py-24 bg-[#0d0d0d] border-y border-gray-900">
+        <h2 class="text-center text-3xl md:text-5xl font-serif italic mb-20 uppercase tracking-tighter">Why Village Global <span class="gold-text">Leads</span></h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-16 text-center">
+            <div>
+                <i data-lucide="shield-check" class="gold-text mx-auto mb-6 w-10 h-10"></i>
+                <h4 class="font-bold mb-4 uppercase tracking-widest text-xs">Trusted Deals</h4>
+                <p class="text-xs text-gray-500 leading-relaxed">Secured with absolute transparency. No hidden fees.</p>
+            </div>
+            <div>
+                <i data-lucide="refresh-cw" class="gold-text mx-auto mb-6 w-10 h-10"></i>
+                <h4 class="font-bold mb-4 uppercase tracking-widest text-xs">Easy Swap</h4>
+                <p class="text-xs text-gray-500 leading-relaxed">Upgrade your lifestyle in minutes with our trade-in evaluation.</p>
+            </div>
+            <div>
+                <i data-lucide="truck" class="gold-text mx-auto mb-6 w-10 h-10"></i>
+                <h4 class="font-bold mb-4 uppercase tracking-widest text-xs">Fast Delivery</h4>
+                <p class="text-xs text-gray-500 leading-relaxed">Lagos-wide and Nationwide dispatch at record speeds.</p>
+            </div>
         </div>
-        <div id="car-list" class="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <p class="text-gray-500 italic text-center col-span-full">Opening the showroom vault...</p>
+    </section>
+
+    <!-- CLIENT RATINGS & COMMENTS -->
+    <section class="px-6 md:px-12 py-24 bg-black">
+        <h2 class="text-center text-3xl md:text-5xl font-serif italic mb-20 uppercase">Client <span class="gold-text">Testimonials</span></h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div class="glass p-8 border border-gray-800">
+                <div class="flex gap-1 mb-4 text-gold"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
+                <p class="text-sm italic text-gray-400 mb-6">"Got my G-Wagon swap done within 24 hours. The transparency is unmatched in Lagos."</p>
+                <p class="text-xs font-bold uppercase gold-text">— Chief Adekunle</p>
+            </div>
+            <div class="glass p-8 border border-gray-800">
+                <div class="flex gap-1 mb-4 text-gold"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
+                <p class="text-sm italic text-gray-400 mb-6">"International shipping from Canada was handled professionally. Car arrived in perfect condition."</p>
+                <p class="text-xs font-bold uppercase gold-text">— Dr. Sarah O.</p>
+            </div>
+            <div class="glass p-8 border border-gray-800">
+                <div class="flex gap-1 mb-4 text-gold"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
+                <p class="text-sm italic text-gray-400 mb-6">"The best place for verified luxury cars in Agege. Trusted and reliable."</p>
+                <p class="text-xs font-bold uppercase gold-text">— Mr. Emeka</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT FORM (WhatsApp Connected) -->
+    <section class="px-6 md:px-12 py-24 bg-[#0d0d0d] border-t border-gray-900">
+        <div class="max-w-xl mx-auto text-center">
+            <h2 class="text-4xl font-serif italic mb-4 uppercase">Reach the <span class="gold-text">Concierge</span></h2>
+            <p class="text-gray-500 text-xs uppercase tracking-widest mb-12">Submit and chat on WhatsApp</p>
+            <form id="contact-form" class="space-y-4">
+                <input type="text" id="contact-name" placeholder="YOUR FULL NAME" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none focus:border-gold uppercase tracking-widest" required>
+                <textarea id="contact-msg" placeholder="YOUR MESSAGE / INQUIRY" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none focus:border-gold h-32 uppercase tracking-widest" required></textarea>
+                <button type="submit" class="w-full bg-gold text-black py-4 font-bold uppercase text-xs tracking-widest hover:scale-105 transition">Send Message</button>
+            </form>
         </div>
     </section>
 
     <!-- FOOTER -->
     <footer class="relative z-10 bg-black border-t border-gray-900 px-6 md:px-12 py-20">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
-            
-            <!-- Column 1: Info & Socials -->
             <div class="text-center md:text-left">
                 <p class="font-bold text-xl mb-8 tracking-tighter uppercase italic">CAR VILLAGE <span class="gold-text">GLOBAL</span></p>
-                <p class="text-xs text-gray-500 leading-loose mb-8">
-                    76, Iju Ishaga Road, Ajilete Bus Stop<br>
-                    Ifako Ijaiye, Agege, Lagos, Nigeria
-                </p>
-                <div class="flex justify-center md:justify-start gap-6">
-                    <a href="https://www.facebook.com/profile.php?id=61577436842297" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="facebook"></i></a>
-                    <a href="https://www.instagram.com/carsvillageglobal" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="instagram"></i></a>
-                    <a href="#" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="music-2"></i></a>
+                <p class="text-[10px] text-gray-500 leading-loose mb-8">76, Iju Ishaga Road, Ajilete Bus Stop<br>Ifako Ijaiye, Agege, Lagos, Nigeria</p>
+                <!-- CORRECTED SOCIAL MEDIA ICONS -->
+                <div class="flex justify-center md:justify-start gap-8">
+                    <a href="https://www.facebook.com/profile.php?id=61577436842297" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                    <a href="https://www.instagram.com/carsvillageglobal" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-gold transition"><i data-lucide="music-2" class="w-5 h-5"></i></a>
                 </div>
             </div>
-
-            <!-- Column 2: Sitemap -->
             <div class="text-center md:text-left">
                 <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400">Navigation</p>
-                <ul class="text-xs space-y-6 text-gray-500 uppercase tracking-widest">
+                <ul class="text-[10px] space-y-6 text-gray-500 uppercase tracking-widest">
                     <li><a href="index.html" class="hover:text-gold transition">Home</a></li>
                     <li><a href="#inventory" class="hover:text-gold transition">Inventory</a></li>
                     <li><a href="#about" class="hover:text-gold transition">About Us</a></li>
-                    <li><a href="signup.html" class="hover:text-gold transition">Create Account</a></li>
+                    <li><a href="signup.html" class="hover:text-gold transition">Sign Up</a></li>
                 </ul>
             </div>
-
-            <!-- Column 3: Policies -->
             <div class="text-center md:text-left">
                 <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400">Policies</p>
-                <ul class="text-xs space-y-6 text-gray-500 uppercase tracking-widest">
-                    <li><button onclick="openPolicy('privacy')" class="hover:text-gold transition">Privacy Policy</button></li>
-                    <li><button onclick="openPolicy('shipping')" class="hover:text-gold transition">Shipping Policy</button></li>
-                    <li><button onclick="openPolicy('delivery')" class="hover:text-gold transition">Delivery Policy</button></li>
-                    <li><button onclick="openPolicy('pickup')" class="hover:text-gold transition">Pick-up Policy</button></li>
+                <ul class="text-[10px] space-y-6 text-gray-500 uppercase tracking-widest font-bold">
+                    <li><button onclick="openPolicy('privacy')" class="hover:text-gold">Privacy Policy</button></li>
+                    <li><button onclick="openPolicy('shipping')" class="hover:text-gold">Shipping</button></li>
+                    <li><button onclick="openPolicy('delivery')" class="hover:text-gold">Delivery</button></li>
+                    <li><button onclick="openPolicy('pickup')" class="hover:text-gold">Pick-up</button></li>
                 </ul>
             </div>
-
-            <!-- Column 4: Contact -->
             <div class="text-center md:text-left">
-                <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400">Concierge</p>
+                <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400">Contact</p>
                 <a href="https://wa.me/2348024417215" class="gold-text text-xl font-bold block mb-4">08024417215</a>
-                <p class="text-[10px] text-gray-600 uppercase tracking-tighter">Live Support 24/7 Available</p>
             </div>
         </div>
-        <div class="mt-20 pt-10 border-t border-gray-900/50 text-center text-[10px] text-gray-700 tracking-[0.5em] uppercase">
-            &copy; 2024 Cars Village Global. Excellence Guaranteed.
-        </div>
+        <div class="mt-20 pt-10 border-t border-gray-900/50 text-center text-[10px] text-gray-800 tracking-widest uppercase">&copy; 2024 Cars Village Global.</div>
     </footer>
 
-    <!-- POLICY MODAL -->
-    <div id="policy-modal" class="modal">
-        <div class="bg-[#0a0a0a] border border-gray-800 w-full max-w-2xl p-8 md:p-12 relative max-h-[85vh] overflow-y-auto rounded-sm">
-            <button onclick="closePolicy()" class="absolute top-6 right-6 text-gray-500 hover:text-white transition"><i data-lucide="x"></i></button>
-            <h2 id="policy-title" class="text-3xl font-serif italic mb-8 gold-text"></h2>
-            <div id="policy-body" class="text-gray-400 text-sm leading-relaxed space-y-6 text-justify">
-                <!-- Data injected via JS -->
-            </div>
-            <button onclick="closePolicy()" class="mt-12 w-full py-5 border border-gray-800 text-[10px] uppercase tracking-widest font-bold hover:bg-gold hover:text-black transition">Acknowledge</button>
-        </div>
-    </div>
+    <!-- MODALS -->
+    <div id="policy-modal" class="modal"><div class="bg-[#0a0a0a] border border-gray-800 w-full max-w-2xl p-8 md:p-12 relative max-h-[85vh] overflow-y-auto rounded-sm"><button onclick="closePolicy()" class="absolute top-6 right-6 text-gray-500 hover:text-white"><i data-lucide="x"></i></button><h2 id="policy-title" class="text-3xl font-serif italic mb-8 gold-text uppercase tracking-tighter"></h2><div id="policy-body" class="text-gray-400 text-xs leading-relaxed space-y-6 text-justify"></div></div></div>
+    <div id="car-modal" class="modal"><div class="bg-[#111] max-w-5xl w-full p-8 rounded-sm relative max-h-[90vh] overflow-y-auto"><button onclick="closeModal()" class="absolute top-6 right-6 text-white"><i data-lucide="x"></i></button><div id="modal-content" class="grid md:grid-cols-2 gap-12"></div></div></div>
+    <div id="login-modal" class="modal"><div class="bg-[#111] max-w-sm w-full p-10 text-center rounded-sm"><h2 class="text-2xl font-serif italic mb-8 gold-text">Staff Portal</h2><input type="email" id="login-email" placeholder="EMAIL" class="w-full bg-black border border-gray-800 p-4 text-[10px] mb-4 outline-none focus:border-gold text-white uppercase tracking-widest"><input type="password" id="login-pass" placeholder="PASSWORD" class="w-full bg-black border border-gray-800 p-4 text-[10px] mb-8 outline-none focus:border-gold text-white"><button onclick="handleLogin()" class="w-full bg-gold text-black py-4 font-bold uppercase text-[10px] tracking-widest">Sign In</button></div></div>
+    <div id="upload-modal" class="modal"><div class="bg-[#111] max-w-xl w-full p-10 rounded-sm"><h2 class="text-2xl font-serif italic mb-8 gold-text uppercase">Add Premium Asset</h2><form id="upload-form" class="space-y-4"><input type="text" id="car-name" placeholder="VEHICLE NAME" class="w-full bg-black border border-gray-800 p-4 text-[10px] outline-none text-white uppercase tracking-widest" required><input type="text" id="car-price" placeholder="LIST PRICE (₦)" class="w-full bg-black border border-gray-800 p-4 text-[10px] outline-none text-white uppercase tracking-widest" required><textarea id="car-desc" placeholder="SPECIFICATIONS & FEATURES" class="w-full bg-black border border-gray-800 p-4 text-[10px] outline-none h-32 text-white uppercase tracking-widest" required></textarea><div class="border-2 border-dashed border-gray-800 p-6 text-center relative hover:border-gold transition cursor-pointer"><input type="file" id="car-files" accept="image/*" multiple class="absolute inset-0 opacity-0 cursor-pointer" onchange="updateFileCount()"><p id="file-label" class="text-[10px] text-gray-500 uppercase tracking-widest">Select Images (Max 5)</p></div><button type="submit" id="submit-btn" class="w-full bg-gold text-black py-5 font-bold uppercase text-[10px] tracking-widest">Publish Inventory</button></form><button onclick="toggleUploadModal()" class="w-full mt-4 text-gray-600 text-[10px] uppercase">Cancel</button></div></div>
 
-    <!-- CAR DETAIL MODAL -->
-    <div id="car-modal" class="modal">
-        <div class="bg-[#111] max-w-5xl w-full p-8 rounded-sm relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeModal()" class="absolute top-6 right-6 text-white"><i data-lucide="x"></i></button>
-            <div id="modal-content" class="grid md:grid-cols-2 gap-12">
-                <!-- Data injected -->
-            </div>
-        </div>
-    </div>
-
-    <!-- LOGIN MODAL -->
-    <div id="login-modal" class="modal">
-        <div class="bg-[#111] max-w-sm w-full p-10 text-center rounded-sm">
-            <h2 class="text-2xl font-serif italic mb-8 gold-text">Staff Portal</h2>
-            <input type="email" id="login-email" placeholder="ADMIN EMAIL" class="w-full bg-black border border-gray-800 p-4 text-xs mb-4 outline-none focus:border-gold uppercase tracking-widest text-white">
-            <input type="password" id="login-pass" placeholder="PASSWORD" class="w-full bg-black border border-gray-800 p-4 text-xs mb-8 outline-none focus:border-gold text-white">
-            <button onclick="handleLogin()" class="w-full bg-gold text-black py-4 font-bold uppercase text-xs tracking-widest">Sign In</button>
-            <button onclick="toggleLoginModal()" class="text-gray-600 mt-6 text-[10px] uppercase hover:text-white transition">Back to Showroom</button>
-        </div>
-    </div>
-
-    <!-- UPLOAD MODAL (ADMIN) -->
-    <!-- UPLOAD MODAL (Updated for File Upload) -->
-    <div id="upload-modal" class="modal">
-        <div class="bg-[#111] max-w-xl w-full p-10 rounded-sm">
-            <h2 class="text-2xl font-serif italic mb-8 gold-text">Add Premium Asset</h2>
-            <form id="upload-form" class="space-y-4">
-                <input type="text" id="car-name" placeholder="Vehicle Name" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white" required>
-                <input type="text" id="car-price" placeholder="List Price (₦)" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white" required>
-                <textarea id="car-desc" placeholder="Specifications & Features" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none h-32 text-white" required></textarea>
-                
-                <div class="border-2 border-dashed border-gray-800 p-6 text-center hover:border-gold transition cursor-pointer relative">
-                    <input type="file" id="car-files" accept="image/*" multiple class="absolute inset-0 opacity-0 cursor-pointer" onchange="updateFileCount()">
-                    <i data-lucide="upload-cloud" class="mx-auto mb-2 text-gray-500"></i>
-                    <p id="file-label" class="text-[10px] text-gray-500 uppercase tracking-widest">Click to upload images (Max 5)</p>
-                </div>
-
-                <button type="submit" id="submit-btn" class="w-full bg-gold text-black py-5 font-bold uppercase text-[10px] tracking-widest disabled:opacity-50">
-                    Publish to Inventory
-                </button>
-            </form>
-            <button onclick="toggleUploadModal()" class="w-full mt-4 text-gray-600 text-[10px] uppercase">Cancel</button>
-        </div>
-    </div>
     <script>
     const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co";
     const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
     const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
-    // Mobile Menu
+    // Menu logic
     const menuBtn = document.getElementById('menu-btn');
     const closeBtn = document.getElementById('close-menu');
     const mobileNav = document.getElementById('mobile-nav');
@@ -228,7 +206,7 @@
     closeBtn.onclick = () => mobileNav.classList.remove('active');
     function closeMobileMenu() { mobileNav.classList.remove('active'); }
 
-    // Fetch Cars from Database
+    // Fetch Cars
     async function fetchCars() {
         const { data, error } = await supabaseClient.from('cars').select('*').order('created_at', { ascending: false });
         if (!error) renderCars(data);
@@ -236,136 +214,56 @@
 
     function renderCars(cars) {
         const list = document.getElementById('car-list');
-        if (cars.length === 0) {
-            list.innerHTML = '<p class="text-gray-500 italic text-center col-span-full">No cars in the showroom yet.</p>';
-            return;
-        }
+        if (cars.length === 0) { list.innerHTML = '<p class="col-span-full text-center text-gray-600 text-xs tracking-widest uppercase">Showroom Empty</p>'; return; }
         list.innerHTML = cars.map(car => `
-            <div class="group cursor-pointer border border-gray-900 p-4 hover:border-gold transition duration-500" onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})">
-                <div class="h-64 overflow-hidden mb-8">
-                    <img src="${car.images && car.images[0] ? car.images[0] : 'https://via.placeholder.com/600x400?text=No+Image'}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                </div>
-                <div class="flex justify-between items-center px-2">
-                    <h3 class="font-bold uppercase tracking-[0.2em] text-xs">${car.name}</h3>
-                    <p class="gold-text font-bold text-sm">${car.price}</p>
-                </div>
-                <button class="w-full mt-10 py-4 border border-gray-800 text-[10px] font-bold uppercase tracking-widest group-hover:bg-white group-hover:text-black transition">Full Specifications</button>
+            <div class="group cursor-pointer border border-gray-900 p-3 md:p-4 hover:border-gold transition duration-500" onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})">
+                <div class="h-40 md:h-64 overflow-hidden mb-4"><img src="${car.images[0]}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700"></div>
+                <div class="flex flex-col gap-2"><h3 class="font-bold uppercase tracking-widest text-[10px]">${car.name}</h3><p class="gold-text font-bold text-xs">${car.price}</p></div>
             </div>
         `).join('');
     }
 
+    // Contact Form to WhatsApp
+    document.getElementById('contact-form').onsubmit = (e) => {
+        e.preventDefault();
+        const name = document.getElementById('contact-name').value;
+        const msg = document.getElementById('contact-msg').value;
+        const text = encodeURIComponent(`Hello Cars Village Global,\nName: ${name}\nInquiry: ${msg}`);
+        window.open(`https://wa.me/2348024417215?text=${text}`, '_blank');
+    };
+
     function showDetails(car) {
         const content = document.getElementById('modal-content');
-        const mainImg = car.images && car.images[0] ? car.images[0] : 'https://via.placeholder.com/600x400';
-        
-        content.innerHTML = `
-            <div class="space-y-4">
-                <img src="${mainImg}" class="w-full rounded-sm shadow-2xl">
-                <div class="grid grid-cols-4 gap-3">
-                    ${car.images ? car.images.slice(1).map(img => `<img src="${img}" class="h-20 w-full object-cover rounded-sm border border-gray-800">`).join('') : ''}
-                </div>
-            </div>
-            <div class="flex flex-col justify-center">
-                <h2 class="text-4xl font-serif italic mb-4 leading-tight">${car.name}</h2>
-                <p class="gold-text text-3xl font-bold mb-8">${car.price}</p>
-                <div class="h-px bg-gray-800 mb-8 w-1/4"></div>
-                <p class="text-gray-400 text-sm leading-loose mb-10 text-justify">${car.description}</p>
-                <a href="https://wa.me/2348024417215?text=Hello, I am interested in the ${car.name} priced at ${car.price}" target="_blank" class="block text-center bg-green-600 text-white py-5 font-bold uppercase text-[10px] tracking-widest hover:bg-green-500 transition shadow-lg">Check Availability (WhatsApp)</a>
-            </div>
-        `;
+        content.innerHTML = `<div class="space-y-4"><img src="${car.images[0]}" class="w-full rounded-sm"><div class="grid grid-cols-4 gap-2">${car.images.slice(1).map(img => `<img src="${img}" class="h-16 w-full object-cover rounded-sm border border-gray-800">`).join('')}</div></div><div class="flex flex-col justify-center"><h2 class="text-3xl font-serif italic mb-4 leading-tight uppercase">${car.name}</h2><p class="gold-text text-2xl font-bold mb-8">${car.price}</p><p class="text-gray-400 text-xs leading-loose mb-10 text-justify">${car.description}</p><a href="https://wa.me/2348024417215?text=I am interested in ${car.name}" target="_blank" class="block text-center bg-green-600 text-white py-4 font-bold uppercase text-[10px] tracking-widest">Chat on WhatsApp</a></div>`;
         document.getElementById('car-modal').classList.add('active');
     }
 
-    // Policies
-    const policies = {
-        privacy: { title: "Privacy Policy", body: "At Cars Village Global, we prioritize your security. We collect your data solely for account management and transaction verification. We never share your personal information with third parties without your explicit consent." },
-        shipping: { title: "Global Shipping Policy", body: "We offer worldwide shipping to major international ports. For global orders, shipping quotes are calculated based on destination, weight, and insurance requirements." },
-        delivery: { title: "Nationwide Delivery Policy", body: "Within Nigeria, we provide high-security doorstep delivery via specialized car haulers. Delivery within Lagos typically takes 24-48 hours." },
-        pickup: { title: "Physical Pick-up Policy", body: "Customers are welcome to pick up their vehicles at 76, Iju Ishaga Road, Agege, Lagos. Please bring a valid ID and your confirmed receipt. Appointments required 24h in advance." }
-    };
-
-    function openPolicy(type) {
-        document.getElementById('policy-title').innerText = policies[type].title;
-        document.getElementById('policy-body').innerText = policies[type].body;
-        document.getElementById('policy-modal').classList.add('active');
-    }
-
-    // Admin Access Logic
-    const ADMIN_EMAIL = "dben61168@gmail.com";
     async function handleLogin() {
         const email = document.getElementById('login-email').value;
         const pass = document.getElementById('login-pass').value;
         const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
-        if (!error && data.user.email === ADMIN_EMAIL) {
-            document.getElementById('admin-panel-btn').classList.remove('hidden');
-            document.getElementById('login-modal').classList.remove('active');
-            alert("Admin Access Granted");
-        } else { alert("Unauthorized or Login Failed"); }
+        if (!error && data.user.email === "dben61168@gmail.com") { document.getElementById('admin-panel-btn').classList.remove('hidden'); document.getElementById('login-modal').classList.remove('active'); } else { alert("Staff Only"); }
     }
 
-    // FILE UPLOAD & SHOWROOM PUBLISH LOGIC
-    function updateFileCount() {
-        const files = document.getElementById('car-files').files;
-        const label = document.getElementById('file-label');
-        if (label) label.innerText = files.length > 0 ? `${files.length} images selected` : "Click to upload images (Max 5)";
-    }
+    function updateFileCount() { const f = document.getElementById('car-files').files; document.getElementById('file-label').innerText = f.length + " Images Selected"; }
 
     document.getElementById('upload-form').onsubmit = async (e) => {
         e.preventDefault();
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        const fileInput = document.getElementById('car-files');
-        const files = fileInput.files;
-
-        if (files.length === 0) return alert("Please select at least one image.");
-        if (files.length > 5) return alert("Maximum 5 images allowed.");
-
-        submitBtn.innerText = "Uploading Assets...";
-        submitBtn.disabled = true;
-
-        const uploadedUrls = [];
-
-        try {
-            // 1. Upload each file to Storage
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                const fileExt = file.name.split('.').pop();
-                const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-                
-                const { data: uploadData, error: uploadError } = await supabaseClient.storage
-                    .from('car-images')
-                    .upload(fileName, file);
-
-                if (uploadError) throw uploadError;
-
-                // 2. Get the public URL for the uploaded file
-                const { data: urlData } = supabaseClient.storage
-                    .from('car-images')
-                    .getPublicUrl(fileName);
-                
-                uploadedUrls.push(urlData.publicUrl);
-            }
-
-            // 3. Insert record into database with image URL array
-            const { error: dbError } = await supabaseClient.from('cars').insert([{ 
-                name: document.getElementById('car-name').value, 
-                price: document.getElementById('car-price').value, 
-                description: document.getElementById('car-desc').value, 
-                images: uploadedUrls 
-            }]);
-
-            if (dbError) throw dbError;
-
-            alert("Showroom Updated Successfully!");
-            location.reload();
-
-        } catch (err) {
-            console.error(err);
-            alert("System Error: " + err.message);
-            submitBtn.innerText = "Publish Inventory";
-            submitBtn.disabled = false;
+        const b = document.getElementById('submit-btn');
+        const f = document.getElementById('car-files').files;
+        b.innerText = "Processing Assets..."; b.disabled = true;
+        const urls = [];
+        for (let i = 0; i < f.length; i++) {
+            const name = `${Math.random()}-${Date.now()}`;
+            await supabaseClient.storage.from('car-images').upload(name, f[i]);
+            urls.push(supabaseClient.storage.from('car-images').getPublicUrl(name).data.publicUrl);
         }
+        await supabaseClient.from('cars').insert([{ name: document.getElementById('car-name').value, price: document.getElementById('car-price').value, description: document.getElementById('car-desc').value, images: urls }]);
+        location.reload();
     };
 
+    const policies = { privacy: { title: "Privacy", body: "We prioritize your security and data protection." }, shipping: { title: "Shipping", body: "Global shipping quotes available to all major ports." }, delivery: { title: "Delivery", body: "Lagos delivery within 48h. Nationwide available." }, pickup: { title: "Pick-up", body: "Address: 76, Iju Ishaga Road, Agege, Lagos." } };
+    function openPolicy(t) { document.getElementById('policy-title').innerText = policies[t].title; document.getElementById('policy-body').innerText = policies[t].body; document.getElementById('policy-modal').classList.add('active'); }
     function closeModal() { document.getElementById('car-modal').classList.remove('active'); }
     function closePolicy() { document.getElementById('policy-modal').classList.remove('active'); }
     function toggleLoginModal() { document.getElementById('login-modal').classList.toggle('active'); }
@@ -373,6 +271,6 @@
     
     lucide.createIcons();
     fetchCars();
-                                  </script>
+    </script>
 </body>
 </html>
