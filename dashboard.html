@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concierge Dashboard | Cars Village Global</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Playfair+Display:italic,wght@700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: white; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .gold-text { color: #d4af37; }
+        .bg-gold { background-color: #d4af37; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .sidebar-link.active { border-right: 3px solid #d4af37; background: rgba(212, 175, 55, 0.05); color: white; }
+    </style>
+</head>
+<body class="flex min-h-screen flex-col md:flex-row">
+
+    <!-- SIDEBAR -->
+    <aside class="w-full md:w-64 bg-black border-r border-gray-900 p-8 flex flex-col gap-10">
+        <div class="text-lg font-bold tracking-tighter uppercase italic">
+            CAR VILLAGE <span class="gold-text">Global</span>
+        </div>
+        
+        <nav class="flex flex-col gap-2">
+            <button onclick="showSection('overview')" class="sidebar-link active text-left p-4 text-xs uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-3">
+                <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Overview
+            </button>
+            <button onclick="showSection('tracking')" class="sidebar-link text-left p-4 text-xs uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-3">
+                <i data-lucide="truck" class="w-4 h-4"></i> Tracking
+            </button>
+            <button onclick="showSection('profile')" class="sidebar-link text-left p-4 text-xs uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-3">
+                <i data-lucide="map-pin" class="w-4 h-4"></i> Delivery Info
+            </button>
+            <a href="index.html" class="p-4 text-xs uppercase tracking-widest text-gray-500 hover:text-white transition flex items-center gap-3">
+                <i data-lucide="shopping-bag" class="w-4 h-4"></i> Showroom
+            </a>
+        </nav>
+
+        <button onclick="handleLogout()" class="mt-auto text-left p-4 text-[10px] uppercase tracking-widest text-red-500 hover:text-red-400 transition flex items-center gap-3 border-t border-gray-900">
+            <i data-lucide="log-out" class="w-4 h-4"></i> Sign Out
+        </button>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-grow p-6 md:p-12 overflow-y-auto">
+        
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-12">
+            <div>
+                <p id="greeting" class="text-xs uppercase tracking-[0.3em] text-gray-500">Welcome Back</p>
+                <h1 id="user-name" class="text-4xl font-serif italic mt-2">Elite Member</h1>
+            </div>
+            <div class="hidden md:block glass px-6 py-3 rounded-full text-[10px] uppercase tracking-widest border border-gold/20">
+                Lagos, NG | <span id="current-date"></span>
+            </div>
+        </header>
+
+        <!-- OVERVIEW SECTION -->
+        <section id="section-overview" class="dashboard-section space-y-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass p-8">
+                    <p class="text-[10px] uppercase text-gray-500 mb-2">Active Trackings</p>
+                    <h3 id="active-count" class="text-3xl font-serif italic">0</h3>
+                </div>
+                <div class="glass p-8">
+                    <p class="text-[10px] uppercase text-gray-500 mb-2">Status</p>
+                    <h3 class="text-xs uppercase gold-text tracking-widest font-bold">Verified Member</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRACKING SECTION -->
+        <section id="section-tracking" class="dashboard-section hidden space-y-8">
+            <h2 class="text-xl font-serif italic gold-text">Vehicle Logistics Tracking</h2>
+            <div id="order-list" class="space-y-4">
+                <p class="text-gray-600 text-sm">No vehicles currently in transit.</p>
+            </div>
+        </section>
+
+        <!-- DELIVERY INFO SECTION -->
+        <section id="section-profile" class="dashboard-section hidden max-w-2xl">
+            <h2 class="text-xl font-serif italic gold-text mb-8">Delivery & Shipping Address</h2>
+            <form id="profile-form" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="text-[10px] uppercase text-gray-500 mb-2 block tracking-widest">Phone Number</label>
+                        <input type="text" id="prof-phone" class="w-full bg-black border border-gray-800 p-4 text-sm outline-none focus:border-gold">
+                    </div>
+                </div>
+                <div>
+                    <label class="text-[10px] uppercase text-gray-500 mb-2 block tracking-widest">Delivery Address</label>
+                    <input type="text" id="prof-address" class="w-full bg-black border border-gray-800 p-4 text-sm outline-none focus:border-gold">
+                </div>
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label class="text-[10px] uppercase text-gray-500 mb-2 block tracking-widest">City</label>
+                        <input type="text" id="prof-city" class="w-full bg-black border border-gray-800 p-4 text-sm outline-none focus:border-gold">
+                    </div>
+                    <div>
+                        <label class="text-[10px] uppercase text-gray-500 mb-2 block tracking-widest">State</label>
+                        <input type="text" id="prof-state" class="w-full bg-black border border-gray-800 p-4 text-sm outline-none focus:border-gold">
+                    </div>
+                </div>
+                <button type="submit" class="bg-gold text-black px-10 py-4 font-bold uppercase text-[10px] tracking-widest hover:scale-105 transition">Update Information</button>
+            </form>
+        </section>
+
+    </main>
+
+    <script>
+        const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co"; 
+        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
+        const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+
+        let currentUser = null;
+
+        // 1. Check Authentication
+        async function checkUser() {
+            const { data: { user } } = await supabaseClient.auth.getUser();
+            if (!user) {
+                window.location.href = "login.html";
+            } else {
+                currentUser = user;
+                document.getElementById('user-name').innerText = user.user_metadata.full_name || user.email;
+                loadProfile();
+                loadOrders();
+            }
+        }
+
+        // 2. Load and Save Profile
+        async function loadProfile() {
+            const { data, error } = await supabaseClient.from('profiles').select('*').eq('id', currentUser.id).single();
+            if (data) {
+                document.getElementById('prof-phone').value = data.phone || '';
+                document.getElementById('prof-address').value = data.delivery_address || '';
+                document.getElementById('prof-city').value = data.city || '';
+                document.getElementById('prof-state').value = data.state || '';
+            }
+        }
+
+        document.getElementById('profile-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const updates = {
+                id: currentUser.id,
+                phone: document.getElementById('prof-phone').value,
+                delivery_address: document.getElementById('prof-address').value,
+                city: document.getElementById('prof-city').value,
+                state: document.getElementById('prof-state').value,
+                full_name: currentUser.user_metadata.full_name
+            };
+            const { error } = await supabaseClient.from('profiles').upsert(updates);
+            if (error) alert("Error updating info");
+            else alert("Delivery information saved.");
+        };
+
+        // 3. Load Orders/Tracking
+        async function loadOrders() {
+            const { data, error } = await supabaseClient.from('orders').select('*').eq('user_id', currentUser.id);
+            if (data && data.length > 0) {
+                document.getElementById('active-count').innerText = data.length;
+                const list = document.getElementById('order-list');
+                list.innerHTML = data.map(order => `
+                    <div class="glass p-6 border border-white/5">
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <h4 class="font-bold uppercase tracking-widest text-sm">${order.car_name}</h4>
+                                <p class="text-[9px] text-gray-500 uppercase mt-1">VIN: ${order.vin || 'PENDING'}</p>
+                            </div>
+                            <span class="text-[10px] uppercase gold-text font-bold px-3 py-1 border border-gold/30 rounded-full">${order.status}</span>
+                        </div>
+                        <div class="w-full bg-gray-900 h-1 rounded-full overflow-hidden">
+                            <div class="bg-gold h-full transition-all duration-1000" style="width: ${order.progress}%"></div>
+                        </div>
+                        <div class="mt-4 flex justify-between text-[9px] text-gray-600 uppercase">
+                            <span>Order Confirmed</span>
+                            <span>In Transit</span>
+                            <span>At Port</span>
+                            <span>Delivered</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Navigation UI Logic
+        function showSection(id) {
+            document.querySelectorAll('.dashboard-section').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            document.getElementById(`section-${id}`).classList.remove('hidden');
+            event.currentTarget.classList.add('active');
+        }
+
+        async function handleLogout() {
+            await supabaseClient.auth.signOut();
+            window.location.href = "index.html";
+        }
+
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        lucide.createIcons();
+        checkUser();
+    </script>
+</body>
+</html>
