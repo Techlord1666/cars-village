@@ -106,20 +106,20 @@
         </div>
     </div>
 
-    <script>
+   <script>
         // 1. SUPABASE CONFIGURATION
         const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co"; 
         const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
         const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
-        // 2. SIGNUP LOGIC
+        // 2. SIGNUP & PROFILE AUTO-STORE LOGIC
         const signupForm = document.getElementById('signup-form');
         const errorMsg = document.getElementById('error-msg');
         const signupBtn = document.getElementById('signup-btn');
 
         signupForm.onsubmit = async (e) => {
             e.preventDefault();
-            signupBtn.innerHTML = "Processing...";
+            signupBtn.innerHTML = "CREATING PROFILE...";
             signupBtn.disabled = true;
             errorMsg.classList.add('hidden');
 
@@ -127,24 +127,46 @@
             const password = document.getElementById('password').value;
             const fullName = document.getElementById('full-name').value;
 
-            const { data, error } = await supabaseClient.auth.signUp({
+            // STEP 1: Create the User in Supabase Auth
+            const { data, error: authError } = await supabaseClient.auth.signUp({
                 email: email,
                 password: password,
-                options: { data: { full_name: fullName } }
+                options: { 
+                    data: { full_name: fullName } // Saves to Auth Metadata
+                }
             });
 
-            if (error) {
-                errorMsg.innerText = error.message;
+            if (authError) {
+                errorMsg.innerText = authError.message;
                 errorMsg.classList.remove('hidden');
                 signupBtn.innerHTML = "Register Now";
                 signupBtn.disabled = false;
-            } else {
-                alert("Account created successfully!");
-                window.location.href = "index.html";
+                return;
+            }
+
+            // STEP 2: Automatically store in 'profiles' table for Dashboard recognition
+            if (data.user) {
+                const { error: profileError } = await supabaseClient
+                    .from('profiles')
+                    .insert([
+                        { 
+                            id: data.user.id, 
+                            full_name: fullName, 
+                            updated_at: new Date() 
+                        }
+                    ]);
+
+                if (profileError) {
+                    console.error("Profile store error:", profileError);
+                    // We don't stop the process here because the account is already created
+                }
+
+                alert("Account created successfully! Welcome to the Elite.");
+                window.location.href = "login.html"; // Redirect to login
             }
         };
 
-        // 3. POLICY MODAL LOGIC
+        // 3. POLICY MODAL LOGIC (Detailed as requested)
         const policies = {
             privacy: {
                 title: "Privacy Policy",
