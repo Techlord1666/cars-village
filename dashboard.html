@@ -111,97 +111,136 @@
 
     </main>
 
-    <script>
-        const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co"; 
-        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
-        const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+   <script>
+    // 1. SUPABASE CONFIGURATION
+    const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co"; 
+    const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
+    const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
-        let currentUser = null;
+    let currentUser = null;
 
-        // 1. Check Authentication
-        async function checkUser() {
-            const { data: { user } } = await supabaseClient.auth.getUser();
-            if (!user) {
-                window.location.href = "login.html";
-            } else {
-                currentUser = user;
-                document.getElementById('user-name').innerText = user.user_metadata.full_name || user.email;
-                loadProfile();
-                loadOrders();
-            }
+    // 1. Check Authentication (Recognize the logged-in client)
+    async function checkUser() {
+        const { data: { user }, error } = await supabaseClient.auth.getUser();
+        
+        if (error || !user) {
+            // If not logged in, kick back to login page
+            window.location.href = "login.html";
+        } else {
+            currentUser = user;
+            // Set user name from metadata or email
+            document.getElementById('user-name').innerText = user.user_metadata.full_name || user.email;
+            loadProfile();
+            loadOrders();
         }
+    }
 
-        // 2. Load and Save Profile
-        async function loadProfile() {
-            const { data, error } = await supabaseClient.from('profiles').select('*').eq('id', currentUser.id).single();
-            if (data) {
-                document.getElementById('prof-phone').value = data.phone || '';
-                document.getElementById('prof-address').value = data.delivery_address || '';
-                document.getElementById('prof-city').value = data.city || '';
-                document.getElementById('prof-state').value = data.state || '';
-            }
+    // 2. Load Profile Data from Database
+    async function loadProfile() {
+        const { data, error } = await supabaseClient
+            .from('profiles')
+            .select('*')
+            .eq('id', currentUser.id)
+            .single();
+
+        if (data) {
+            document.getElementById('prof-phone').value = data.phone || '';
+            document.getElementById('prof-address').value = data.delivery_address || '';
+            document.getElementById('prof-city').value = data.city || '';
+            document.getElementById('prof-state').value = data.state || '';
         }
+    }
 
-        document.getElementById('profile-form').onsubmit = async (e) => {
-            e.preventDefault();
-            const updates = {
-                id: currentUser.id,
-                phone: document.getElementById('prof-phone').value,
-                delivery_address: document.getElementById('prof-address').value,
-                city: document.getElementById('prof-city').value,
-                state: document.getElementById('prof-state').value,
-                full_name: currentUser.user_metadata.full_name
-            };
-            const { error } = await supabaseClient.from('profiles').upsert(updates);
-            if (error) alert("Error updating info");
-            else alert("Delivery information saved.");
+    // 3. Save/Update Profile Logic
+    document.getElementById('profile-form').onsubmit = async (e) => {
+        e.preventDefault();
+        
+        const btn = e.target.querySelector('button');
+        btn.innerText = "SAVING...";
+        btn.disabled = true;
+
+        const updates = {
+            id: currentUser.id,
+            phone: document.getElementById('prof-phone').value,
+            delivery_address: document.getElementById('prof-address').value,
+            city: document.getElementById('prof-city').value,
+            state: document.getElementById('prof-state').value,
+            full_name: currentUser.user_metadata.full_name || "Elite Member",
+            updated_at: new Date()
         };
 
-        // 3. Load Orders/Tracking
-        async function loadOrders() {
-            const { data, error } = await supabaseClient.from('orders').select('*').eq('user_id', currentUser.id);
-            if (data && data.length > 0) {
-                document.getElementById('active-count').innerText = data.length;
-                const list = document.getElementById('order-list');
-                list.innerHTML = data.map(order => `
-                    <div class="glass p-6 border border-white/5">
-                        <div class="flex justify-between items-center mb-4">
-                            <div>
-                                <h4 class="font-bold uppercase tracking-widest text-sm">${order.car_name}</h4>
-                                <p class="text-[9px] text-gray-500 uppercase mt-1">VIN: ${order.vin || 'PENDING'}</p>
-                            </div>
-                            <span class="text-[10px] uppercase gold-text font-bold px-3 py-1 border border-gold/30 rounded-full">${order.status}</span>
+        // UPSERT means "Update if exists, otherwise Insert"
+        const { error } = await supabaseClient.from('profiles').upsert(updates);
+
+        if (error) {
+            console.error("Error details:", error);
+            alert("Update Failed: " + error.message);
+            btn.innerText = "Update Information";
+            btn.disabled = false;
+        } else {
+            alert("Delivery information updated successfully!");
+            btn.innerText = "Update Information";
+            btn.disabled = false;
+        }
+    };
+
+    // 4. Load Vehicle Tracking Information
+    async function loadOrders() {
+        const { data, error } = await supabaseClient
+            .from('orders')
+            .select('*')
+            .eq('user_id', currentUser.id);
+
+        if (data && data.length > 0) {
+            document.getElementById('active-count').innerText = data.length;
+            const list = document.getElementById('order-list');
+            list.innerHTML = data.map(order => `
+                <div class="glass p-6 border border-white/5 mb-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <div>
+                            <h4 class="font-bold uppercase tracking-widest text-sm">${order.car_name}</h4>
+                            <p class="text-[9px] text-gray-500 uppercase mt-1">VIN: ${order.vin || 'PENDING'}</p>
                         </div>
-                        <div class="w-full bg-gray-900 h-1 rounded-full overflow-hidden">
-                            <div class="bg-gold h-full transition-all duration-1000" style="width: ${order.progress}%"></div>
-                        </div>
-                        <div class="mt-4 flex justify-between text-[9px] text-gray-600 uppercase">
-                            <span>Order Confirmed</span>
-                            <span>In Transit</span>
-                            <span>At Port</span>
-                            <span>Delivered</span>
-                        </div>
+                        <span class="text-[10px] uppercase gold-text font-bold px-3 py-1 border border-gold/30 rounded-full">${order.status}</span>
                     </div>
-                `).join('');
-            }
+                    <div class="w-full bg-gray-900 h-1 rounded-full overflow-hidden">
+                        <div class="bg-gold h-full transition-all duration-1000" style="width: ${order.progress}%"></div>
+                    </div>
+                    <div class="mt-4 flex justify-between text-[9px] text-gray-600 uppercase">
+                        <span>Confirmed</span>
+                        <span>Shipping</span>
+                        <span>Customs</span>
+                        <span>Delivered</span>
+                    </div>
+                </div>
+            `).join('');
         }
+    }
 
-        // Navigation UI Logic
-        function showSection(id) {
-            document.querySelectorAll('.dashboard-section').forEach(s => s.classList.add('hidden'));
-            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-            document.getElementById(`section-${id}`).classList.remove('hidden');
-            event.currentTarget.classList.add('active');
-        }
+    // Sidebar Navigation Logic
+    function showSection(id) {
+        document.querySelectorAll('.dashboard-section').forEach(s => s.classList.add('hidden'));
+        document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+        
+        document.getElementById(`section-${id}`).classList.remove('hidden');
+        event.currentTarget.classList.add('active');
+    }
 
-        async function handleLogout() {
-            await supabaseClient.auth.signOut();
-            window.location.href = "index.html";
-        }
+    // Sign Out Logic
+    async function handleLogout() {
+        await supabaseClient.auth.signOut();
+        window.location.href = "index.html";
+    }
 
-        document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-        lucide.createIcons();
-        checkUser();
-    </script>
+    // Initialization
+    document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-GB', { 
+        day: 'numeric', 
+        month: 'short', 
+        year: 'numeric' 
+    });
+    
+    lucide.createIcons();
+    checkUser();
+</script>
 </body>
 </html>
