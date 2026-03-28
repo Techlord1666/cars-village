@@ -278,13 +278,13 @@
         location.reload();
     };
 
-    const policies = { privacy: { title: "Privacy", body: "We prioritize your data security." }, shipping: { title: "Shipping", body: "Global shipping available." }, delivery: { title: "Delivery", body: "Doorstep delivery nationwide." }, pickup: { title: "Pick-up", body: "Location: 76, Iju Ishaga Road, Lagos." } };
+    const policies = { privacy: { title: "Privacy", body: "At Cars Village Global, we prioritize your security. We collect your data solely for account management and transaction verification. We never share your personal information with third parties without your explicit consent. All payment data is encrypted via industry-standard protocols" }, shipping: { title: "Shipping", body: "Global shipping available." }, delivery: { title: "Delivery", body: "Doorstep delivery nationwide." }, pickup: { title: "Pick-up", body: "Location: 76, Iju Ishaga Road, Lagos." } };
     function openPolicy(t) { document.getElementById('policy-title').innerText = policies[t].title; document.getElementById('policy-body').innerText = policies[t].body; document.getElementById('policy-modal').classList.add('active'); }
     function closeModal() { document.getElementById('car-modal').classList.remove('active'); }
     function closePolicy() { document.getElementById('policy-modal').classList.remove('active'); }
     function toggleLoginModal() { document.getElementById('login-modal').classList.toggle('active'); }
     function toggleUploadModal() { document.getElementById('upload-modal').classList.toggle('active'); }
-    
+     
     lucide.createIcons();
     fetchCars();
     </script>
