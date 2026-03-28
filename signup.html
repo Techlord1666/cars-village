@@ -107,99 +107,101 @@
     </div>
 
    <script>
-        // 1. SUPABASE CONFIGURATION
-        const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co"; 
-        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
-        const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+    // 1. SUPABASE CONFIGURATION
+    const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co"; 
+    const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
+    const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
-        // 2. SIGNUP & PROFILE AUTO-STORE LOGIC
-        const signupForm = document.getElementById('signup-form');
-        const errorMsg = document.getElementById('error-msg');
-        const signupBtn = document.getElementById('signup-btn');
+    // 2. SIGNUP & PROFILE AUTO-STORE LOGIC
+    const signupForm = document.getElementById('signup-form');
+    const errorMsg = document.getElementById('error-msg');
+    const signupBtn = document.getElementById('signup-btn');
 
-        signupForm.onsubmit = async (e) => {
-            e.preventDefault();
-            signupBtn.innerHTML = "CREATING PROFILE...";
-            signupBtn.disabled = true;
-            errorMsg.classList.add('hidden');
+    signupForm.onsubmit = async (e) => {
+        e.preventDefault();
+        signupBtn.innerHTML = "ESTABLISHING PROFILE...";
+        signupBtn.disabled = true;
+        errorMsg.classList.add('hidden');
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const fullName = document.getElementById('full-name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const fullName = document.getElementById('full-name').value;
 
-            // STEP 1: Create the User in Supabase Auth
-            const { data, error: authError } = await supabaseClient.auth.signUp({
-                email: email,
-                password: password,
-                options: { 
-                    data: { full_name: fullName } // Saves to Auth Metadata
-                }
-            });
-
-            if (authError) {
-                errorMsg.innerText = authError.message;
-                errorMsg.classList.remove('hidden');
-                signupBtn.innerHTML = "Register Now";
-                signupBtn.disabled = false;
-                return;
+        // STEP 1: Create the User in Supabase Auth
+        // Because "Confirm Email" is OFF, this user is created and logged in immediately
+        const { data, error: authError } = await supabaseClient.auth.signUp({
+            email: email,
+            password: password,
+            options: { 
+                data: { full_name: fullName } 
             }
+        });
 
-            // STEP 2: Automatically store in 'profiles' table for Dashboard recognition
-            if (data.user) {
-                const { error: profileError } = await supabaseClient
-                    .from('profiles')
-                    .insert([
-                        { 
-                            id: data.user.id, 
-                            full_name: fullName, 
-                            updated_at: new Date() 
-                        }
-                    ]);
-
-                if (profileError) {
-                    console.error("Profile store error:", profileError);
-                    // We don't stop the process here because the account is already created
-                }
-
-                alert("Account created successfully! Welcome to the Elite.");
-                window.location.href = "login.html"; // Redirect to login
-            }
-        };
-
-        // 3. POLICY MODAL LOGIC (Detailed as requested)
-        const policies = {
-            privacy: {
-                title: "Privacy Policy",
-                body: "At Cars Village Global, we prioritize your security. We collect your data solely for account management and transaction verification. We never share your personal information with third parties without your explicit consent. All payment data is encrypted via industry-standard protocols."
-            },
-            shipping: {
-                title: "Global Shipping Policy",
-                body: "We offer worldwide shipping to major ports. For international orders, shipping quotes are calculated based on destination and vehicle weight. Please note that customers are responsible for local import duties and taxes in their respective countries."
-            },
-            delivery: {
-                title: "Delivery Policy",
-                body: "Within Nigeria, we offer doorstep delivery via our specialized car haulers. Delivery within Lagos takes 24-48 hours. Outside Lagos, delivery typically takes 3-7 business days depending on the state and security clearance."
-            },
-            pickup: {
-                title: "Vehicle Pick-up Policy",
-                body: "Customers can physically inspect and pick up their vehicles at our showroom: 76, Iju Ishaga Road, Ajilete Bus Stop Ifako Ijaiye, Lagos. Please bring a valid government-issued ID and your transaction receipt. Appointments must be scheduled 24 hours in advance."
-            }
-        };
-
-        function openPolicy(type) {
-            const modal = document.getElementById('policy-modal');
-            document.getElementById('policy-title').innerText = policies[type].title;
-            document.getElementById('policy-body').innerText = policies[type].body;
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
+        if (authError) {
+            errorMsg.innerText = authError.message;
+            errorMsg.classList.remove('hidden');
+            signupBtn.innerHTML = "Register Now";
+            signupBtn.disabled = false;
+            return;
         }
 
-        function closePolicy() {
-            document.getElementById('policy-modal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
+        // STEP 2: Automatically store in 'profiles' table
+        if (data.user) {
+            const { error: profileError } = await supabaseClient
+                .from('profiles')
+                .insert([
+                    { 
+                        id: data.user.id, 
+                        full_name: fullName, 
+                        updated_at: new Date().toISOString() // Fixed date format
+                    }
+                ]);
 
-        lucide.createIcons();
-    </script>
+            if (profileError) {
+                console.error("Profile store error:", profileError);
+                // We continue anyway because the account exists
+            }
+
+            // SUCCESS: Welcome message and redirect to Dashboard
+            alert("Welcome to Cars Village Global, " + fullName + "!");
+            window.location.href = "dashboard.html"; 
+        }
+    };
+
+    // 3. POLICY MODAL LOGIC (Detailed)
+    const policies = {
+        privacy: {
+            title: "Privacy Policy",
+            body: "At Cars Village Global, we prioritize your security. We collect your data solely for account management and transaction verification. We never share your personal information with third parties without your explicit consent. All payment data is encrypted via industry-standard protocols."
+        },
+        shipping: {
+            title: "Global Shipping Policy",
+            body: "We offer worldwide shipping to major ports. For international orders, shipping quotes are calculated based on destination and vehicle weight. Please note that customers are responsible for local import duties and taxes in their respective countries."
+        },
+        delivery: {
+            title: "Delivery Policy",
+            body: "Within Nigeria, we offer doorstep delivery via our specialized car haulers. Delivery within Lagos takes 24-48 hours. Outside Lagos, delivery typically takes 3-7 business days depending on the state and security clearance."
+        },
+        pickup: {
+            title: "Vehicle Pick-up Policy",
+            body: "Customers can physically inspect and pick up their vehicles at our showroom: 76, Iju Ishaga Road, Ajilete Bus Stop Ifako Ijaiye, Lagos. Please bring a valid government-issued ID and your transaction receipt. Appointments must be scheduled 24 hours in advance."
+        }
+    };
+
+    function openPolicy(type) {
+        const modal = document.getElementById('policy-modal');
+        document.getElementById('policy-title').innerText = policies[type].title;
+        document.getElementById('policy-body').innerText = policies[type].body;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePolicy() {
+        document.getElementById('policy-modal').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    lucide.createIcons();
+</script>
 </body>
 </html>
