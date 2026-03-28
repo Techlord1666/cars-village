@@ -166,11 +166,12 @@
                 errorMsg.classList.remove('hidden');
                 loginBtn.innerHTML = "SIGN IN";
                 loginBtn.disabled = false;
-            } else {
-                window.location.href = "index.html"; // Redirect to home on success
-            }
-        };
-
+            } 
+           if (error) { ... } 
+          else {
+           window.location.href = "dashboard.html"; // Redirect to dashboard after login
+          }
+       
         // 3. POLICY MODALS
         const policies = {
             privacy: { title: "Privacy Policy", body: "At Cars Village Global, we prioritize your security. We collect your data solely for account management and transaction verification. We never share your personal information with third parties without your explicit consent. All payment data is encrypted via industry-standard protocols." },
