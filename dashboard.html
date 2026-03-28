@@ -119,17 +119,16 @@
 
     let currentUser = null;
 
-    // 1. Check Authentication (Recognize the logged-in client)
+    // 1. Check Authentication
     async function checkUser() {
         const { data: { user }, error } = await supabaseClient.auth.getUser();
         
         if (error || !user) {
-            // If not logged in, kick back to login page
             window.location.href = "login.html";
         } else {
             currentUser = user;
-            // Set user name from metadata or email
-            document.getElementById('user-name').innerText = user.user_metadata.full_name || user.email;
+            // First attempt to show name from Auth metadata
+            document.getElementById('user-name').innerText = user.user_metadata.full_name || "Elite Member";
             loadProfile();
             loadOrders();
         }
@@ -144,6 +143,9 @@
             .single();
 
         if (data) {
+            // Update name from database if it exists there
+            document.getElementById('user-name').innerText = data.full_name || currentUser.user_metadata.full_name || "Elite Member";
+            
             document.getElementById('prof-phone').value = data.phone || '';
             document.getElementById('prof-address').value = data.delivery_address || '';
             document.getElementById('prof-city').value = data.city || '';
@@ -151,11 +153,12 @@
         }
     }
 
-    // 3. Save/Update Profile Logic
+    // 3. Save/Update Profile Logic (FIXED DATE FORMAT)
     document.getElementById('profile-form').onsubmit = async (e) => {
         e.preventDefault();
         
         const btn = e.target.querySelector('button');
+        const originalText = btn.innerText;
         btn.innerText = "SAVING...";
         btn.disabled = true;
 
@@ -165,21 +168,20 @@
             delivery_address: document.getElementById('prof-address').value,
             city: document.getElementById('prof-city').value,
             state: document.getElementById('prof-state').value,
-            full_name: currentUser.user_metadata.full_name || "Elite Member",
-            updated_at: new Date()
+            full_name: document.getElementById('user-name').innerText,
+            updated_at: new Date().toISOString() // FIXED: Use ISO string for database compatibility
         };
 
-        // UPSERT means "Update if exists, otherwise Insert"
         const { error } = await supabaseClient.from('profiles').upsert(updates);
 
         if (error) {
             console.error("Error details:", error);
             alert("Update Failed: " + error.message);
-            btn.innerText = "Update Information";
+            btn.innerText = originalText;
             btn.disabled = false;
         } else {
             alert("Delivery information updated successfully!");
-            btn.innerText = "Update Information";
+            btn.innerText = originalText;
             btn.disabled = false;
         }
     };
@@ -195,7 +197,7 @@
             document.getElementById('active-count').innerText = data.length;
             const list = document.getElementById('order-list');
             list.innerHTML = data.map(order => `
-                <div class="glass p-6 border border-white/5 mb-4">
+                <div class="glass p-6 border border-white/5 mb-6">
                     <div class="flex justify-between items-center mb-4">
                         <div>
                             <h4 class="font-bold uppercase tracking-widest text-sm">${order.car_name}</h4>
@@ -206,7 +208,7 @@
                     <div class="w-full bg-gray-900 h-1 rounded-full overflow-hidden">
                         <div class="bg-gold h-full transition-all duration-1000" style="width: ${order.progress}%"></div>
                     </div>
-                    <div class="mt-4 flex justify-between text-[9px] text-gray-600 uppercase">
+                    <div class="mt-4 flex justify-between text-[9px] text-gray-600 uppercase tracking-tighter">
                         <span>Confirmed</span>
                         <span>Shipping</span>
                         <span>Customs</span>
@@ -222,8 +224,12 @@
         document.querySelectorAll('.dashboard-section').forEach(s => s.classList.add('hidden'));
         document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
         
-        document.getElementById(`section-${id}`).classList.remove('hidden');
-        event.currentTarget.classList.add('active');
+        const target = document.getElementById(`section-${id}`);
+        if(target) target.classList.remove('hidden');
+        
+        if(event && event.currentTarget) {
+            event.currentTarget.classList.add('active');
+        }
     }
 
     // Sign Out Logic
