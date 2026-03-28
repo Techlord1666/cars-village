@@ -19,7 +19,6 @@
         #mobile-nav { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         #mobile-nav.active { transform: translateX(0); }
         
-        /* New Luxury Card Styling */
         .car-card { background: #161616; border-radius: 8px; overflow: hidden; transition: 0.3s; border: 1px solid #222; }
         .car-card:hover { border-color: #d4af37; transform: translateY(-5px); }
         .badge { background: rgba(212, 175, 55, 0.1); color: #d4af37; border: 1px solid rgba(212, 175, 55, 0.3); padding: 2px 8px; font-size: 8px; font-weight: bold; letter-spacing: 1px; border-radius: 2px; }
@@ -29,13 +28,13 @@
 
     <!-- NAVIGATION -->
     <nav class="flex items-center justify-between px-6 md:px-12 py-6 absolute w-full z-50 bg-black/40 backdrop-blur-sm border-b border-white/5">
-        <div class="text-xl md:text-2xl font-bold tracking-tighter text-white">
+        <div class="text-xl md:text-2xl font-bold tracking-tighter">
             CARS VILLAGE <span class="gold-text font-light italic uppercase">Global</span>
         </div>
         <div class="hidden md:flex items-center gap-10 text-[10px] uppercase tracking-[0.2em]">
             <a href="index.html" class="gold-text">Home</a>
             <a href="#inventory" class="hover:text-gold transition">Inventory</a>
-            <a href="#about" class="hover:text-gold transition text-white">About Us</a>
+            <a href="#about" class="hover:text-gold transition">About Us</a>
             <a href="login.html" class="bg-gold text-black px-6 py-2 text-xs font-bold uppercase rounded-sm hover:bg-[#f2d472] transition">Login</a>
             <a href="signup.html" class="bg-gold text-black px-6 py-2 text-xs font-bold uppercase rounded-sm hover:bg-[#f2d472] transition">Sign Up</a>
             <button onclick="toggleLoginModal()" class="text-gray-300 hover:text-gold transition"><i data-lucide="user" class="w-5 h-5"></i></button>
@@ -53,13 +52,13 @@
         <div class="flex justify-end">
             <button id="close-menu" class="text-white p-2"><i data-lucide="x" class="w-8 h-8"></i></button>
         </div>
-        <div class="flex flex-col gap-5 mt-10 text-2xl font-serif italic text-center">
+        <div class="flex flex-col gap-5 mt-10 text-2xl font-serif italic text-center text-white">
             <a href="index.html" class="gold-text" onclick="closeMobileMenu()">Home</a>
             <a href="#inventory" onclick="closeMobileMenu()">Inventory</a>
             <a href="#about" onclick="closeMobileMenu()">About Us</a>
             <a href="signup.html" class="text-sm uppercase tracking-widest bg-gold text-black py-4 mt-4">Sign Up</a>
-            <a href="login.html" class="text-[10px] uppercase tracking-widest bg-gold text-black py-4 mt-4">Login</a>
-            <button onclick="toggleLoginModal(); closeMobileMenu();" class="text-sm uppercase tracking-widest border border-gray-800 py-4 text-white">Staff Login</button>
+            <a href="login.html" class="text-sm uppercase tracking-widest bg-gold text-black py-4 mt-4">Login</a>
+            <button onclick="toggleLoginModal(); closeMobileMenu();" class="text-sm uppercase tracking-widest border border-gray-800 py-4">Staff Login</button>
         </div>
     </div>
 
@@ -85,6 +84,9 @@
             <p class="text-gray-400 leading-loose mb-8 text-lg">
                 Located at <strong>76, Iju Ishaga Road, Ajilete Bus Stop, Ifako Ijaiye, Agege, Lagos, Nigeria</strong>, Cars Village Global is more than a dealership. We are a community built for the discerning driver. We specialize in global procurement, high-end sales, and seamless swaps.
             </p>
+            <div class="border-l-4 border-gold pl-8 py-4 bg-white/5">
+                <p class="text-md italic text-gray-200 uppercase tracking-widest">"Experience craftsmanship and service beyond compare in the heart of Lagos."</p>
+            </div>
         </div>
     </section>
 
@@ -92,10 +94,10 @@
     <section id="inventory" class="px-6 md:px-12 py-24 bg-black border-t border-gray-900">
         <div class="flex justify-between items-end mb-20 border-b border-gray-800 pb-10">
             <h2 class="text-3xl md:text-5xl font-serif italic uppercase">Available Inventory</h2>
-            <p class="text-gray-400 text-[10px] uppercase tracking-widest hidden md:block">Sort By: Price High to Low</p>
+            <p class="text-gray-400 text-[10px] uppercase tracking-widest hidden md:block">Luxury Showroom</p>
         </div>
         <div id="car-list" class="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-6">
-            <!-- Inventory will load here -->
+            <p class="col-span-full text-center text-gray-600 animate-pulse">Loading Premium Assets...</p>
         </div>
     </section>
 
@@ -124,20 +126,20 @@
     <!-- CLIENT RATINGS -->
     <section class="px-6 md:px-12 py-24 bg-black">
         <h2 class="text-center text-3xl md:text-5xl font-serif italic mb-20 uppercase">Client <span class="gold-text">Testimonials</span></h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-white">
             <div class="glass p-8 border border-gray-800">
                 <div class="flex gap-1 mb-4 text-gold"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-                <p class="text-sm italic text-gray-400 mb-6 text-white">"Transparency is unmatched. My trade-in was handled perfectly."</p>
+                <p class="text-sm italic text-gray-400 mb-6">"Transparency is unmatched. My trade-in was handled perfectly."</p>
                 <p class="text-[10px] font-bold uppercase gold-text">— Chief Adekunle</p>
             </div>
             <div class="glass p-8 border border-gray-800">
                 <div class="flex gap-1 mb-4 text-gold"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-                <p class="text-sm italic text-gray-400 mb-6 text-white">"International shipping from Canada arrived in record time."</p>
+                <p class="text-sm italic text-gray-400 mb-6">"International shipping from Canada arrived in record time."</p>
                 <p class="text-[10px] font-bold uppercase gold-text">— Dr. Sarah O.</p>
             </div>
             <div class="glass p-8 border border-gray-800">
                 <div class="flex gap-1 mb-4 text-gold"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-                <p class="text-sm italic text-gray-400 mb-6 text-white">"Best place for verified luxury cars in Nigeria."</p>
+                <p class="text-sm italic text-gray-400 mb-6">"Best place for verified luxury cars in Nigeria."</p>
                 <p class="text-[10px] font-bold uppercase gold-text">— Mr. Emeka</p>
             </div>
         </div>
@@ -162,8 +164,9 @@
                 <p class="font-bold text-xl mb-8 tracking-tighter uppercase italic">CAR VILLAGE <span class="gold-text">GLOBAL</span></p>
                 <p class="text-[10px] text-gray-500 leading-loose mb-8">76, Iju Ishaga Road, Ajilete Bus Stop, Ifako Ijaiye, Agege, Lagos, Nigeria</p>
                 <div class="flex justify-center md:justify-start gap-8">
-                    <a href="https://www.facebook.com/profile.php?id=61577436842297" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="facebook"></i></a>
-                    <a href="https://www.instagram.com/carsvillageglobal" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61577436842297" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="facebook" style="width: 24px; height: 24px;"></i></a>
+                    <a href="https://www.instagram.com/carsvillageglobal" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="instagram" style="width: 24px; height: 24px;"></i></a>
+                    <a href="#" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="music-2" style="width: 24px; height: 24px;"></i></a>
                 </div>
             </div>
             <div class="text-center md:text-left">
@@ -192,13 +195,11 @@
     <!-- MODALS -->
     <div id="policy-modal" class="modal"><div class="bg-[#0a0a0a] border border-gray-800 w-full max-w-2xl p-8 md:p-12 relative max-h-[85vh] overflow-y-auto rounded-sm"><button onclick="closePolicy()" class="absolute top-6 right-6 text-gray-500 hover:text-white"><i data-lucide="x"></i></button><h2 id="policy-title" class="text-3xl font-serif italic mb-8 gold-text uppercase"></h2><div id="policy-body" class="text-gray-400 text-xs leading-relaxed space-y-6 text-justify"></div></div></div>
     <div id="car-modal" class="modal"><div class="bg-[#111] max-w-5xl w-full p-8 rounded-sm relative max-h-[90vh] overflow-y-auto"><button onclick="closeModal()" class="absolute top-6 right-6 text-white"><i data-lucide="x"></i></button><div id="modal-content" class="grid md:grid-cols-2 gap-12"></div></div></div>
+    <div id="login-modal" class="modal"><div class="bg-[#111] max-w-sm w-full p-10 text-center rounded-sm text-white"><h2 class="text-2xl font-serif italic mb-8 gold-text uppercase">Staff Portal</h2><input type="email" id="login-email" placeholder="EMAIL" class="w-full bg-black border border-gray-800 p-4 text-xs mb-4 outline-none focus:border-gold text-white uppercase"><input type="password" id="login-pass" placeholder="PASSWORD" class="w-full bg-black border border-gray-800 p-4 text-xs mb-8 outline-none focus:border-gold text-white"><button onclick="handleLogin()" class="w-full bg-gold text-black py-4 font-bold uppercase text-xs">Sign In</button></div></div>
     
-    <!-- STAFF LOGIN MODAL -->
-    <div id="login-modal" class="modal"><div class="bg-[#111] max-w-sm w-full p-10 text-center rounded-sm text-white"><h2 class="text-2xl font-serif italic mb-8 gold-text">Staff Portal</h2><input type="email" id="login-email" placeholder="EMAIL" class="w-full bg-black border border-gray-800 p-4 text-xs mb-4 outline-none focus:border-gold text-white uppercase"><input type="password" id="login-pass" placeholder="PASSWORD" class="w-full bg-black border border-gray-800 p-4 text-xs mb-8 outline-none focus:border-gold text-white"><button onclick="handleLogin()" class="w-full bg-gold text-black py-4 font-bold uppercase text-xs">Sign In</button></div></div>
-
     <!-- ADD/EDIT MODAL -->
     <div id="upload-modal" class="modal">
-        <div class="bg-[#111] max-w-2xl w-full p-10 rounded-sm overflow-y-auto max-h-[90vh] text-white">
+        <div class="bg-[#111] max-w-2xl w-full p-8 md:p-10 rounded-sm overflow-y-auto max-h-[90vh] text-white">
             <h2 id="modal-title" class="text-2xl font-serif italic mb-8 gold-text uppercase">Add Premium Asset</h2>
             <form id="upload-form" class="space-y-4">
                 <div class="grid grid-cols-2 gap-4">
@@ -219,6 +220,7 @@
                         <option value="PETROL">PETROL</option>
                         <option value="DIESEL">DIESEL</option>
                         <option value="HYBRID">HYBRID</option>
+                        <option value="ELECTRIC">ELECTRIC</option>
                     </select>
                 </div>
                 <select id="car-condition" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white uppercase">
@@ -226,7 +228,7 @@
                     <option value="BRAND NEW">BRAND NEW</option>
                     <option value="NIGERIAN USED">NIGERIAN USED</option>
                 </select>
-                <textarea id="car-desc" placeholder="FULL SPECIFICATIONS" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none h-24 text-white uppercase" required></textarea>
+                <textarea id="car-desc" placeholder="SPECIFICATIONS & DESCRIPTION" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none h-24 text-white uppercase" required></textarea>
                 <div class="border-2 border-dashed border-gray-800 p-6 text-center relative hover:border-gold transition cursor-pointer">
                     <input type="file" id="car-files" accept="image/*" multiple class="absolute inset-0 opacity-0 cursor-pointer" onchange="updateFileCount()">
                     <p id="file-label" class="text-[10px] text-gray-500 uppercase tracking-widest">Select Images (Max 5)</p>
@@ -244,7 +246,6 @@
 
     let currentEditId = null;
 
-    // Navigation
     const menuBtn = document.getElementById('menu-btn');
     const closeBtn = document.getElementById('close-menu');
     const mobileNav = document.getElementById('mobile-nav');
@@ -252,7 +253,6 @@
     closeBtn.onclick = () => mobileNav.classList.remove('active');
     function closeMobileMenu() { mobileNav.classList.remove('active'); }
 
-    // Fetch Inventory
     async function fetchCars() {
         const { data, error } = await supabaseClient.from('cars').select('*').order('created_at', { ascending: false });
         if (!error) renderCars(data);
@@ -271,24 +271,20 @@
                         <button onclick="deleteCar('${car.id}')" class="bg-red-600 p-1 rounded-sm"><i data-lucide="trash-2" class="w-3 h-3 text-white"></i></button>
                     </div>
                 ` : ''}
-                
-                <div class="relative h-28 md:h-48 overflow-hidden">
+                <div class="relative h-32 md:h-48 overflow-hidden cursor-pointer" onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})">
                     <img src="${car.images[0]}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                     <span class="absolute top-2 left-2 badge uppercase tracking-tighter">${car.condition || 'FOREIGN USED'}</span>
                 </div>
-                
                 <div class="p-3">
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-bold text-[11px] md:text-[13px] uppercase tracking-tight leading-tight w-4/5">${car.name}</h3>
-                        <span class="text-[8px] md:text-[9px] text-gray-600 font-bold">${car.year || ''}</span>
+                        <h3 class="font-bold text-[11px] md:text-[13px] uppercase tracking-tight leading-tight w-4/5 text-white">${car.name}</h3>
+                        <span class="text-[8px] md:text-[9px] text-gray-500 font-bold">${car.year || ''}</span>
                     </div>
-                    
-                    <div class="flex gap-2 md:gap-3 text-[8px] md:text-[9px] text-gray-500 mb-4 items-center">
+                    <div class="flex gap-2 text-[8px] md:text-[9px] text-gray-500 mb-4 items-center uppercase">
                         <span class="flex items-center gap-1"><i data-lucide="gauge" class="w-2 md:w-3"></i>${car.km || '0'} KM</span>
                         <span class="flex items-center gap-1"><i data-lucide="settings" class="w-2 md:w-3"></i>${car.transmission || 'AUTO'}</span>
                         <span class="flex items-center gap-1"><i data-lucide="fuel" class="w-2 md:w-3"></i>${car.fuel || 'PETROL'}</span>
                     </div>
-                    
                     <div class="flex justify-between items-center mt-auto">
                         <p class="gold-text font-bold text-xs md:text-sm tracking-tighter">${car.price}</p>
                         <button onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})" class="bg-[#222] hover:bg-[#d4af37] hover:text-black p-2 rounded-sm transition">
@@ -318,7 +314,6 @@
         document.getElementById('car-trans').value = car.transmission || 'AUTO';
         document.getElementById('car-fuel').value = car.fuel || 'PETROL';
         document.getElementById('car-condition').value = car.condition || 'FOREIGN USED';
-        document.getElementById('file-label').innerText = "Using existing photos";
         document.getElementById('upload-modal').classList.add('active');
     }
 
@@ -326,7 +321,6 @@
         currentEditId = null;
         document.getElementById('modal-title').innerText = "Add Premium Asset";
         document.getElementById('upload-form').reset();
-        document.getElementById('file-label').innerText = "Select Images (Max 5)";
         toggleUploadModal();
     }
 
@@ -335,9 +329,7 @@
         content.innerHTML = `
             <div class="space-y-4">
                 <img src="${car.images[0]}" class="w-full rounded-sm">
-                <div class="grid grid-cols-4 gap-2">
-                    ${car.images.slice(1).map(img => `<img src="${img}" class="h-16 w-full object-cover border border-gray-800">`).join('')}
-                </div>
+                <div class="grid grid-cols-4 gap-2">${car.images.slice(1).map(img => `<img src="${img}" class="h-16 w-full object-cover border border-gray-800">`).join('')}</div>
             </div>
             <div class="flex flex-col justify-center text-white">
                 <h2 class="text-3xl font-serif italic mb-2 uppercase">${car.name} <span class="text-sm font-sans font-bold text-gray-500">${car.year || ''}</span></h2>
@@ -346,7 +338,7 @@
                     <span>${car.km || '0'} KM</span> <span>${car.transmission || 'AUTO'}</span> <span>${car.fuel || 'PETROL'}</span> <span>${car.condition || 'USED'}</span>
                 </div>
                 <p class="text-gray-400 text-xs leading-loose text-justify mb-10 border-t border-gray-800 pt-6">${car.description}</p>
-                <a href="https://wa.me/2348024417215?text=I am interested in ${car.name} (${car.year})" target="_blank" class="block text-center bg-green-600 text-white py-4 font-bold uppercase text-[10px]">Chat with Concierge</a>
+                <a href="https://wa.me/2348024417215?text=I am interested in ${car.name} (${car.year})" target="_blank" class="block text-center bg-green-600 text-white py-4 font-bold uppercase text-[10px]">WhatsApp Inquiry</a>
             </div>
         `;
         document.getElementById('car-modal').classList.add('active');
@@ -371,40 +363,60 @@
         const f = document.getElementById('car-files').files;
         b.innerText = "Processing Asset..."; b.disabled = true;
         
-        let urls = null;
-        if (f.length > 0) {
-            urls = [];
-            for (let i = 0; i < f.length; i++) {
-                const name = `${Math.random()}-${Date.now()}`;
-                await supabaseClient.storage.from('car-images').upload(name, f[i]);
-                urls.push(supabaseClient.storage.from('car-images').getPublicUrl(name).data.publicUrl);
+        try {
+            let urls = null;
+            if (f.length > 0) {
+                urls = [];
+                for (let i = 0; i < f.length; i++) {
+                    const name = `${Math.random()}-${Date.now()}`;
+                    await supabaseClient.storage.from('car-images').upload(name, f[i]);
+                    urls.push(supabaseClient.storage.from('car-images').getPublicUrl(name).data.publicUrl);
+                }
             }
-        }
 
-        const carData = { 
-            name: document.getElementById('car-name').value, 
-            price: document.getElementById('car-price').value, 
-            description: document.getElementById('car-desc').value,
-            year: document.getElementById('car-year').value,
-            km: document.getElementById('car-km').value,
-            transmission: document.getElementById('car-trans').value,
-            fuel: document.getElementById('car-fuel').value,
-            condition: document.getElementById('car-condition').value
-        };
-        if (urls) carData.images = urls;
+            const carData = { 
+                name: document.getElementById('car-name').value, 
+                price: document.getElementById('car-price').value, 
+                description: document.getElementById('car-desc').value,
+                year: document.getElementById('car-year').value,
+                km: document.getElementById('car-km').value,
+                transmission: document.getElementById('car-trans').value,
+                fuel: document.getElementById('car-fuel').value,
+                condition: document.getElementById('car-condition').value
+            };
+            if (urls) carData.images = urls;
 
-        if (currentEditId) {
-            await supabaseClient.from('cars').update(carData).eq('id', currentEditId);
-        } else {
-            await supabaseClient.from('cars').insert([carData]);
+            let result;
+            if (currentEditId) {
+                result = await supabaseClient.from('cars').update(carData).eq('id', currentEditId);
+            } else {
+                if (!urls) throw new Error("Images required for new car");
+                result = await supabaseClient.from('cars').insert([carData]);
+            }
+
+            if (result.error) throw result.error;
+            
+            alert("Showroom Updated Successfully!");
+            location.reload();
+        } catch (err) {
+            alert("Error: " + err.message);
+            b.innerText = "Publish Inventory";
+            b.disabled = false;
         }
-        location.reload();
+    };
+
+    document.getElementById('contact-form').onsubmit = (e) => {
+        e.preventDefault();
+        const name = document.getElementById('contact-name').value;
+        const msg = document.getElementById('contact-msg').value;
+        const text = encodeURIComponent(`Hello Cars Village Global,\nName: ${name}\nMessage: ${msg}`);
+        window.open(`https://wa.me/2348024417215?text=${text}`, '_blank');
     };
 
     function openPolicy(t) { 
-        const policies = { privacy: { title: "Privacy", body: "Data protection is our priority." }, shipping: { title: "Shipping", body: "Global shipping handled by concierge." } };
-        document.getElementById('policy-title').innerText = policies[t].title; 
-        document.getElementById('policy-body').innerText = policies[t].body; 
+        const p = { privacy: { title: "Privacy", body: "We protect your data." }, shipping: { title: "Shipping", body: "Worldwide port delivery." } };
+        document.getElementById('policy-title').innerText = p[t].title; 
+        document.getElementById('policy-body').innerText = p[t].body; 
         document.getElementById('policy-modal').classList.add('active'); 
     }
     function closeModal() { document.getElementById('car-modal').classList.remove('active'); }
