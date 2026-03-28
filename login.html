@@ -136,59 +136,76 @@
         </div>
     </div>
 
-    <script>
-        // 1. SUPABASE CONFIGURATION
-        const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co"; 
-        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
-        const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+   <script>
+    // 1. SUPABASE CONFIGURATION
+    const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co"; 
+    const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
+    const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
-        // 2. LOGIN LOGIC
-        const loginForm = document.getElementById('login-form');
-        const errorMsg = document.getElementById('error-msg');
-        const loginBtn = document.getElementById('login-btn');
+    // 2. LOGIN LOGIC
+    const loginForm = document.getElementById('login-form');
+    const errorMsg = document.getElementById('error-msg');
+    const loginBtn = document.getElementById('login-btn');
 
-        loginForm.onsubmit = async (e) => {
-            e.preventDefault();
-            loginBtn.innerHTML = "AUTHENTICATING...";
-            loginBtn.disabled = true;
-            errorMsg.classList.add('hidden');
+    loginForm.onsubmit = async (e) => {
+        e.preventDefault();
+        loginBtn.innerHTML = "AUTHENTICATING...";
+        loginBtn.disabled = true;
+        errorMsg.classList.add('hidden');
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-            const { data, error } = await supabaseClient.auth.signInWithPassword({
-                email: email,
-                password: password,
-            });
+        // Perform the login
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password,
+        });
 
-            if (error) {
-                errorMsg.innerText = error.message;
-                errorMsg.classList.remove('hidden');
-                loginBtn.innerHTML = "SIGN IN";
-                loginBtn.disabled = false;
-            } 
-           if (error) { ... } 
-          else {
-           window.location.href = "dashboard.html"; // Redirect to dashboard after login
-          }
-       
-        // 3. POLICY MODALS
-        const policies = {
-            privacy: { title: "Privacy Policy", body: "At Cars Village Global, we prioritize your security. We collect your data solely for account management and transaction verification. We never share your personal information with third parties without your explicit consent. All payment data is encrypted via industry-standard protocols." },
-            shipping: { title: "Global Shipping Policy", body: "We offer worldwide shipping to major international ports. For global orders, shipping quotes are calculated based on destination port, vehicle weight, and insurance requirements. Please note that customers are responsible for local import duties and taxes." },
-            delivery: { title: "Delivery Policy", body: "Within Nigeria, we provide high-security doorstep delivery via specialized car haulers. Delivery within Lagos is completed within 24-48 hours. Nationwide delivery typically takes 3-7 business days." },
-            pickup: { title: "Pick-up Policy", body: "Visit our flagship showroom: 76, Iju Ishaga Road, Ajilete Bus Stop Ifako Ijaiye, Lagos. Please bring a valid government ID and confirmed receipt. Appointments required 24h in advance." }
-        };
-
-        function openPolicy(type) {
-            document.getElementById('policy-title').innerText = policies[type].title;
-            document.getElementById('policy-body').innerText = policies[type].body;
-            document.getElementById('policy-modal').classList.add('active');
+        if (error) {
+            // If there is an error, show it to the user
+            errorMsg.innerText = error.message;
+            errorMsg.classList.remove('hidden');
+            loginBtn.innerHTML = "SIGN IN";
+            loginBtn.disabled = false;
+        } else {
+            // Success! Redirect to the client dashboard
+            window.location.href = "dashboard.html"; 
         }
+    };
 
-        function closePolicy() { document.getElementById('policy-modal').classList.remove('active'); }
+    // 3. POLICY MODALS
+    const policies = {
+        privacy: { 
+            title: "Privacy Policy", 
+            body: "At Cars Village Global, we prioritize your security. We collect your data solely for account management and transaction verification. We never share your personal information with third parties without your explicit consent. All payment data is encrypted via industry-standard protocols." 
+        },
+        shipping: { 
+            title: "Global Shipping Policy", 
+            body: "We offer worldwide shipping to major international ports. For global orders, shipping quotes are calculated based on destination port, vehicle weight, and insurance requirements. Please note that customers are responsible for local import duties and taxes." 
+        },
+        delivery: { 
+            title: "Delivery Policy", 
+            body: "Within Nigeria, we provide high-security doorstep delivery via specialized car haulers. Delivery within Lagos is completed within 24-48 hours. Nationwide delivery typically takes 3-7 business days." 
+        },
+        pickup: { 
+            title: "Pick-up Policy", 
+            body: "Visit our flagship showroom: 76, Iju Ishaga Road, Ajilete Bus Stop Ifako Ijaiye, Lagos. Please bring a valid government ID and confirmed receipt. Appointments required 24h in advance." 
+        }
+    };
 
-        lucide.createIcons();
-    </script>
+    function openPolicy(type) {
+        document.getElementById('policy-title').innerText = policies[type].title;
+        document.getElementById('policy-body').innerText = policies[type].body;
+        document.getElementById('policy-modal').classList.add('active');
+    }
+
+    function closePolicy() { 
+        document.getElementById('policy-modal').classList.remove('active'); 
+    }
+
+    // Initialize Icons
+    lucide.createIcons();
+</script>
 </body>
 </html>
