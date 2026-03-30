@@ -266,193 +266,236 @@
         </div>
     </div>
 
-    <script>
-    const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co";
-    const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
-    const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
+ <script>
+const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co";
+const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
+const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
-    let currentEditId = null;
+let currentEditId = null;
 
-    const menuBtn = document.getElementById('menu-btn');
-    const closeBtn = document.getElementById('close-menu');
-    const mobileNav = document.getElementById('mobile-nav');
-    menuBtn.onclick = () => mobileNav.classList.add('active');
-    closeBtn.onclick = () => mobileNav.classList.remove('active');
-    function closeMobileMenu() { mobileNav.classList.remove('active'); }
+const menuBtn = document.getElementById('menu-btn');
+const closeBtn = document.getElementById('close-menu');
+const mobileNav = document.getElementById('mobile-nav');
+menuBtn.onclick = () => mobileNav.classList.add('active');
+closeBtn.onclick = () => mobileNav.classList.remove('active');
+function closeMobileMenu() { mobileNav.classList.remove('active'); }
 
-    async function fetchCars() {
-        const { data, error } = await supabaseClient.from('cars').select('*').order('created_at', { ascending: false });
-        if (!error) renderCars(data);
-    }
+async function fetchCars() {
+    const { data, error } = await supabaseClient.from('cars').select('*').order('created_at', { ascending: false });
+    if (!error) renderCars(data);
+}
 
-    function renderCars(cars) {
-        const list = document.getElementById('car-list');
-        const isAdmin = !document.getElementById('admin-panel-btn').classList.contains('hidden');
-        if (cars.length === 0) { list.innerHTML = '<p class="col-span-full text-center text-gray-600 text-xs uppercase">Showroom Empty</p>'; return; }
-        
-        list.innerHTML = cars.map(car => `
-            <div class="group relative car-card">
-                ${isAdmin ? `
-                    <div class="absolute top-2 right-2 z-10 flex gap-1">
-                        <button onclick="prepareEdit(${JSON.stringify(car).replace(/"/g, '&quot;')})" class="bg-blue-600 p-1 rounded-sm"><i data-lucide="edit" class="w-3 h-3 text-white"></i></button>
-                        <button onclick="deleteCar('${car.id}')" class="bg-red-600 p-1 rounded-sm"><i data-lucide="trash-2" class="w-3 h-3 text-white"></i></button>
-                    </div>
-                ` : ''}
-                <div class="relative h-32 md:h-48 overflow-hidden cursor-pointer" onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})">
-                    <img src="${car.images[0]}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                    <span class="absolute top-2 left-2 badge uppercase tracking-tighter">${car.condition || 'FOREIGN USED'}</span>
-                </div>
-                <div class="p-3">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-bold text-[11px] md:text-[13px] uppercase tracking-tight leading-tight w-4/5 text-white">${car.name}</h3>
-                        <span class="text-[8px] md:text-[9px] text-gray-500 font-bold">${car.year || ''}</span>
-                    </div>
-                    <div class="flex gap-2 text-[8px] md:text-[9px] text-gray-500 mb-4 items-center uppercase">
-                        <span class="flex items-center gap-1"><i data-lucide="gauge" class="w-2 md:w-3"></i>${car.km || '0'} KM</span>
-                        <span class="flex items-center gap-1"><i data-lucide="settings" class="w-2 md:w-3"></i>${car.transmission || 'AUTO'}</span>
-                        <span class="flex items-center gap-1"><i data-lucide="fuel" class="w-2 md:w-3"></i>${car.fuel || 'PETROL'}</span>
-                    </div>
-                    <div class="flex justify-between items-center mt-auto">
-                        <p class="gold-text font-bold text-xs md:text-sm tracking-tighter">${car.price}</p>
-                        <button onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})" class="bg-[#222] hover:bg-[#d4af37] hover:text-black p-2 rounded-sm transition">
-                            <i data-lucide="chevron-right" class="w-3 h-3"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-        lucide.createIcons();
-    }
-
-    async function deleteCar(id) {
-        if (!confirm("Remove this asset?")) return;
-        await supabaseClient.from('cars').delete().eq('id', id);
-        fetchCars();
-    }
-
-    function prepareEdit(car) {
-        currentEditId = car.id;
-        document.getElementById('modal-title').innerText = "Edit Premium Asset";
-        document.getElementById('car-name').value = car.name;
-        document.getElementById('car-price').value = car.price;
-        document.getElementById('car-desc').value = car.description;
-        document.getElementById('car-year').value = car.year || '';
-        document.getElementById('car-km').value = car.km || '';
-        document.getElementById('car-trans').value = car.transmission || 'AUTO';
-        document.getElementById('car-fuel').value = car.fuel || 'PETROL';
-        document.getElementById('car-condition').value = car.condition || 'FOREIGN USED';
-        document.getElementById('upload-modal').classList.add('active');
-    }
-
-    function prepareAdd() {
-        currentEditId = null;
-        document.getElementById('modal-title').innerText = "Add Premium Asset";
-        document.getElementById('upload-form').reset();
-        toggleUploadModal();
-    }
-
-    function showDetails(car) {
-        const content = document.getElementById('modal-content');
-        content.innerHTML = `
-            <div class="space-y-4">
-                <img src="${car.images[0]}" class="w-full rounded-sm">
-                <div class="grid grid-cols-4 gap-2">${car.images.slice(1).map(img => `<img src="${img}" class="h-16 w-full object-cover border border-gray-800">`).join('')}</div>
-            </div>
-            <div class="flex flex-col justify-center text-white">
-                <h2 class="text-3xl font-serif italic mb-2 uppercase">${car.name} <span class="text-sm font-sans font-bold text-gray-500">${car.year || ''}</span></h2>
-                <p class="gold-text text-2xl font-bold mb-4">${car.price}</p>
-                <div class="flex gap-4 text-[10px] text-gray-400 mb-6 uppercase tracking-widest font-bold">
-                    <span>${car.km || '0'} KM</span> <span>${car.transmission || 'AUTO'}</span> <span>${car.fuel || 'PETROL'}</span> <span>${car.condition || 'USED'}</span>
-                </div>
-                <p class="text-gray-400 text-xs leading-loose text-justify mb-10 border-t border-gray-800 pt-6">${car.description}</p>
-                <a href="https://wa.me/2348024417215?text=I am interested in ${car.name} (${car.year})" target="_blank" class="block text-center bg-green-600 text-white py-4 font-bold uppercase text-[10px]">WhatsApp Inquiry</a>
-            </div>
-        `;
-        document.getElementById('car-modal').classList.add('active');
-    }
-
-    async function handleLogin() {
-        const email = document.getElementById('login-email').value;
-        const pass = document.getElementById('login-pass').value;
-        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
-        if (!error && data.user.email === "dben61168@gmail.com") { 
-            document.getElementById('admin-panel-btn').classList.remove('hidden'); 
-            document.getElementById('login-modal').classList.remove('active'); 
-            fetchCars(); 
-        } else { alert("Staff Only"); }
-    }
-
-    function updateFileCount() { const f = document.getElementById('car-files').files; document.getElementById('file-label').innerText = f.length + " Images Ready"; }
+function renderCars(cars) {
+    const list = document.getElementById('car-list');
+    const isAdmin = !document.getElementById('admin-panel-btn').classList.contains('hidden');
+    if (cars.length === 0) { list.innerHTML = '<p class="col-span-full text-center text-gray-600 text-xs uppercase">Showroom Empty</p>'; return; }
     
-    document.getElementById('upload-form').onsubmit = async (e) => {
-        e.preventDefault();
-        const b = document.getElementById('submit-btn');
-        const f = document.getElementById('car-files').files;
-        b.innerText = "Processing Asset..."; b.disabled = true;
-        
-        try {
-            let urls = null;
-            if (f.length > 0) {
-                urls = [];
-                for (let i = 0; i < f.length; i++) {
-                    const name = `${Math.random()}-${Date.now()}`;
-                    await supabaseClient.storage.from('car-images').upload(name, f[i]);
-                    urls.push(supabaseClient.storage.from('car-images').getPublicUrl(name).data.publicUrl);
-                }
-            }
-
-            const carData = { 
-                name: document.getElementById('car-name').value, 
-                price: document.getElementById('car-price').value, 
-                description: document.getElementById('car-desc').value,
-                year: document.getElementById('car-year').value,
-                km: document.getElementById('car-km').value,
-                transmission: document.getElementById('car-trans').value,
-                fuel: document.getElementById('car-fuel').value,
-                condition: document.getElementById('car-condition').value
-            };
-            if (urls) carData.images = urls;
-
-            let result;
-            if (currentEditId) {
-                result = await supabaseClient.from('cars').update(carData).eq('id', currentEditId);
-            } else {
-                if (!urls) throw new Error("Images required for new car");
-                result = await supabaseClient.from('cars').insert([carData]);
-            }
-
-            if (result.error) throw result.error;
-            
-            alert("Showroom Updated Successfully!");
-            location.reload();
-        } catch (err) {
-            alert("Error: " + err.message);
-            b.innerText = "Publish Inventory";
-            b.disabled = false;
-        }
-    };
-
-    document.getElementById('contact-form').onsubmit = (e) => {
-        e.preventDefault();
-        const name = document.getElementById('contact-name').value;
-        const msg = document.getElementById('contact-msg').value;
-        const text = encodeURIComponent(`Hello Cars Village Global,\nName: ${name}\nMessage: ${msg}`);
-        window.open(`https://wa.me/2348024417215?text=${text}`, '_blank');
-    };
-
-    function openPolicy(t) { 
-        const p = { privacy: { title: "Privacy", body: "We protect your data." }, shipping: { title: "Shipping", body: "Worldwide port delivery." } };
-        document.getElementById('policy-title').innerText = p[t].title; 
-        document.getElementById('policy-body').innerText = p[t].body; 
-        document.getElementById('policy-modal').classList.add('active'); 
-    }
-    function closeModal() { document.getElementById('car-modal').classList.remove('active'); }
-    function closePolicy() { document.getElementById('policy-modal').classList.remove('active'); }
-    function toggleLoginModal() { document.getElementById('login-modal').classList.toggle('active'); }
-    function toggleUploadModal() { document.getElementById('upload-modal').classList.toggle('active'); }
-     
+    list.innerHTML = cars.map(car => `
+        <div class="group relative car-card">
+            ${isAdmin ? `
+                <div class="absolute top-2 right-2 z-10 flex gap-1">
+                    <button onclick="prepareEdit(${JSON.stringify(car).replace(/"/g, '&quot;')})" class="bg-blue-600 p-1 rounded-sm"><i data-lucide="edit" class="w-3 h-3 text-white"></i></button>
+                    <button onclick="deleteCar('${car.id}')" class="bg-red-600 p-1 rounded-sm"><i data-lucide="trash-2" class="w-3 h-3 text-white"></i></button>
+                </div>
+            ` : ''}
+            <div class="relative h-32 md:h-48 overflow-hidden cursor-pointer" onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})">
+                <img src="${car.images[0]}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                <span class="absolute top-2 left-2 badge uppercase tracking-tighter">${car.condition || 'FOREIGN USED'}</span>
+            </div>
+            <div class="p-3">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="font-bold text-[11px] md:text-[13px] uppercase tracking-tight leading-tight w-4/5 text-white">${car.name}</h3>
+                    <span class="text-[8px] md:text-[9px] text-gray-500 font-bold">${car.year || ''}</span>
+                </div>
+                <div class="flex gap-2 text-[8px] md:text-[9px] text-gray-500 mb-4 items-center uppercase">
+                    <span class="flex items-center gap-1"><i data-lucide="gauge" class="w-2 md:w-3"></i>${car.km || '0'} KM</span>
+                    <span class="flex items-center gap-1"><i data-lucide="settings" class="w-2 md:w-3"></i>${car.transmission || 'AUTO'}</span>
+                    <span class="flex items-center gap-1"><i data-lucide="fuel" class="w-2 md:w-3"></i>${car.fuel || 'PETROL'}</span>
+                </div>
+                <div class="flex justify-between items-center mt-auto">
+                    <p class="gold-text font-bold text-xs md:text-sm tracking-tighter">${car.price}</p>
+                    <button onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})" class="bg-[#222] hover:bg-[#d4af37] hover:text-black p-2 rounded-sm transition">
+                        <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
     lucide.createIcons();
+}
+
+// Function to swap images in the Detail View
+window.changeDetailImage = function(url) {
+    document.getElementById('main-preview-img').src = url;
+};
+
+function showDetails(car) {
+    const modal = document.getElementById('car-modal');
+    const content = document.getElementById('modal-content');
+    
+    // Create the HTML for thumbnails
+    const thumbnailsHTML = car.images.map(img => `
+        <img src="${img}" 
+             onclick="changeDetailImage('${img}')" 
+             class="h-16 w-full object-cover border border-gray-800 cursor-pointer hover:border-gold transition rounded-sm shadow-md"
+        >
+    `).join('');
+
+    content.innerHTML = `
+        <div class="space-y-4">
+            <!-- Main Large Image -->
+            <div class="relative overflow-hidden rounded-sm shadow-2xl bg-black aspect-video">
+                <img id="main-preview-img" src="${car.images[0]}" class="w-full h-full object-cover transition-all duration-500">
+            </div>
+            
+            <!-- Thumbnail Grid -->
+            <div class="grid grid-cols-5 gap-2">
+                ${thumbnailsHTML}
+            </div>
+            <p class="text-[9px] text-gray-600 uppercase tracking-widest text-center">Click thumbnails to view</p>
+        </div>
+
+        <div class="flex flex-col justify-center text-white">
+            <h2 class="text-3xl font-serif italic mb-2 uppercase">${car.name} <span class="text-sm font-sans font-bold text-gray-500">${car.year || ''}</span></h2>
+            <p class="gold-text text-2xl font-bold mb-4">${car.price}</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-[10px] text-gray-400 mb-6 uppercase tracking-widest font-bold bg-white/5 p-4 rounded-sm border border-white/5">
+                <div class="flex flex-col"><span class="text-gray-600 text-[8px]">Mileage</span><span>${car.km || '0'} KM</span></div>
+                <div class="flex flex-col"><span class="text-gray-600 text-[8px]">Gearbox</span><span>${car.transmission || 'AUTO'}</span></div>
+                <div class="flex flex-col"><span class="text-gray-600 text-[8px]">Fuel</span><span>${car.fuel || 'PETROL'}</span></div>
+                <div class="flex flex-col"><span class="text-gray-600 text-[8px]">Status</span><span>${car.condition || 'USED'}</span></div>
+            </div>
+
+            <p class="text-gray-400 text-xs leading-loose text-justify mb-10 border-t border-gray-800 pt-6 whitespace-pre-line">${car.description}</p>
+            
+            <a href="https://wa.me/2348024417215?text=Hello Cars Village Global, I am interested in the ${car.name} (${car.year}) priced at ${car.price}. Please confirm availability." 
+               target="_blank" 
+               class="block text-center bg-green-600 hover:bg-green-700 text-white py-4 font-bold uppercase text-[10px] tracking-[0.2em] transition shadow-lg">
+               Inquire on WhatsApp
+            </a>
+        </div>
+    `;
+    modal.classList.add('active');
+    lucide.createIcons();
+}
+
+async function deleteCar(id) {
+    if (!confirm("Remove this asset from the showroom?")) return;
+    await supabaseClient.from('cars').delete().eq('id', id);
     fetchCars();
-    </script>
+}
+
+function prepareEdit(car) {
+    currentEditId = car.id;
+    document.getElementById('modal-title').innerText = "Edit Premium Asset";
+    document.getElementById('car-name').value = car.name;
+    document.getElementById('car-price').value = car.price;
+    document.getElementById('car-desc').value = car.description;
+    document.getElementById('car-year').value = car.year || '';
+    document.getElementById('car-km').value = car.km || '';
+    document.getElementById('car-trans').value = car.transmission || 'AUTO';
+    document.getElementById('car-fuel').value = car.fuel || 'PETROL';
+    document.getElementById('car-condition').value = car.condition || 'FOREIGN USED';
+    document.getElementById('upload-modal').classList.add('active');
+}
+
+function prepareAdd() {
+    currentEditId = null;
+    document.getElementById('modal-title').innerText = "Add Premium Asset";
+    document.getElementById('upload-form').reset();
+    toggleUploadModal();
+}
+
+async function handleLogin() {
+    const email = document.getElementById('login-email').value;
+    const pass = document.getElementById('login-pass').value;
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
+    if (!error && data.user.email === "dben61168@gmail.com") { 
+        document.getElementById('admin-panel-btn').classList.remove('hidden'); 
+        document.getElementById('login-modal').classList.remove('active'); 
+        fetchCars(); 
+    } else { alert("Staff Only Access Denied"); }
+}
+
+function updateFileCount() { 
+    const f = document.getElementById('car-files').files; 
+    document.getElementById('file-label').innerText = f.length + " Images Ready for Showroom"; 
+}
+
+document.getElementById('upload-form').onsubmit = async (e) => {
+    e.preventDefault();
+    const b = document.getElementById('submit-btn');
+    const f = document.getElementById('car-files').files;
+    b.innerText = "Processing Assets..."; b.disabled = true;
+    
+    try {
+        let urls = null;
+        if (f.length > 0) {
+            urls = [];
+            for (let i = 0; i < f.length; i++) {
+                const fileName = `${Math.random()}-${Date.now()}`;
+                const { data, error } = await supabaseClient.storage.from('car-images').upload(fileName, f[i]);
+                if (error) throw error;
+                urls.push(supabaseClient.storage.from('car-images').getPublicUrl(fileName).data.publicUrl);
+            }
+        }
+
+        const carData = { 
+            name: document.getElementById('car-name').value, 
+            price: document.getElementById('car-price').value, 
+            description: document.getElementById('car-desc').value,
+            year: document.getElementById('car-year').value,
+            km: document.getElementById('car-km').value,
+            transmission: document.getElementById('car-trans').value,
+            fuel: document.getElementById('car-fuel').value,
+            condition: document.getElementById('car-condition').value
+        };
+        if (urls) carData.images = urls;
+
+        let result;
+        if (currentEditId) {
+            result = await supabaseClient.from('cars').update(carData).eq('id', currentEditId);
+        } else {
+            if (!urls) throw new Error("At least one image is required for listing.");
+            result = await supabaseClient.from('cars').insert([carData]);
+        }
+
+        if (result.error) throw result.error;
+        
+        alert("Showroom Updated Successfully!");
+        location.reload();
+    } catch (err) {
+        alert("System Error: " + err.message);
+        b.innerText = "Publish Inventory";
+        b.disabled = false;
+    }
+};
+
+document.getElementById('contact-form').onsubmit = (e) => {
+    e.preventDefault();
+    const name = document.getElementById('contact-name').value;
+    const msg = document.getElementById('contact-msg').value;
+    const text = encodeURIComponent(`Hello Cars Village Global,\nName: ${name}\nInquiry: ${msg}`);
+    window.open(`https://wa.me/2348024417215?text=${text}`, '_blank');
+};
+
+function openPolicy(t) { 
+    const p = { 
+        privacy: { title: "Privacy Policy", body: "We protect your elite data with encrypted protocols." }, 
+        shipping: { title: "Global Shipping", body: "Worldwide port-to-port delivery handled by our logistics partners." } 
+    };
+    document.getElementById('policy-title').innerText = p[t].title; 
+    document.getElementById('policy-body').innerText = p[t].body; 
+    document.getElementById('policy-modal').classList.add('active'); 
+}
+
+function closeModal() { document.getElementById('car-modal').classList.remove('active'); }
+function closePolicy() { document.getElementById('policy-modal').classList.remove('active'); }
+function toggleLoginModal() { document.getElementById('login-modal').classList.toggle('active'); }
+function toggleUploadModal() { document.getElementById('upload-modal').classList.toggle('active'); }
+ 
+lucide.createIcons();
+fetchCars();
+</script>
 </body>
 </html>
