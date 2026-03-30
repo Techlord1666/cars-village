@@ -7,10 +7,10 @@
     <!-- PRIMARY SEO & KEYWORD OPTIMIZATION -->
     <title>Cars Village Global | Luxury Car Dealership Lagos | Buy, Sell & Swap</title>
     <meta name="description" content="Nigeria's premier destination for high-performance luxury vehicles. Buy, Sell, and Swap premium cars in Lagos. Foreign used and brand new luxury assets available.">
-    <meta name="keywords" content="Luxury cars Lagos, car swap Nigeria, buy cars Lagos, Mercedes-Benz Lagos, Range Rover Nigeria, Cars Village Global, imported cars Nigeria, high-end cars Nigeria, cheap luxury cars Lagos, car dealership Agege">
+    <meta name="keywords" content="Luxury cars Lagos, car swap Nigeria, buy cars Lagos, Mercedes-Benz Lagos, Range Rover Nigeria, Cars Village Global, high-end cars Nigeria, car dealership Agege, Lagos auto mart">
     <meta name="author" content="Cars Village Global">
 
-    <!-- OPEN GRAPH / SOCIAL MEDIA PREVIEW (WhatsApp/Facebook Link Preview) -->
+    <!-- OPEN GRAPH / SOCIAL MEDIA PREVIEW (For WhatsApp, Facebook, Instagram) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://carsvillageglobal.com/">
     <meta property="og:title" content="Cars Village Global | Luxury Automotive Excellence">
@@ -26,23 +26,41 @@
     <!-- FAVICON (Browser Tab Icon) -->
     <link rel="icon" type="image/jpeg" href="https://duyjoykoswhqlalhvjlq.supabase.co/storage/v1/object/public/car-images/IMG_0260.jpeg">
 
-    <!-- LIBRARIES -->
+    <!-- EXTERNAL LIBRARIES -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Playfair+Display:italic,wght@700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
-        /* CUSTOM LUXURY STYLES */
-        body { font-family: 'Inter', sans-serif; background-color: #0a0a0a; color: white; scroll-behavior: smooth; }
+        /* BASE THEME STYLING */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #0a0a0a; 
+            color: white; 
+            scroll-behavior: smooth; 
+        }
         .font-serif { font-family: 'Playfair Display', serif; }
         .gold-text { color: #d4af37; }
         .bg-gold { background-color: #d4af37; }
         
-        /* MODAL & OVERLAY STYLES */
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+        /* MODAL SYSTEM STYLING */
+        .modal { 
+            display: none; 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(0,0,0,0.98); 
+            z-index: 1000; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px; 
+        }
         .modal.active { display: flex; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .glass { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+        }
         
         /* CIRCULAR LOGO STYLING */
         .logo-container { 
@@ -56,81 +74,124 @@
             cursor: pointer; 
             transition: transform 0.3s ease;
         }
-        .logo-container:active { transform: scale(0.9); }
-        @media (min-width: 768px) { .logo-container { width: 65px; height: 65px; } }
+        .logo-container:active { transform: scale(0.95); }
+        @media (min-width: 768px) { 
+            .logo-container { width: 65px; height: 65px; } 
+        }
         
-        /* NAVIGATION ANIMATION */
-        #mobile-nav { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        /* MOBILE NAVIGATION ANIMATION */
+        #mobile-nav { 
+            transform: translateX(100%); 
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
         #mobile-nav.active { transform: translateX(0); }
         
-        /* INVENTORY CARD STYLING */
-        .car-card { background: #161616; border-radius: 8px; overflow: hidden; transition: 0.3s; border: 1px solid #222; height: 100%; display: flex; flex-direction: column; }
-        .car-card:hover { border-color: #d4af37; transform: translateY(-5px); }
-        .badge { background: rgba(212, 175, 55, 0.1); color: #d4af37; border: 1px solid rgba(212, 175, 55, 0.3); padding: 2px 8px; font-size: 8px; font-weight: bold; letter-spacing: 1px; border-radius: 2px; }
+        /* INVENTORY CAR CARDS */
+        .car-card { 
+            background: #161616; 
+            border-radius: 8px; 
+            overflow: hidden; 
+            transition: transform 0.3s, border-color 0.3s; 
+            border: 1px solid #222; 
+            height: 100%; 
+            display: flex; 
+            flex-direction: column; 
+        }
+        .car-card:hover { 
+            border-color: #d4af37; 
+            transform: translateY(-8px); 
+        }
+        .badge { 
+            background: rgba(212, 175, 55, 0.1); 
+            color: #d4af37; 
+            border: 1px solid rgba(212, 175, 55, 0.3); 
+            padding: 2px 8px; 
+            font-size: 8px; 
+            font-weight: bold; 
+            letter-spacing: 1px; 
+            border-radius: 2px; 
+        }
 
-        /* FULLSCREEN IMAGE VIEWER */
-        #fullscreen-viewer { display: none; position: fixed; inset: 0; background: black; z-index: 2000; align-items: center; justify-content: center; cursor: zoom-out; }
+        /* FULLSCREEN IMAGE LIGHTBOX */
+        #fullscreen-viewer { 
+            display: none; 
+            position: fixed; 
+            inset: 0; 
+            background: black; 
+            z-index: 2000; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: zoom-out; 
+        }
         #fullscreen-viewer.active { display: flex; }
         #fullscreen-img { max-width: 95%; max-height: 90vh; object-fit: contain; }
     </style>
 </head>
 <body class="relative">
 
-    <!-- FULL SCREEN IMAGE LIGHTBOX -->
+    <!-- 1. FULL SCREEN IMAGE VIEWER (LIGHTBOX) -->
     <div id="fullscreen-viewer" onclick="closeFullscreen()">
-        <button class="absolute top-6 right-6 text-white bg-white/10 p-4 rounded-full transition hover:bg-white/20"><i data-lucide="x" class="w-8 h-8"></i></button>
+        <button class="absolute top-6 right-6 text-white bg-white/10 p-4 rounded-full transition hover:bg-white/20">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
         <img id="fullscreen-img" src="" alt="Proper Asset View">
     </div>
 
-    <!-- NAVIGATION BAR -->
+    <!-- 2. NAVIGATION BAR -->
     <nav class="flex items-center justify-between px-6 md:px-12 py-4 absolute w-full z-50 bg-black/40 backdrop-blur-sm border-b border-white/5">
-        <!-- BRAND LOGO (Secret Click Area) -->
-        <div id="admin-secret-trigger" class="flex items-center gap-3">
+        <!-- SECRET TRIGGER AREA (Tap logo 5 times to show staff login) -->
+        <div id="admin-secret-trigger" class="flex items-center gap-3 group">
             <div class="logo-container">
-                <img src="https://duyjoykoswhqlalhvjlq.supabase.co/storage/v1/object/public/car-images/IMG_0260.jpeg" alt="Cars Village Logo" class="w-full h-full object-cover">
+                <img src="https://duyjoykoswhqlalhvjlq.supabase.co/storage/v1/object/public/car-images/IMG_0260.jpeg" alt="Logo" class="w-full h-full object-cover">
             </div>
             <div class="hidden sm:block">
                 <p class="text-lg font-bold tracking-tighter leading-none text-white uppercase">CARS VILLAGE</p>
-                <p class="gold-text text-[8px] tracking-[0.4em] italic uppercase">GLOBAL</p>
+                <p class="gold-text text-[8px] tracking-[0.4em] italic uppercase font-bold">GLOBAL</p>
             </div>
         </div>
 
         <!-- Desktop Menu -->
         <div class="hidden md:flex items-center gap-10 text-[10px] uppercase tracking-[0.2em]">
-            <a href="index.html" class="gold-text">Home</a>
+            <a href="index.html" class="gold-text font-bold">Home</a>
             <a href="#inventory" class="hover:text-gold transition text-white">Inventory</a>
             <a href="#about" class="hover:text-gold transition text-white">About Us</a>
             <a href="signup.html" class="bg-white text-black px-6 py-2 font-bold uppercase rounded-sm transition hover:bg-gray-200">Sign Up</a>
             <a href="login.html" class="bg-gold text-black px-6 py-2 font-bold uppercase rounded-sm hover:bg-[#f2d472] transition">Client Login</a>
         </div>
 
-        <!-- Mobile Menu Toggle -->
-        <div class="md:hidden flex items-center gap-4">
-            <button id="menu-btn" class="text-white p-2"><i data-lucide="menu" class="w-8 h-8"></i></button>
+        <!-- Mobile Toggle Icon -->
+        <div class="md:hidden flex items-center">
+            <button id="menu-btn" class="text-white p-2">
+                <i data-lucide="menu" class="w-8 h-8"></i>
+            </button>
         </div>
 
-        <!-- Hidden Admin Control Button (Only shows after secret login) -->
+        <!-- Admin Control Center (Only visible to you after login) -->
         <div id="admin-panel-btn" class="hidden ml-4">
-            <button onclick="prepareAdd()" class="bg-red-600 text-white px-4 py-2 text-[10px] uppercase font-bold animate-pulse">Add Car +</button>
+            <button onclick="prepareAdd()" class="bg-red-600 text-white px-4 py-2 text-[10px] uppercase font-bold animate-pulse shadow-lg">
+                Add New Car +
+            </button>
         </div>
     </nav>
 
-    <!-- MOBILE MENU OVERLAY -->
+    <!-- 3. MOBILE MENU OVERLAY -->
     <div id="mobile-nav" class="fixed inset-0 bg-black z-[100] flex flex-col p-10 md:hidden">
-        <div class="flex justify-end"><button id="close-menu" class="text-white p-2"><i data-lucide="x" class="w-8 h-8"></i></button></div>
+        <div class="flex justify-end">
+            <button id="close-menu" class="text-white p-2"><i data-lucide="x" class="w-10 h-10"></i></button>
+        </div>
         <div class="flex flex-col gap-6 mt-10 text-center">
             <div class="logo-container mx-auto mb-4" style="width: 100px; height: 100px; border-width: 3px;">
                 <img src="https://duyjoykoswhqlalhvjlq.supabase.co/storage/v1/object/public/car-images/IMG_0260.jpeg" class="w-full h-full object-cover">
             </div>
-            <a href="index.html" class="text-3xl font-serif gold-text" onclick="closeMobileMenu()">Home</a>
-            <a href="#inventory" class="text-3xl font-serif text-white" onclick="closeMobileMenu()">Inventory</a>
-            <a href="#about" class="text-3xl font-serif text-white" onclick="closeMobileMenu()">About Us</a>
-            <a href="signup.html" class="text-lg uppercase tracking-widest bg-white text-black py-4 mt-6 font-bold">Sign Up</a>
+            <a href="index.html" class="text-3xl font-serif gold-text uppercase italic" onclick="closeMobileMenu()">Home</a>
+            <a href="#inventory" class="text-3xl font-serif text-white uppercase italic" onclick="closeMobileMenu()">Inventory</a>
+            <a href="#about" class="text-3xl font-serif text-white uppercase italic" onclick="closeMobileMenu()">About Us</a>
+            <a href="signup.html" class="text-lg uppercase tracking-widest bg-white text-black py-4 mt-8 font-bold">Sign Up</a>
             <a href="login.html" class="text-lg uppercase tracking-widest bg-gold text-black py-4 font-bold">Client Login</a>
         </div>
     </div>
 
-    <!-- HERO SECTION -->
+    <!-- 4. HERO SECTION -->
     <section class="relative h-screen flex items-center px-6 md:px-12">
         <div class="absolute inset-0 z-0">
             <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=2000" class="w-full h-full object-cover opacity-50">
@@ -139,13 +200,11 @@
         <div class="relative z-10 max-w-4xl pt-20">
             <h1 class="text-5xl md:text-9xl font-serif italic mb-6 leading-tight">Buy, Sell & <span class="gold-text underline">Swap</span></h1>
             <p class="text-gray-400 text-lg md:text-xl max-w-2xl mb-10 leading-relaxed uppercase tracking-widest">Nigeria's premier destination for high-performance luxury vehicles.</p>
-            <div class="flex flex-col sm:flex-row gap-4">
-                <a href="#inventory" class="bg-gold text-black px-12 py-5 font-bold uppercase text-[10px] tracking-widest text-center shadow-2xl">Browse Inventory</a>
-            </div>
+            <a href="#inventory" class="bg-gold text-black px-12 py-5 font-bold uppercase text-[10px] tracking-widest inline-block shadow-2xl hover:scale-105 transition duration-300">Browse Inventory</a>
         </div>
     </section>
 
-    <!-- WELCOME / ABOUT SECTION -->
+    <!-- 5. WELCOME / ABOUT SECTION (FULL WIDTH) -->
     <section id="about" class="px-6 md:px-12 py-20 md:py-32 bg-[#080808] border-b border-white/5">
         <div class="max-w-[1400px] mx-auto">
             <div class="w-full mb-12 md:mb-20 text-white">
@@ -161,11 +220,10 @@
                     <div class="absolute -bottom-4 -left-4 w-20 h-20 border-l-2 border-b-2 border-gold hidden md:block"></div>
                 </div>
                 <div class="order-2 text-white">
-                    <p class="text-gray-400 leading-loose mb-8 text-base md:text-xl text-justify md:text-left">
+                    <p class="text-gray-400 leading-loose mb-8 text-base md:text-xl text-justify md:text-left font-light tracking-wide">
                         Located at <strong class="text-white">76, Iju Ishaga Road, Ajilete Bus Stop, Ifako Ijaiye, Agege, Lagos, Nigeria</strong>, 
                         Cars Village Global is more than a dealership. We are a community built for the discerning driver. 
                         We specialize in global procurement, high-end sales, and seamless ownership transitions. 
-                        Our mission is to bring the world's finest automotive engineering to the streets of Lagos.
                     </p>
                     <div class="border-l-4 border-gold pl-6 md:pl-8 py-4 bg-white/5">
                         <p class="text-sm md:text-md italic text-gray-200 uppercase tracking-widest leading-relaxed">
@@ -177,76 +235,83 @@
         </div>
     </section>
 
-    <!-- INVENTORY SECTION -->
+    <!-- 6. INVENTORY SECTION (2 MOBILE / 5 LAPTOP) -->
     <section id="inventory" class="px-6 md:px-12 py-24 bg-black border-t border-gray-900">
         <div class="flex justify-between items-end mb-20 border-b border-gray-800 pb-10">
             <h2 class="text-3xl md:text-5xl font-serif italic uppercase text-white">Available Inventory</h2>
-            <p class="text-gray-400 text-[10px] uppercase tracking-widest hidden md:block italic">Luxury Showroom</p>
+            <p class="text-gray-400 text-[10px] uppercase tracking-widest hidden md:block italic">Direct Global Imports</p>
         </div>
-        <!-- 2 Mobile / 5 Laptop Grid -->
         <div id="car-list" class="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-6">
-            <p class="col-span-full text-center text-gray-600 animate-pulse uppercase text-xs tracking-widest italic">Syncing Showroom Assets...</p>
+            <p class="col-span-full text-center text-gray-600 animate-pulse uppercase text-xs tracking-widest py-20">Entering Showroom Vault...</p>
         </div>
     </section>
 
-    <!-- WHY CHOOSE US SECTION -->
+    <!-- 7. WHY CHOOSE US -->
     <section id="leads" class="px-6 md:px-12 py-24 bg-[#0d0d0d] border-y border-gray-900 text-center">
         <h2 class="text-center text-3xl md:text-5xl font-serif italic mb-20 uppercase tracking-tighter text-white">Why Village Global <span class="gold-text">Leads</span></h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-16 text-white">
-            <div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-16 text-white uppercase tracking-widest">
+            <div class="p-6">
                 <i data-lucide="shield-check" class="gold-text mx-auto mb-6 w-12 h-12"></i>
-                <h4 class="font-bold mb-4 uppercase tracking-widest text-xs">Trusted Deals</h4>
-                <p class="text-xs text-gray-500 leading-relaxed uppercase tracking-widest">Secured with absolute transparency. No hidden fees.</p>
+                <h4 class="font-bold mb-4 text-xs">Trusted Deals</h4>
+                <p class="text-[10px] text-gray-500 leading-relaxed">Absolute Transparency. No Hidden Fees.</p>
             </div>
-            <div>
+            <div class="p-6">
                 <i data-lucide="refresh-cw" class="gold-text mx-auto mb-6 w-12 h-12"></i>
-                <h4 class="font-bold mb-4 uppercase tracking-widest text-xs">Easy Swap</h4>
-                <p class="text-xs text-gray-500 leading-relaxed uppercase tracking-widest">Upgrade your lifestyle in minutes with our evaluation.</p>
+                <h4 class="font-bold mb-4 text-xs">Easy Swap</h4>
+                <p class="text-[10px] text-gray-500 leading-relaxed">Upgrade your lifestyle in minutes.</p>
             </div>
-            <div>
+            <div class="p-6">
                 <i data-lucide="truck" class="gold-text mx-auto mb-6 w-12 h-12"></i>
-                <h4 class="font-bold mb-4 uppercase tracking-widest text-xs">Fast Delivery</h4>
-                <p class="text-xs text-gray-500 leading-relaxed uppercase tracking-widest">Lagos-wide and Nationwide dispatch at record speeds.</p>
+                <h4 class="font-bold mb-4 text-xs">Fast Delivery</h4>
+                <p class="text-[10px] text-gray-500 leading-relaxed">Lagos-wide and Nationwide dispatch.</p>
             </div>
         </div>
     </section>
 
-    <!-- CLIENT RATINGS SECTION -->
+    <!-- 8. RATINGS / TESTIMONIALS -->
     <section class="px-6 md:px-12 py-24 bg-black">
         <h2 class="text-center text-3xl md:text-5xl font-serif italic mb-20 uppercase text-white">Client Testimonials</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-white">
-            <div class="glass p-8 border border-gray-800">
-                <div class="flex gap-1 mb-4 text-gold"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-                <p class="text-sm italic text-gray-400 mb-6 uppercase tracking-tight">"Transparency is unmatched. My car swap was handled perfectly."</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div class="glass p-8 border border-gray-800 text-white shadow-2xl">
+                <div class="flex gap-1 mb-4 text-gold">
+                    <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                </div>
+                <p class="text-sm italic text-gray-400 mb-6 uppercase tracking-tighter">"Transparency is unmatched. My car swap was handled perfectly."</p>
                 <p class="text-[10px] font-bold uppercase gold-text tracking-widest">— Chief Adekunle</p>
             </div>
-            <div class="glass p-8 border border-gray-800">
-                <div class="flex gap-1 mb-4 text-gold"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-                <p class="text-sm italic text-gray-400 mb-6 uppercase tracking-tight">"Best luxury showroom in Lagos. Very reliable and trusted."</p>
+            <div class="glass p-8 border border-gray-800 text-white shadow-2xl">
+                <div class="flex gap-1 mb-4 text-gold">
+                    <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                </div>
+                <p class="text-sm italic text-gray-400 mb-6 uppercase tracking-tighter">"Best luxury showroom in Lagos. Very reliable and trusted."</p>
                 <p class="text-[10px] font-bold uppercase gold-text tracking-widest">— Mr. Emeka</p>
             </div>
-            <div class="glass p-8 border border-gray-800">
-                <div class="flex gap-1 mb-4 text-gold"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-                <p class="text-sm italic text-gray-400 mb-6 uppercase tracking-tight">"Excellent international shipping service. My vehicle arrived in perfect shape."</p>
+            <div class="glass p-8 border border-gray-800 text-white shadow-2xl">
+                <div class="flex gap-1 mb-4 text-gold">
+                    <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                </div>
+                <p class="text-sm italic text-gray-400 mb-6 uppercase tracking-tighter">"Excellent international shipping. My vehicle arrived in perfect shape."</p>
                 <p class="text-[10px] font-bold uppercase gold-text tracking-widest">— Dr. Sarah O.</p>
             </div>
         </div>
     </section>
 
-    <!-- CONTACT FORM SECTION -->
-    <section class="px-6 md:px-12 py-24 bg-[#0d0d0d] border-t border-gray-900 text-white">
-        <div class="max-w-xl mx-auto text-center">
+    <!-- 9. CONTACT FORM (WHATSAPP) -->
+    <section class="px-6 md:px-12 py-24 bg-[#0d0d0d] border-t border-gray-900 text-white text-center">
+        <div class="max-w-xl mx-auto">
             <h2 class="text-4xl font-serif italic mb-4 uppercase">Reach the <span class="gold-text">Concierge</span></h2>
             <p class="text-gray-500 text-xs uppercase tracking-widest mb-10 italic">Secure Private Inquiry</p>
             <form id="contact-form" class="space-y-4">
-                <input type="text" id="contact-name" placeholder="YOUR FULL NAME" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none focus:border-gold uppercase text-white" required>
-                <textarea id="contact-msg" placeholder="MESSAGE / ASSET SPECIFICATIONS" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none focus:border-gold h-32 uppercase text-white" required></textarea>
-                <button type="submit" class="w-full bg-gold text-black py-4 font-bold uppercase text-xs tracking-widest shadow-xl transition hover:scale-105">Send WhatsApp Message</button>
+                <input type="text" id="contact-name" placeholder="YOUR FULL NAME" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none focus:border-gold uppercase text-white shadow-sm" required>
+                <textarea id="contact-msg" placeholder="MESSAGE / ASSET SPECIFICATIONS" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none focus:border-gold h-32 uppercase text-white shadow-sm" required></textarea>
+                <button type="submit" class="w-full bg-gold text-black py-4 font-bold uppercase text-xs tracking-widest shadow-xl transition hover:scale-105 active:scale-95 duration-300">
+                    Send WhatsApp Message
+                </button>
             </form>
         </div>
     </section>
 
-    <!-- FOOTER SECTION -->
+    <!-- 10. FOOTER -->
     <footer class="relative z-10 bg-black border-t border-gray-900 px-6 md:px-12 py-20 text-white text-center md:text-left">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
             <div>
@@ -254,168 +319,224 @@
                 <div class="logo-container mx-auto md:mx-0 mb-6" style="width: 80px; height: 80px; border-width: 3px;">
                     <img src="https://duyjoykoswhqlalhvjlq.supabase.co/storage/v1/object/public/car-images/IMG_0260.jpeg" class="w-full h-full object-cover">
                 </div>
-                <p class="text-[10px] text-gray-500 leading-loose uppercase tracking-widest mb-8">76, Iju Ishaga Road, Ajilete Bus Stop, Ifako Ijaiye, Agege, Lagos, Nigeria</p>
+                <p class="text-[10px] text-gray-500 leading-loose uppercase tracking-widest mb-8">
+                    76, Iju Ishaga Road, Ajilete Bus Stop, Ifako Ijaiye, Agege, Lagos, Nigeria
+                </p>
                 <div class="flex justify-center md:justify-start gap-8">
-                    <a href="https://www.facebook.com/profile.php?id=61577436842297" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="facebook" class="w-6 h-6"></i></a>
-                    <a href="https://www.instagram.com/carsvillageglobal" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="instagram" class="w-6 h-6"></i></a>
-                    <a href="#" target="_blank" class="text-gray-400 hover:text-gold transition"><i data-lucide="music-2" class="w-6 h-6"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61577436842297" target="_blank" class="text-gray-400 hover:text-gold transition">
+                        <i data-lucide="facebook" class="w-6 h-6"></i>
+                    </a>
+                    <a href="https://www.instagram.com/carsvillageglobal" target="_blank" class="text-gray-400 hover:text-gold transition">
+                        <i data-lucide="instagram" class="w-6 h-6"></i>
+                    </a>
+                    <a href="#" target="_blank" class="text-gray-400 hover:text-gold transition">
+                        <i data-lucide="music-2" class="w-6 h-6"></i>
+                    </a>
                 </div>
             </div>
             <div>
                 <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400">Navigation</p>
                 <ul class="text-[10px] space-y-6 text-gray-500 uppercase tracking-widest font-bold">
-                    <li><a href="index.html" class="hover:text-gold">Home Showroom</a></li>
-                    <li><a href="#inventory" class="hover:text-gold">Available Inventory</a></li>
-                    <li><a href="#about" class="hover:text-gold">About The Village</a></li>
-                    <li><a href="signup.html" class="hover:text-gold">Create Account</a></li>
+                    <li><a href="index.html" class="hover:text-gold transition">Home Showroom</a></li>
+                    <li><a href="#inventory" class="hover:text-gold transition">Inventory</a></li>
+                    <li><a href="#about" class="hover:text-gold transition">About Us</a></li>
+                    <li><a href="signup.html" class="hover:text-gold transition">Create Account</a></li>
                 </ul>
             </div>
             <div>
-                <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400 uppercase">Legal</p>
+                <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400">Legal Policies</p>
                 <ul class="text-[10px] space-y-6 text-gray-500 uppercase tracking-widest font-bold">
                     <li><button onclick="openPolicy('privacy')" class="hover:text-gold uppercase">Privacy Policy</button></li>
                     <li><button onclick="openPolicy('shipping')" class="hover:text-gold uppercase">Shipping Policy</button></li>
                 </ul>
             </div>
             <div>
-                <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400 italic">Concierge</p>
-                <a href="https://wa.me/2348024417215" class="gold-text text-xl font-bold block mb-4 uppercase underline decoration-gold underline-offset-8 decoration-1">WhatsApp</a>
-                <p class="text-[10px] text-gray-600 uppercase">Direct Sales Access</p>
+                <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400 italic">Concierge Access</p>
+                <a href="https://wa.me/2348024417215" class="gold-text text-xl font-bold block mb-4 uppercase underline decoration-gold underline-offset-8">WhatsApp</a>
+                <p class="text-[10px] text-gray-600 uppercase">Available 24/7 For Luxury Procurement</p>
             </div>
         </div>
-        <div class="mt-20 pt-10 border-t border-gray-900 text-center text-[10px] text-gray-800 tracking-[0.5em] uppercase">&copy; 2024 Cars Village Global. Excellence Guaranteed.</div>
+        <div class="mt-20 pt-10 border-t border-gray-900 text-center text-[10px] text-gray-800 tracking-[0.5em] uppercase">
+            &copy; 2024 Cars Village Global. Excellence Guaranteed.
+        </div>
     </footer>
 
-    <!-- ASSET DETAIL MODAL -->
+    <!-- MODAL 1: ASSET DETAIL POPUP -->
     <div id="car-modal" class="modal">
         <div class="bg-[#111] max-w-5xl w-full p-8 rounded-sm relative max-h-[90vh] overflow-y-auto text-white border border-white/5 shadow-2xl">
-            <button onclick="closeModal()" class="absolute top-6 right-6 text-white z-50 transition hover:rotate-90"><i data-lucide="x"></i></button>
+            <button onclick="closeModal()" class="absolute top-6 right-6 text-white z-50 transition hover:rotate-90">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
             <div id="modal-content" class="grid md:grid-cols-2 gap-12"></div>
         </div>
     </div>
     
-    <!-- STAFF LOGIN MODAL (Triggered by Secret Click) -->
+    <!-- MODAL 2: STAFF LOGIN (HIDDEN SECRET) -->
     <div id="login-modal" class="modal">
         <div class="bg-[#111] max-w-sm w-full p-10 text-center rounded-sm text-white border border-white/10 shadow-2xl">
-            <h2 class="text-2xl font-serif italic mb-8 gold-text uppercase">Staff Entry</h2>
-            <input type="email" id="login-email" placeholder="EMAIL" class="w-full bg-black border border-gray-800 p-4 text-xs mb-4 outline-none focus:border-gold text-white uppercase tracking-widest">
+            <h2 class="text-2xl font-serif italic mb-8 gold-text uppercase">Staff Portal</h2>
+            <input type="email" id="login-email" placeholder="ADMIN EMAIL" class="w-full bg-black border border-gray-800 p-4 text-xs mb-4 outline-none focus:border-gold text-white uppercase tracking-widest">
             <input type="password" id="login-pass" placeholder="PASSWORD" class="w-full bg-black border border-gray-800 p-4 text-xs mb-8 outline-none focus:border-gold text-white">
             <button onclick="handleLogin()" class="w-full bg-gold text-black py-4 font-bold uppercase text-xs tracking-widest">Sign In</button>
-            <button onclick="toggleLoginModal()" class="text-gray-600 mt-6 text-[10px] uppercase tracking-widest">Close Portal</button>
+            <button onclick="toggleLoginModal()" class="text-gray-500 mt-6 text-[10px] uppercase tracking-widest">Close Portal</button>
         </div>
     </div>
     
-    <!-- UPLOAD MODAL -->
+    <!-- MODAL 3: ASSET UPLOAD/EDIT -->
     <div id="upload-modal" class="modal">
         <div class="bg-[#111] max-w-2xl w-full p-8 md:p-10 rounded-sm overflow-y-auto max-h-[90vh] text-white shadow-2xl border border-white/5">
-            <h2 id="modal-title" class="text-2xl font-serif italic mb-8 gold-text uppercase">Asset Management</h2>
-            <form id="upload-form" class="space-y-4">
+            <h2 id="modal-title" class="text-2xl font-serif italic mb-8 gold-text uppercase">Inventory Manager</h2>
+            <form id="upload-form" class="space-y-4 text-white">
                 <div class="grid grid-cols-2 gap-4">
-                    <input type="text" id="car-name" placeholder="NAME" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white uppercase" required>
-                    <input type="text" id="car-year" placeholder="YEAR" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white uppercase" required>
+                    <input type="text" id="car-name" placeholder="VEHICLE NAME" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none uppercase" required>
+                    <input type="text" id="car-year" placeholder="YEAR" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none uppercase" required>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <input type="text" id="car-price" placeholder="PRICE" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white uppercase" required>
-                    <input type="text" id="car-km" placeholder="MILEAGE" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white uppercase" required>
+                    <input type="text" id="car-price" placeholder="LIST PRICE (₦)" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none uppercase" required>
+                    <input type="text" id="car-km" placeholder="MILEAGE (KM)" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none uppercase" required>
                 </div>
                 <div class="grid grid-cols-2 gap-4">
-                    <select id="car-trans" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white uppercase"><option value="AUTO">AUTO</option><option value="MANUAL">MANUAL</option><option value="PDK">PDK</option></select>
-                    <select id="car-fuel" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white uppercase"><option value="PETROL">PETROL</option><option value="DIESEL">DIESEL</option><option value="ELECTRIC">ELECTRIC</option><option value="HYBRID">HYBRID</option></select>
+                    <select id="car-trans" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none uppercase"><option value="AUTO">AUTO</option><option value="MANUAL">MANUAL</option><option value="PDK">PDK</option></select>
+                    <select id="car-fuel" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none uppercase"><option value="PETROL">PETROL</option><option value="DIESEL">DIESEL</option></select>
                 </div>
-                <select id="car-condition" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none text-white uppercase"><option value="FOREIGN USED">FOREIGN USED</option><option value="BRAND NEW">BRAND NEW</option></select>
-                <textarea id="car-desc" placeholder="SPECIFICATIONS" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none h-24 text-white uppercase" required></textarea>
+                <select id="car-condition" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none uppercase font-bold"><option value="FOREIGN USED">FOREIGN USED</option><option value="BRAND NEW">BRAND NEW</option><option value="NIGERIAN USED">NIGERIAN USED</option></select>
+                <textarea id="car-desc" placeholder="SPECIFICATIONS & FULL DESCRIPTION" class="w-full bg-black border border-gray-800 p-4 text-xs outline-none h-24 uppercase tracking-widest" required></textarea>
                 <div class="border-2 border-dashed border-gray-800 p-6 text-center relative hover:border-gold transition cursor-pointer">
                     <input type="file" id="car-files" accept="image/*" multiple class="absolute inset-0 opacity-0 cursor-pointer" onchange="updateFileCount()">
-                    <p id="file-label" class="text-[10px] text-gray-500 uppercase tracking-widest">Select Images (Max 5)</p>
+                    <p id="file-label" class="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Select Images (Max 5)</p>
                 </div>
                 <button type="submit" id="submit-btn" class="w-full bg-gold text-black py-5 font-bold uppercase text-xs tracking-widest shadow-xl">Update Showroom</button>
             </form>
-            <button onclick="toggleUploadModal()" class="w-full mt-4 text-gray-600 text-[10px] uppercase">Cancel</button>
+            <button onclick="toggleUploadModal()" class="w-full mt-4 text-gray-600 text-[10px] uppercase text-white tracking-widest">Cancel</button>
+        </div>
+    </div>
+
+    <!-- MODAL 4: POLICIES (Privacy/Shipping) -->
+    <div id="policy-modal" class="modal">
+        <div class="bg-[#0a0a0a] border border-gray-800 w-full max-w-2xl p-10 relative max-h-[85vh] overflow-y-auto rounded-sm text-white shadow-2xl">
+            <button onclick="closePolicy()" class="absolute top-6 right-6 text-gray-500 hover:text-white"><i data-lucide="x"></i></button>
+            <h2 id="policy-title" class="text-3xl font-serif italic mb-8 gold-text uppercase"></h2>
+            <div id="policy-body" class="text-gray-400 text-sm leading-relaxed space-y-6 text-justify">
+                <!-- Data Injected Via JS -->
+            </div>
+            <button onclick="closePolicy()" class="mt-12 w-full py-5 border border-gray-800 text-[10px] uppercase tracking-widest font-bold hover:bg-gold hover:text-black transition">Acknowledge</button>
         </div>
     </div>
 
     <!-- SCRIPTS -->
     <script>
+    // SUPABASE CONNECTION
     const SB_URL = "https://duyjoykoswhqlalhvjlq.supabase.co";
     const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR1eWpveWtvc3docWxhbGh2amxxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1OTk3MjgsImV4cCI6MjA5MDE3NTcyOH0.c0R8OxpkLt-2U80QKFLV6IpuL_XtSUjXBbyWfocU8HQ";
     const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
     let currentEditId = null;
 
-    // SECRET ADMIN TRIGGER: TAP LOGO 5 TIMES QUICKLY
+    // 1. SECRET ADMIN ACCESS (Click logo 5 times quickly)
     let logoClicks = 0;
     document.getElementById('admin-secret-trigger').onclick = function() {
         logoClicks++;
-        if (logoClicks >= 5) { toggleLoginModal(); logoClicks = 0; }
+        if (logoClicks >= 5) { 
+            toggleLoginModal(); 
+            logoClicks = 0; 
+        }
         setTimeout(() => { logoClicks = 0; }, 3000); 
     };
 
-    // LIGHTBOX / IMAGE VIEW LOGIC
-    window.openFullscreen = (url) => { 
+    // 2. IMAGE VIEWER LOGIC (Lightbox & Swapper)
+    window.openFullscreen = function(url) { 
         document.getElementById('fullscreen-img').src = url; 
         document.getElementById('fullscreen-viewer').classList.add('active'); 
         document.body.style.overflow = 'hidden'; 
         lucide.createIcons(); 
     };
-    window.closeFullscreen = () => { 
+    
+    window.closeFullscreen = function() { 
         document.getElementById('fullscreen-viewer').classList.remove('active'); 
         document.body.style.overflow = 'auto'; 
     };
-    window.changeDetailImage = (url) => { 
+    
+    window.changeDetailImage = function(url) { 
         document.getElementById('main-preview-img').src = url; 
     };
 
-    // UI NAVIGATION
+    // 3. UI CONTROLS (Navigation/Modals)
     const menuBtn = document.getElementById('menu-btn'); 
     const closeBtn = document.getElementById('close-menu'); 
     const mobileNav = document.getElementById('mobile-nav');
-    menuBtn.onclick = () => mobileNav.classList.add('active'); 
-    closeBtn.onclick = () => mobileNav.classList.remove('active');
+    menuBtn.onclick = function() { mobileNav.classList.add('active'); }; 
+    closeBtn.onclick = function() { mobileNav.classList.remove('active'); };
     function closeMobileMenu() { mobileNav.classList.remove('active'); }
 
-    // FETCHING & RENDERING ASSETS
+    // 4. DATABASE: FETCH ASSETS
     async function fetchCars() { 
         const { data, error } = await supabaseClient.from('cars').select('*').order('created_at', { ascending: false }); 
         if (!error) renderCars(data); 
     }
 
+    // 5. DATABASE: RENDER ASSETS (Grid Logic)
     function renderCars(cars) {
         const list = document.getElementById('car-list'); 
         const isAdmin = !document.getElementById('admin-panel-btn').classList.contains('hidden');
-        if (cars.length === 0) { list.innerHTML = '<p class="col-span-full text-center text-gray-700 text-[10px] uppercase italic py-20 tracking-widest">Showroom Empty</p>'; return; }
-        list.innerHTML = cars.map(car => `
-            <div class="group relative car-card">
-                ${isAdmin ? `<div class="absolute top-2 right-2 z-10 flex gap-1"><button onclick="prepareEdit(${JSON.stringify(car).replace(/"/g, '&quot;')})" class="bg-blue-600 p-1.5 rounded-sm shadow-xl transition hover:bg-blue-700"><i data-lucide="edit" class="w-3.5 h-3.5 text-white"></i></button><button onclick="deleteCar('${car.id}')" class="bg-red-600 p-1.5 rounded-sm shadow-xl transition hover:bg-red-700"><i data-lucide="trash-2" class="w-3.5 h-3.5 text-white"></i></button></div>` : ''}
-                <div class="relative h-32 md:h-48 overflow-hidden cursor-pointer" onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})">
-                    <img src="${car.images[0]}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                    <span class="absolute top-2 left-2 badge uppercase tracking-widest">${car.condition || 'USED'}</span>
-                </div>
-                <div class="p-3 flex flex-col flex-grow">
-                    <div class="flex justify-between items-start mb-2"><h3 class="font-bold text-[10px] md:text-[12px] uppercase text-white leading-tight w-4/5">${car.name}</h3><span class="text-[8px] md:text-[9px] text-gray-600 font-bold">${car.year || ''}</span></div>
-                    <div class="flex gap-2 text-[8px] md:text-[9px] text-gray-500 mb-4 items-center uppercase font-bold tracking-tighter">
-                        <span class="flex items-center gap-1"><i data-lucide="gauge" class="w-2.5 h-2.5"></i>${car.km || '0'} KM</span>
-                        <span class="flex items-center gap-1"><i data-lucide="fuel" class="w-2.5 h-2.5"></i>${car.fuel || 'PETROL'}</span>
+        if (cars.length === 0) { 
+            list.innerHTML = '<p class="col-span-full text-center text-gray-700 text-[10px] uppercase italic py-20 tracking-[0.5em]">Vault Currently Empty</p>'; 
+            return; 
+        }
+        list.innerHTML = cars.map(function(car) {
+            return `
+                <div class="group relative car-card">
+                    ${isAdmin ? `
+                        <div class="absolute top-2 right-2 z-10 flex gap-1">
+                            <button onclick="prepareEdit(${JSON.stringify(car).replace(/"/g, '&quot;')})" class="bg-blue-600 p-1.5 rounded-sm shadow-xl transition hover:bg-blue-700">
+                                <i data-lucide="edit" class="w-3.5 h-3.5 text-white"></i>
+                            </button>
+                            <button onclick="deleteCar('${car.id}')" class="bg-red-600 p-1.5 rounded-sm shadow-xl transition hover:bg-red-700">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5 text-white"></i>
+                            </button>
+                        </div>
+                    ` : ''}
+                    <div class="relative h-32 md:h-48 overflow-hidden cursor-pointer" onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})">
+                        <img src="${car.images[0]}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <span class="absolute top-2 left-2 badge uppercase tracking-widest font-bold">${car.condition || 'USED'}</span>
                     </div>
-                    <div class="flex justify-between items-center mt-auto border-t border-white/5 pt-2">
-                        <p class="gold-text font-bold text-xs md:text-sm tracking-tighter">${car.price}</p>
-                        <button onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})" class="bg-[#222] hover:bg-gold hover:text-black p-1.5 rounded-sm transition"><i data-lucide="chevron-right" class="w-3 h-3"></i></button>
+                    <div class="p-3 flex flex-col flex-grow">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-[10px] md:text-[12px] uppercase text-white leading-tight w-4/5">${car.name}</h3>
+                            <span class="text-[8px] md:text-[9px] text-gray-600 font-bold">${car.year || ''}</span>
+                        </div>
+                        <div class="flex gap-2 text-[8px] md:text-[9px] text-gray-500 mb-4 items-center uppercase font-bold tracking-tighter">
+                            <span class="flex items-center gap-1"><i data-lucide="gauge" class="w-2.5 h-2.5"></i>${car.km || '0'} KM</span>
+                            <span class="flex items-center gap-1"><i data-lucide="fuel" class="w-2.5 h-2.5"></i>${car.fuel || 'PETROL'}</span>
+                        </div>
+                        <div class="flex justify-between items-center mt-auto border-t border-white/5 pt-2">
+                            <p class="gold-text font-bold text-xs md:text-sm tracking-tighter">${car.price}</p>
+                            <button onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})" class="bg-[#222] hover:bg-gold hover:text-black p-1.5 rounded-sm transition">
+                                <i data-lucide="chevron-right" class="w-3 h-3 text-white"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
         lucide.createIcons();
     }
 
+    // 6. DATABASE: DETAIL POPUP
     function showDetails(car) {
-        const thumbs = car.images.map(img => `<img src="${img}" onclick="changeDetailImage('${img}')" class="h-16 w-full object-cover border border-gray-800 cursor-pointer hover:border-gold transition rounded-sm">`).join('');
+        const thumbs = car.images.map(function(img) {
+            return `<img src="${img}" onclick="changeDetailImage('${img}')" class="h-16 w-full object-cover border border-gray-800 cursor-pointer hover:border-gold transition rounded-sm shadow-md">`;
+        }).join('');
+        
         document.getElementById('modal-content').innerHTML = `
             <div class="space-y-4">
                 <div class="relative overflow-hidden cursor-zoom-in group" onclick="openFullscreen(document.getElementById('main-preview-img').src)">
                     <img id="main-preview-img" src="${car.images[0]}" class="w-full h-full object-cover rounded-sm">
-                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center"><i data-lucide="maximize" class="w-8 h-8 text-white"></i></div>
+                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <i data-lucide="maximize" class="w-8 h-8 text-white"></i>
+                    </div>
                 </div>
                 <div class="grid grid-cols-5 gap-2">${thumbs}</div>
-                <p class="text-[9px] text-gray-600 uppercase tracking-widest text-center">Proper High-Definition Full View Available</p>
+                <p class="text-[9px] text-gray-600 uppercase tracking-widest text-center italic">Proper High-Definition Full View Available</p>
             </div>
             <div class="flex flex-col justify-center text-white">
                 <h2 class="text-3xl font-serif italic mb-2 uppercase">${car.name} <span class="text-sm font-sans font-bold text-gray-500">${car.year || ''}</span></h2>
@@ -427,44 +548,134 @@
                     <div class="flex flex-col"><span class="text-gray-600 text-[8px]">Condition</span><span>${car.condition || 'USED'}</span></div>
                 </div>
                 <p class="text-gray-400 text-xs leading-loose text-justify mb-10 border-t border-gray-800 pt-6 uppercase tracking-tight">${car.description}</p>
-                <a href="https://wa.me/2348024417215?text=Hello Cars Village Global, I am interested in ${car.name} (${car.year})" target="_blank" class="block text-center bg-green-600 text-white py-4 font-bold uppercase text-[10px] shadow-2xl transition hover:bg-green-700">WhatsApp Concierge</a>
+                <a href="https://wa.me/2348024417215?text=Hello Cars Village Global, I am interested in ${car.name} (${car.year})" target="_blank" class="block text-center bg-green-600 text-white py-4 font-bold uppercase text-[10px] shadow-2xl transition hover:bg-green-700">WhatsApp Inquiry</a>
             </div>
         `;
         document.getElementById('car-modal').classList.add('active'); 
         lucide.createIcons();
     }
 
-    // AUTH & ADMIN ACTIONS
-    async function handleLogin() {
-        const { data, error } = await supabaseClient.auth.signInWithPassword({ email: document.getElementById('login-email').value, password: document.getElementById('login-pass').value });
-        if (!error && data.user.email === "dben61168@gmail.com") { document.getElementById('admin-panel-btn').classList.remove('hidden'); document.getElementById('login-modal').classList.remove('active'); fetchCars(); } else { alert("Unauthorized."); }
-    }
-
-    async function deleteCar(id) { if (confirm("Remove asset permanently?")) { await supabaseClient.from('cars').delete().eq('id', id); fetchCars(); } }
-    function prepareEdit(car) { currentEditId = car.id; document.getElementById('modal-title').innerText = "Edit Asset"; document.getElementById('car-name').value = car.name; document.getElementById('car-price').value = car.price; document.getElementById('car-desc').value = car.description; document.getElementById('car-year').value = car.year || ''; document.getElementById('car-km').value = car.km || ''; document.getElementById('car-trans').value = car.transmission || 'AUTO'; document.getElementById('car-fuel').value = car.fuel || 'PETROL'; document.getElementById('car-condition').value = car.condition || 'FOREIGN USED'; document.getElementById('upload-modal').classList.add('active'); }
-    function prepareAdd() { currentEditId = null; document.getElementById('modal-title').innerText = "Add Asset"; document.getElementById('upload-form').reset(); toggleUploadModal(); }
-
-    function updateFileCount() { document.getElementById('file-label').innerText = document.getElementById('car-files').files.length + " Images Verified"; }
-    
-    document.getElementById('upload-form').onsubmit = async (e) => {
-        e.preventDefault(); const b = document.getElementById('submit-btn'); const f = document.getElementById('car-files').files;
-        b.innerText = "Processing Assets..."; b.disabled = true;
-        try {
-            let urls = null; if (f.length > 0) { urls = []; for (let i = 0; i < f.length; i++) { const name = `${Math.random()}-${Date.now()}`; await supabaseClient.storage.from('car-images').upload(name, f[i]); urls.push(supabaseClient.storage.from('car-images').getPublicUrl(name).data.publicUrl); } }
-            const carData = { name: document.getElementById('car-name').value, price: document.getElementById('car-price').value, description: document.getElementById('car-desc').value, year: document.getElementById('car-year').value, km: document.getElementById('car-km').value, transmission: document.getElementById('car-trans').value, fuel: document.getElementById('car-fuel').value, condition: document.getElementById('car-condition').value };
-            if (urls) carData.images = urls;
-            if (currentEditId) await supabaseClient.from('cars').update(carData).eq('id', currentEditId); else await supabaseClient.from('cars').insert([carData]);
-            alert("Showroom Synchronized!"); location.reload();
-        } catch (err) { alert(err.message); b.innerText = "Publish Inventory"; b.disabled = false; }
+    // 7. POLICY LOGIC (RE-RESTORED FULL TEXT)
+    const policies = {
+        privacy: {
+            title: "Privacy Policy",
+            body: "At Cars Village Global, we prioritize your security. We collect your data solely for account management and transaction verification. We never share your personal information with third parties without your explicit consent. All payment data is encrypted via industry-standard protocols and stored in secure cloud environments. By using our platform, you agree to our elite security standards."
+        },
+        shipping: {
+            title: "Global Shipping Policy",
+            body: "We offer worldwide shipping to major international ports. For global orders, shipping quotes are calculated based on the destination port, vehicle weight, and insurance requirements. Please note that all customers are responsible for local import duties, customs fees, and taxes in their respective countries. Full port-to-port tracking is provided for every luxury asset."
+        }
     };
 
-    document.getElementById('contact-form').onsubmit = (e) => { e.preventDefault(); const t = encodeURIComponent(`Inquiry from ${document.getElementById('contact-name').value}: ${document.getElementById('contact-msg').value}`); window.open(`https://wa.me/2348024417215?text=${t}`, '_blank'); };
-    function openPolicy(t) { document.getElementById('policy-title').innerText = t.toUpperCase(); document.getElementById('policy-modal').classList.add('active'); }
+    function openPolicy(t) {
+        const p = policies[t];
+        document.getElementById('policy-title').innerText = p.title.toUpperCase();
+        document.getElementById('policy-body').innerText = p.body;
+        document.getElementById('policy-modal').classList.add('active');
+    }
+
+    // 8. STAFF AUTH & UPLOAD
+    async function handleLogin() {
+        const email = document.getElementById('login-email').value;
+        const pass = document.getElementById('login-pass').value;
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
+        if (!error && data.user.email === "dben61168@gmail.com") { 
+            document.getElementById('admin-panel-btn').classList.remove('hidden'); 
+            document.getElementById('login-modal').classList.remove('active'); 
+            fetchCars(); 
+        } else { alert("Staff Unauthorized. Access Blocked."); }
+    }
+
+    async function deleteCar(id) { 
+        if (confirm("Remove this asset from the showroom permanently?")) { 
+            await supabaseClient.from('cars').delete().eq('id', id); 
+            fetchCars(); 
+        } 
+    }
+
+    function prepareEdit(car) { 
+        currentEditId = car.id; 
+        document.getElementById('modal-title').innerText = "Edit Asset Data"; 
+        document.getElementById('car-name').value = car.name; 
+        document.getElementById('car-price').value = car.price; 
+        document.getElementById('car-desc').value = car.description; 
+        document.getElementById('car-year').value = car.year || ''; 
+        document.getElementById('car-km').value = car.km || ''; 
+        document.getElementById('car-trans').value = car.transmission || 'AUTO'; 
+        document.getElementById('car-fuel').value = car.fuel || 'PETROL'; 
+        document.getElementById('car-condition').value = car.condition || 'FOREIGN USED'; 
+        document.getElementById('upload-modal').classList.add('active'); 
+    }
+
+    function prepareAdd() { 
+        currentEditId = null; 
+        document.getElementById('modal-title').innerText = "Add Premium Asset"; 
+        document.getElementById('upload-form').reset(); 
+        toggleUploadModal(); 
+    }
+
+    function updateFileCount() { 
+        const count = document.getElementById('car-files').files.length;
+        document.getElementById('file-label').innerText = count + " Images Verified & Ready"; 
+    }
+    
+    document.getElementById('upload-form').onsubmit = async (e) => {
+        e.preventDefault(); 
+        const b = document.getElementById('submit-btn'); 
+        const f = document.getElementById('car-files').files;
+        b.innerText = "Encrypting & Storing Assets..."; 
+        b.disabled = true;
+        try {
+            let urls = null; 
+            if (f.length > 0) { 
+                urls = []; 
+                for (let i = 0; i < f.length; i++) { 
+                    const name = `${Math.random()}-${Date.now()}`; 
+                    await supabaseClient.storage.from('car-images').upload(name, f[i]); 
+                    urls.push(supabaseClient.storage.from('car-images').getPublicUrl(name).data.publicUrl); 
+                } 
+            }
+            const carData = { 
+                name: document.getElementById('car-name').value, 
+                price: document.getElementById('car-price').value, 
+                description: document.getElementById('car-desc').value, 
+                year: document.getElementById('car-year').value, 
+                km: document.getElementById('car-km').value, 
+                transmission: document.getElementById('car-trans').value, 
+                fuel: document.getElementById('car-fuel').value, 
+                condition: document.getElementById('car-condition').value 
+            };
+            if (urls) carData.images = urls;
+            
+            if (currentEditId) {
+                await supabaseClient.from('cars').update(carData).eq('id', currentEditId); 
+            } else { 
+                if (!urls) throw new Error("Asset images required for showroom upload."); 
+                await supabaseClient.from('cars').insert([carData]); 
+            }
+            alert("Showroom Database Synchronized!"); 
+            location.reload();
+        } catch (err) { 
+            alert("Error: " + err.message); 
+            b.innerText = "Publish Inventory"; 
+            b.disabled = false; 
+        }
+    };
+
+    // CONTACT FORM LOGIC
+    document.getElementById('contact-form').onsubmit = function(e) { 
+        e.preventDefault(); 
+        const text = encodeURIComponent(`Inquiry from ${document.getElementById('contact-name').value}: ${document.getElementById('contact-msg').value}`); 
+        window.open(`https://wa.me/2348024417215?text=${text}`, '_blank'); 
+    };
+
+    // HELPER MODAL CONTROLS
     function closeModal() { document.getElementById('car-modal').classList.remove('active'); }
     function closePolicy() { document.getElementById('policy-modal').classList.remove('active'); }
     function toggleLoginModal() { document.getElementById('login-modal').classList.toggle('active'); }
     function toggleUploadModal() { document.getElementById('upload-modal').classList.toggle('active'); }
      
+    // INITIALIZE
     lucide.createIcons(); 
     fetchCars();
     </script>
