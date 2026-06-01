@@ -436,7 +436,7 @@
     let logoClicks = 0;
     document.getElementById('admin-secret-trigger').onclick = function() {
         logoClicks++;
-        if (logoClicks >= 5) { 
+        if (logoClicks >= 3) { 
             toggleLoginModal(); 
             logoClicks = 0; 
         }
@@ -574,24 +574,34 @@
         document.getElementById('policy-modal').classList.add('active');
     }
 
-    // 8. STAFF AUTH & UPLOAD
-    async function handleLogin() {
-        const email = document.getElementById('login-email').value;
-        const pass = document.getElementById('login-pass').value;
-        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password: pass });
-        if (!error && data.user.email === "dben61168@gmail.com") { 
-            document.getElementById('admin-panel-btn').classList.remove('hidden'); 
-            document.getElementById('login-modal').classList.remove('active'); 
-            fetchCars(); 
-        } else { alert("Staff Unauthorized. Access Blocked."); }
-    }
+    // 8. // STAFF AUTH & UPLOAD
+async function handleLogin() {
+    const email = document.getElementById('login-email').value;
+    const pass = document.getElementById('login-pass').value;
+    
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ 
+        email: email, 
+        password: pass 
+    });
 
-    async function deleteCar(id) { 
-        if (confirm("Remove this asset from the showroom permanently?")) { 
-            await supabaseClient.from('cars').delete().eq('id', id); 
-            fetchCars(); 
-        } 
+    // Validates against your new official Admin Email
+    if (!error && data.user.email === "ayodeleoladapo@yahoo.com") { 
+        document.getElementById('admin-panel-btn').classList.remove('hidden'); 
+        document.getElementById('login-modal').classList.remove('active'); 
+        fetchCars(); 
+        alert("Welcome, Admin. System Access Granted.");
+    } else { 
+        alert("Staff Unauthorized. Access Blocked."); 
     }
+}
+
+async function deleteCar(id) { 
+    if (confirm("Remove this asset from the showroom permanently?")) { 
+        const { error } = await supabaseClient.from('cars').delete().eq('id', id); 
+        if (error) alert("Error deleting: " + error.message);
+        else fetchCars(); 
+    } 
+}
 
     function prepareEdit(car) { 
         currentEditId = car.id; 
@@ -666,7 +676,7 @@
     document.getElementById('contact-form').onsubmit = function(e) { 
         e.preventDefault(); 
         const text = encodeURIComponent(`Inquiry from ${document.getElementById('contact-name').value}: ${document.getElementById('contact-msg').value}`); 
-        window.open(`https://wa.me/2348024417215?text=${text}`, '_blank'); 
+        window.open(`https://wa.me/2348034779113?text=${text}`, '_blank'); 
     };
 
     // HELPER MODAL CONTROLS
