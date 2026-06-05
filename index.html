@@ -308,6 +308,9 @@
                     Send WhatsApp Message
                 </button>
             </form>
+            <p class="text-gray-500 text-xs uppercase tracking-widest mt-6">
+                Or Call Us Directly: <a href="tel:+2348024417215" class="gold-text underline">0802 441 7215</a>
+            </p>
         </div>
     </section>
 
@@ -352,7 +355,8 @@
             </div>
             <div>
                 <p class="text-[10px] uppercase tracking-widest font-bold mb-8 text-gray-400 italic">Concierge Access</p>
-                <a href="https://wa.me/2348024417215" class="gold-text text-xl font-bold block mb-4 uppercase underline decoration-gold underline-offset-8">WhatsApp</a>
+                <a href="https://wa.me/2348034779113" target="_blank" class="gold-text text-xl font-bold block mb-2 uppercase underline decoration-gold underline-offset-8">WhatsApp</a>
+                <a href="tel:+2348024417215" class="text-white text-xl font-bold block mb-4 uppercase underline decoration-white underline-offset-8">Call Us</a>
                 <p class="text-[10px] text-gray-600 uppercase">Available 24/7 For Luxury Procurement</p>
             </div>
         </div>
@@ -431,6 +435,8 @@
     const supabaseClient = supabase.createClient(SB_URL, SB_KEY);
 
     let currentEditId = null;
+    const WHATSAPP_NUMBER_INQUIRY = '2348034779113'; // For general inquiries and individual car listings
+    const CALL_NUMBER = '2348024417215'; // For direct calls
 
     // 1. SECRET ADMIN ACCESS (Click logo 5 times quickly)
     let logoClicks = 0;
@@ -483,6 +489,9 @@
             return; 
         }
         list.innerHTML = cars.map(function(car) {
+            const defaultImage = 'https://via.placeholder.com/400x300?text=No+Image'; // Placeholder if no images
+            const imageUrl = car.images && car.images.length > 0 ? car.images[0] : defaultImage;
+
             return `
                 <div class="group relative car-card">
                     ${isAdmin ? `
@@ -496,7 +505,7 @@
                         </div>
                     ` : ''}
                     <div class="relative h-32 md:h-48 overflow-hidden cursor-pointer" onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})">
-                        <img src="${car.images[0]}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                        <img src="${imageUrl}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
                         <span class="absolute top-2 left-2 badge uppercase tracking-widest font-bold">${car.condition || 'USED'}</span>
                     </div>
                     <div class="p-3 flex flex-col flex-grow">
@@ -510,9 +519,9 @@
                         </div>
                         <div class="flex justify-between items-center mt-auto border-t border-white/5 pt-2">
                             <p class="gold-text font-bold text-xs md:text-sm tracking-tighter">${car.price}</p>
-                            <button onclick="showDetails(${JSON.stringify(car).replace(/"/g, '&quot;')})" class="bg-[#222] hover:bg-gold hover:text-black p-1.5 rounded-sm transition">
-                                <i data-lucide="chevron-right" class="w-3 h-3 text-white"></i>
-                            </button>
+                            <a href="https://wa.me/${WHATSAPP_NUMBER_INQUIRY}?text=${encodeURIComponent('Hello Cars Village Global, I am interested in ' + car.name + ' (' + car.year + ').')}" target="_blank" class="bg-green-600 hover:bg-green-700 text-white p-1.5 px-3 rounded-sm transition text-[9px] uppercase font-bold">
+                                <i data-lucide="message-square" class="w-3 h-3 inline-block mr-1"></i>WhatsApp
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -523,14 +532,17 @@
 
     // 6. DATABASE: DETAIL POPUP
     function showDetails(car) {
-        const thumbs = car.images.map(function(img) {
+        const defaultImageDetail = 'https://via.placeholder.com/600x400?text=No+Image';
+        const mainImageUrl = car.images && car.images.length > 0 ? car.images[0] : defaultImageDetail;
+
+        const thumbs = car.images && car.images.length > 0 ? car.images.map(function(img) {
             return `<img src="${img}" onclick="changeDetailImage('${img}')" class="h-16 w-full object-cover border border-gray-800 cursor-pointer hover:border-gold transition rounded-sm shadow-md">`;
-        }).join('');
+        }).join('') : `<div class="col-span-5 text-center text-gray-600 text-[10px] italic">No additional images</div>`;
         
         document.getElementById('modal-content').innerHTML = `
             <div class="space-y-4">
                 <div class="relative overflow-hidden cursor-zoom-in group" onclick="openFullscreen(document.getElementById('main-preview-img').src)">
-                    <img id="main-preview-img" src="${car.images[0]}" class="w-full h-full object-cover rounded-sm">
+                    <img id="main-preview-img" src="${mainImageUrl}" class="w-full h-full object-cover rounded-sm">
                     <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                         <i data-lucide="maximize" class="w-8 h-8 text-white"></i>
                     </div>
@@ -548,7 +560,8 @@
                     <div class="flex flex-col"><span class="text-gray-600 text-[8px]">Condition</span><span>${car.condition || 'USED'}</span></div>
                 </div>
                 <p class="text-gray-400 text-xs leading-loose text-justify mb-10 border-t border-gray-800 pt-6 uppercase tracking-tight">${car.description}</p>
-                <a href="https://wa.me/2348024417215?text=Hello Cars Village Global, I am interested in ${car.name} (${car.year})" target="_blank" class="block text-center bg-green-600 text-white py-4 font-bold uppercase text-[10px] shadow-2xl transition hover:bg-green-700">WhatsApp Inquiry</a>
+                <a href="https://wa.me/${WHATSAPP_NUMBER_INQUIRY}?text=${encodeURIComponent('Hello Cars Village Global, I am interested in ' + car.name + ' (' + car.year + ')')}" target="_blank" class="block text-center bg-green-600 text-white py-4 font-bold uppercase text-[10px] shadow-2xl transition hover:bg-green-700">WhatsApp Inquiry</a>
+                <a href="tel:+${CALL_NUMBER}" class="block text-center bg-gray-700 text-white py-4 font-bold uppercase text-[10px] shadow-2xl transition hover:bg-gray-800 mt-3">Call Us: 0802 441 7215</a>
             </div>
         `;
         document.getElementById('car-modal').classList.add('active'); 
@@ -621,6 +634,7 @@ async function deleteCar(id) {
         currentEditId = null; 
         document.getElementById('modal-title').innerText = "Add Premium Asset"; 
         document.getElementById('upload-form').reset(); 
+        document.getElementById('file-label').innerText = "Select Images (Max 5)"; // Reset file label
         toggleUploadModal(); 
     }
 
@@ -636,13 +650,29 @@ async function deleteCar(id) {
         b.innerText = "Encrypting & Storing Assets..."; 
         b.disabled = true;
         try {
-            let urls = null; 
+            let urls = []; // Initialize as an empty array
             if (f.length > 0) { 
-                urls = []; 
                 for (let i = 0; i < f.length; i++) { 
-                    const name = `${Math.random()}-${Date.now()}`; 
-                    await supabaseClient.storage.from('car-images').upload(name, f[i]); 
-                    urls.push(supabaseClient.storage.from('car-images').getPublicUrl(name).data.publicUrl); 
+                    const file = f[i];
+                    const fileName = `${Date.now()}-${file.name}`; // Use original file name for uniqueness
+                    const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                        .from('car-images')
+                        .upload(fileName, file); 
+
+                    if (uploadError) {
+                        throw new Error("Failed to upload image: " + uploadError.message);
+                    }
+                    
+                    // Correct way to get public URL after successful upload
+                    const { data: publicUrlData } = supabaseClient.storage
+                        .from('car-images')
+                        .getPublicUrl(fileName);
+                    
+                    if (publicUrlData && publicUrlData.publicUrl) {
+                        urls.push(publicUrlData.publicUrl);
+                    } else {
+                        throw new Error("Failed to retrieve public URL for image: " + fileName);
+                    }
                 } 
             }
             const carData = { 
@@ -655,12 +685,34 @@ async function deleteCar(id) {
                 fuel: document.getElementById('car-fuel').value, 
                 condition: document.getElementById('car-condition').value 
             };
-            if (urls) carData.images = urls;
             
+            // Only add images array if there are URLs when adding a new car
+            // When editing, if new images are uploaded, update `images`.
+            // Otherwise, retain existing `images` if `urls` is empty and it's an edit operation.
             if (currentEditId) {
+                // If there are new images, use them. If not, try to retain existing ones.
+                if (urls.length > 0) {
+                    carData.images = urls;
+                } else {
+                    // Fetch existing images to retain them if no new images were uploaded during edit
+                    const { data: existingCar, error: fetchError } = await supabaseClient
+                        .from('cars')
+                        .select('images')
+                        .eq('id', currentEditId)
+                        .single();
+
+                    if (!fetchError && existingCar && existingCar.images) {
+                        carData.images = existingCar.images;
+                    } else {
+                        carData.images = []; // No existing images and no new ones
+                    }
+                }
                 await supabaseClient.from('cars').update(carData).eq('id', currentEditId); 
             } else { 
-                if (!urls) throw new Error("Asset images required for showroom upload."); 
+                if (urls.length === 0) { // Enforce image upload for new cars
+                    throw new Error("Asset images required for showroom upload."); 
+                }
+                carData.images = urls; // Assign images for new car
                 await supabaseClient.from('cars').insert([carData]); 
             }
             alert("Showroom Database Synchronized!"); 
@@ -676,7 +728,7 @@ async function deleteCar(id) {
     document.getElementById('contact-form').onsubmit = function(e) { 
         e.preventDefault(); 
         const text = encodeURIComponent(`Inquiry from ${document.getElementById('contact-name').value}: ${document.getElementById('contact-msg').value}`); 
-        window.open(`https://wa.me/2348034779113?text=${text}`, '_blank'); 
+        window.open(`https://wa.me/${WHATSAPP_NUMBER_INQUIRY}?text=${text}`, '_blank'); 
     };
 
     // HELPER MODAL CONTROLS
