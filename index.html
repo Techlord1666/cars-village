@@ -125,6 +125,28 @@
         }
         #fullscreen-viewer.active { display: flex; }
         #fullscreen-img { max-width: 95%; max-height: 90vh; object-fit: contain; }
+
+        /* SMALL "GET YOUR BUSINESS WEBSITE" FOOTER BUTTON */
+        .biz-site-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 9px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #9ca3af;
+            border: 1px solid #262626;
+            padding: 7px 16px;
+            border-radius: 999px;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.02);
+        }
+        .biz-site-btn:hover {
+            color: #0a0a0a;
+            background: #d4af37;
+            border-color: #d4af37;
+        }
     </style>
 </head>
 <body class="relative">
@@ -362,6 +384,14 @@
         </div>
         <div class="mt-20 pt-10 border-t border-gray-900 text-center text-[10px] text-gray-800 tracking-[0.5em] uppercase">
             &copy; 2024 Cars Village Global. Excellence Guaranteed.
+        </div>
+
+        <!-- SMALL "GET YOUR BUSINESS WEBSITE" BUTTON (visible to everyone) -->
+        <div class="flex justify-center mt-8">
+            <a href="https://wa.me/2349032473005?text=Hi%2C%20I%20saw%20your%20website%20and%20I%27d%20like%20to%20get%20a%20business%20website%20too." target="_blank" rel="noopener" class="biz-site-btn">
+                <i data-lucide="globe" class="w-3 h-3"></i>
+                Get Your Business Website
+            </a>
         </div>
     </footer>
 
